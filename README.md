@@ -1,3 +1,3 @@
 # BitCoinPools
 
-**This is an app for retrieving latest information about BTC pools**. Go to: [*Releases*](https://github.com/Javinator9889/BitCoinPools/releases) for getting the latest version
+**This is an app for retrieving latest information about BTC pools**. Go to: [*Releases*](https://github.com/Javinator9889/BitCoinPools/releases) for getting the latest version or [click here](https://goo.gl/5sqsNP)
