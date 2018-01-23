@@ -2,4 +2,9 @@
   "latestVersion": "1.2",
   "latestVersionCode": "10",
   "url": "https://github.com/Javinator9889/BitCoinPools/releases"
+  "releaseNotes": [
+    "- First evolution",
+    "- Second evolution",
+    "- Bug fixes"
+  ] 
 }
