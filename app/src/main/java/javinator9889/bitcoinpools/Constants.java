@@ -23,8 +23,8 @@ public class Constants {
     public static final String CHANNEL_ID = "javinator9889.bitcoinpools.Alerts";
     public static final int NOTIFICATION_ID = 1;
     public static final int REQUEST_CODE = 0;
-    public static final String GITHUB_USER = "Javinator9889";
-    public static final String GITHUB_REPO = "BitCoinPools";
+    public static final String GITHUB_USER = "YOUR_GITHUB_USER";
+    public static final String GITHUB_REPO = "YOUR_REPO_NAME";
     public static final class LOG {
         public static final String UNCAUGHT_ERROR = "Uncaught error on: ";
 
