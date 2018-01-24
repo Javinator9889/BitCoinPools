@@ -8,7 +8,7 @@ With the latest update, we have just integrated the option to *recieve notificat
 
 ## What this app exactly does?
 
-The purpose of this application is *getting information about mining pools* avaiable on Internet [(click here for getting more information])(https://en.wikipedia.org/wiki/Mining_pool), and also giving the user **more information** for the BitCoin (as its current price)
+The purpose of this application is *getting information about mining pools* avaiable on Internet [(click here for getting more information)](https://en.wikipedia.org/wiki/Mining_pool), and also giving the user **more information** for the BitCoin (as its current price)
 
 ![Interface](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/englishinterface.jpg)
 ![Buttons](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/buttons.jpg)
