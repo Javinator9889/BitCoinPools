@@ -31,24 +31,6 @@
     <string name="prefUpdated">Preferencias actualizadas correctamente</string>
     <string name="BTCP">Precio del BTC actual: $</string>
     <string name="porcent">% de los bloques minados</string>
-    <string name="ftos">
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</string>
     <string-array name="prices">
         <item>$1000</item>
         <item>$2000</item>
@@ -84,5 +66,27 @@ SOFTWARE.</string>
     <string name="updateNow">Actualizar</string>
     <string name="updateLater">Recordar más tarde</string>
     <string name="updatePage">Página de actualización</string>
-    <string name="crash">Ooops, algo ha fallado. Ayuda a mejorar la aplicación enviándome un reporte con los fallos</string>
+    <string name="crash">Ooops, BitCoin Pools ha fallado. Ayuda a mejorar la aplicación enviándome un reporte con los fallos</string>
+    <string name="noConnectionTitle">No hay conexión a Internet</string>
+    <string name="noConnectionDesc">Esta aplicación necesita conexión a Internet para funcionar. Por favor, activa tu conexión de datos o conéctate a una red WiFi</string>
+    <string name="accept">Aceptar</string>
+    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>obtén información sobre las últimas pools de BTC</i> y más<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">🛠 Proyecto en GitHub</a>]]></string>
+    <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
+    <string name="changelog">
+        <![CDATA[
+        <h1>Versión 1.12 (25/01/18)</h1><i>
+        - Solución de bugs cuando no había conexión a Internet<br />
+        - Implementación de nuevos métodos y librerías (mirar: <i>Licencia</i>)<br />
+        - Nuevo: changelog cuando la app se actualiza (lo que estás leyendo)<br />
+        - Optimización de la app para evitar bloqueos (hilos asíncronos)<br /></i>
+        <br />
+        <h1>Versión 1.1 (23/01/18)</h1><i>
+        - Incluídas notificaciones<br />
+        - Añadido un nuevo mensaje cuando hay una actualización disponible<br />
+        - Incluido un reporte de errores<br /></i>
+        <br />
+        <h1>Versión 1.0 (23/12/17)</h1><i>
+        - Versión inicial</i>
+        ]]>
+    </string>
 </resources>

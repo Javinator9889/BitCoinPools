@@ -7,6 +7,11 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import org.acra.ACRA;
@@ -57,6 +62,8 @@ public class BitCoinApp extends Application {
 
         builder.setPeriodic(Constants.SCHEDULING_TIME);
         builder.setPersisted(Constants.PERSISTED);
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+        builder.setBackoffCriteria(Constants.BACKOFF_CRITERIA, JobInfo.BACKOFF_POLICY_LINEAR);
 
         assert mJobScheduler != null;
         if (mJobScheduler.schedule(builder.build()) == JobScheduler.RESULT_FAILURE) {
@@ -74,6 +81,7 @@ public class BitCoinApp extends Application {
             sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES.NOTIFIED_HIGH, false);
             sharedPreferencesEditor.putInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
             sharedPreferencesEditor.putInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
+            sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, appVersion());
             sharedPreferencesEditor.apply();
         }
     }
@@ -84,5 +92,21 @@ public class BitCoinApp extends Application {
         assert jobScheduler != null;
         jobScheduler.cancelAll();
         startBackgroundJobs();
+    }
+
+    public static boolean isOnline() {
+        ConnectivityManager connectionManager = (ConnectivityManager) getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectionManager != null;
+        NetworkInfo netInfo = connectionManager.getActiveNetworkInfo();
+        return ((netInfo != null) && netInfo.isConnectedOrConnecting());
+    }
+
+    public static String appVersion() {
+        try {
+            PackageInfo pInfo = getAppContext().getPackageManager().getPackageInfo(getAppContext().getPackageName(), 0);
+            return pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "1.0";
+        }
     }
 }

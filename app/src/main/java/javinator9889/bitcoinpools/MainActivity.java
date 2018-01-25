@@ -2,10 +2,12 @@ package javinator9889.bitcoinpools;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +18,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.mikephil.charting.charts.PieChart;
@@ -47,38 +51,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
-        setContentView(R.layout.activity_main);
+        if (BitCoinApp.isOnline()) {
+            Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
+            setContentView(R.layout.activity_main);
 
-        Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
-        checkPermissions();
-        initMPU();
-        initRD();
-        initT();
-        CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
-        setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
+            if (BitCoinApp.getSharedPreferences().contains(Constants.SHARED_PREFERENCES.APP_VERSION)) {
+                if (!BitCoinApp.getSharedPreferences().getString(Constants.SHARED_PREFERENCES.APP_VERSION, "1.0").equals(BitCoinApp.appVersion())) {
+                    new MaterialDialog.Builder(this)
+                            .title("Changelog")
+                            .content(R.string.changelog, true)
+                            .cancelable(true)
+                            .positiveText(R.string.accept)
+                            .build().show();
+                    SharedPreferences.Editor editor = BitCoinApp.getSharedPreferences().edit();
+                    editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion());
+                    editor.apply();
+                }
+            } else {
+                new MaterialDialog.Builder(this)
+                        .title("Changelog")
+                        .content(R.string.changelog, true)
+                        .cancelable(true)
+                        .positiveText(R.string.accept)
+                        .build().show();
+                SharedPreferences.Editor editor = BitCoinApp.getSharedPreferences().edit();
+                editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion());
+                editor.apply();
+            }
 
-        final FloatingActionsMenu mainButton = (FloatingActionsMenu) findViewById(R.id.menu_fab);
-        final FloatingActionButton licenseButton = (FloatingActionButton) findViewById(R.id.license);
-        final FloatingActionButton closeButton = (FloatingActionButton) findViewById(R.id.close);
-        final FloatingActionButton settingsButton = (FloatingActionButton) findViewById(R.id.settings);
-        final FloatingActionButton refreshButton = (FloatingActionButton) findViewById(R.id.update);
-        final PieChart chart = (PieChart) findViewById(R.id.chart);
+            Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
+            checkPermissions();
+            initMPU();
+            initRD();
+            initT();
+            CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
+            setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
 
-        Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
-        createPieChart(chart);
-        chart.invalidate();
-        createTable((TableLayout) findViewById(R.id.poolstable));
-        mainButton.bringToFront();
-        mainButton.invalidate();
+            final FloatingActionsMenu mainButton = (FloatingActionsMenu) findViewById(R.id.menu_fab);
+            final FloatingActionButton licenseButton = (FloatingActionButton) findViewById(R.id.license);
+            final FloatingActionButton closeButton = (FloatingActionButton) findViewById(R.id.close);
+            final FloatingActionButton settingsButton = (FloatingActionButton) findViewById(R.id.settings);
+            final FloatingActionButton refreshButton = (FloatingActionButton) findViewById(R.id.update);
+            final PieChart chart = (PieChart) findViewById(R.id.chart);
 
-        Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
-        licenseButton.setOnClickListener(this);
-        closeButton.setOnClickListener(this);
-        settingsButton.setOnClickListener(this);
-        refreshButton.setOnClickListener(this);
+            Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
+            createPieChart(chart);
+            createTable((TableLayout) findViewById(R.id.poolstable));
+            mainButton.bringToFront();
+            mainButton.invalidate();
 
-        ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
+            Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
+            licenseButton.setOnClickListener(this);
+            closeButton.setOnClickListener(this);
+            settingsButton.setOnClickListener(this);
+            refreshButton.setOnClickListener(this);
+
+            ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
+        } else {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.noConnectionTitle)
+                    .content(R.string.noConnectionDesc)
+                    .cancelable(false)
+                    .positiveText(R.string.accept)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            closeApp();
+                        }
+                    })
+                    .build()
+                    .show();
+        }
     }
 
     private void refresh() {
@@ -89,27 +132,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initMPU() {
-        net market = new net();
-        market.execute("https://api.blockchain.info/stats");
-        try {
-            MARKET_PRICE_USD = round((float) market.get().getDouble("market_price_usd"), 2);
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
-            MARKET_PRICE_USD = 0;
-        }
+        Thread mpuThread = new Thread() {
+            public void run() {
+                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_MPU);
+                net market = new net();
+                market.execute(Constants.STATS_URL);
+                try {
+                    MARKET_PRICE_USD = round((float) market.get().getDouble(Constants.MARKET_NAME), 2);
+                } catch (InterruptedException | ExecutionException | JSONException e) {
+                    Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
+                    MARKET_PRICE_USD = 0;
+                }
+            }
+        };
+        mpuThread.start();
     }
 
     private void initRD() {
-        int days = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
-        String url = "https://api.blockchain.info/pools?timespan=" + days + "days";
-        net httpsResponse = new net();
-        httpsResponse.execute(url);
-        try {
-            RETRIEVED_DATA = JSONTools.sortByValue(JSONTools.convert2HashMap(httpsResponse.get()));
-        } catch (InterruptedException | ExecutionException e) {
-            RETRIEVED_DATA = null;
-            Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
-        }
+        Thread rdThread = new Thread() {
+            public void run() {
+                int days = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
+                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_RD);
+                String url = Constants.POOLS_URL + days + "days";
+                net httpsResponse = new net();
+                httpsResponse.execute(url);
+                try {
+                    RETRIEVED_DATA = JSONTools.sortByValue(JSONTools.convert2HashMap(httpsResponse.get()));
+                } catch (InterruptedException | ExecutionException e) {
+                    RETRIEVED_DATA = null;
+                    Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
+                }
+            }
+        };
+        rdThread.start();
     }
 
     private void initT() {
@@ -117,75 +172,87 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TABLE_PARAMS = masterRow.getLayoutParams();
     }
 
-    private void createPieChart(PieChart destinationChart) {
-        List<PieEntry> values = new ArrayList<>();
-        List<Map.Entry<String, Float>> entryList = new ArrayList<>(RETRIEVED_DATA.entrySet());
-        Map.Entry<String, Float> getEntry;
-        int count = 0;
-        for (int i = entryList.size() - 1; (i >= 0) && (count < 10); --i) {
-            getEntry = entryList.get(i);
-            Log.i(Constants.LOG.MATAG, "Accessing at: " + i + " | Key: " + getEntry.getKey() + " | Value: " + getEntry.getValue());
-            values.add(new PieEntry(getEntry.getValue(), getEntry.getKey()));
-            ++count;
-        }
-        PieDataSet data = new PieDataSet(values, "Latest 24h BTC pools");
-        data.setColors(ColorTemplate.MATERIAL_COLORS);
-        data.setValueTextSize(10f);
+    private void createPieChart(final PieChart destinationChart) {
+        Thread pieChartThread = new Thread() {
+            public void run() {
+                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_CHART);
+                List<PieEntry> values = new ArrayList<>();
+                List<Map.Entry<String, Float>> entryList = new ArrayList<>(RETRIEVED_DATA.entrySet());
+                Map.Entry<String, Float> getEntry;
+                int count = 0;
+                for (int i = entryList.size() - 1; (i >= 0) && (count < 10); --i) {
+                    getEntry = entryList.get(i);
+                    Log.i(Constants.LOG.MATAG, "Accessing at: " + i + " | Key: " + getEntry.getKey() + " | Value: " + getEntry.getValue());
+                    values.add(new PieEntry(getEntry.getValue(), getEntry.getKey()));
+                    ++count;
+                }
+                PieDataSet data = new PieDataSet(values, "Latest 24h BTC pools");
+                data.setColors(ColorTemplate.MATERIAL_COLORS);
+                data.setValueTextSize(10f);
 
-        destinationChart.setData(new PieData(data));
-        destinationChart.setUsePercentValues(true);
-        destinationChart.setEntryLabelColor(ColorTemplate.rgb("#000000"));
-        Description description = new Description();
-        description.setText(getString(R.string.porcent));
-        destinationChart.setDescription(description);
-        destinationChart.getLegend().setEnabled(false);
-        destinationChart.invalidate();
+                destinationChart.setData(new PieData(data));
+                destinationChart.setUsePercentValues(true);
+                destinationChart.setEntryLabelColor(ColorTemplate.rgb("#000000"));
+                Description description = new Description();
+                description.setText(getString(R.string.porcent));
+                destinationChart.setDescription(description);
+                destinationChart.getLegend().setEnabled(false);
+                destinationChart.invalidate();
+            }
+        };
+        pieChartThread.start();
     }
 
-    private void createTable(TableLayout destinationTable) {
-        List<Map.Entry<String, Float>> entryList = new ArrayList<>(RETRIEVED_DATA.entrySet());
-        Map.Entry<String, Float> getEntry;
-        int count = 1;
+    private void createTable(final TableLayout destinationTable) {
+        Thread tableThread = new Thread() {
+            public void run() {
+                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_TABLE);
+                List<Map.Entry<String, Float>> entryList = new ArrayList<>(RETRIEVED_DATA.entrySet());
+                Map.Entry<String, Float> getEntry;
+                int count = 1;
 
-        TableRow fetchTableRow = findViewById(R.id.masterRow);
-        TextView firstPool = new TextView(this);
-        TextView firstBlock = new TextView(this);
+                TableRow fetchTableRow = findViewById(R.id.masterRow);
+                TextView firstPool = new TextView(MainActivity.this);
+                TextView firstBlock = new TextView(MainActivity.this);
 
-        getEntry = entryList.get(entryList.size() - 1);
+                getEntry = entryList.get(entryList.size() - 1);
 
-        firstPool.setText(getEntry.getKey());
-        firstPool.setTypeface(Typeface.DEFAULT_BOLD);
-        firstPool.setTextSize(16f);
+                firstPool.setText(getEntry.getKey());
+                firstPool.setTypeface(Typeface.DEFAULT_BOLD);
+                firstPool.setTextSize(16f);
 
-        firstBlock.setText(String.valueOf(getEntry.getValue()));
-        firstBlock.setTypeface(Typeface.MONOSPACE);
-        firstBlock.setTextSize(16f);
+                firstBlock.setText(String.valueOf(getEntry.getValue()));
+                firstBlock.setTypeface(Typeface.MONOSPACE);
+                firstBlock.setTextSize(16f);
 
-        fetchTableRow.addView(firstPool);
-        fetchTableRow.addView(firstBlock);
-        for (int i = entryList.size() - 2; (i >= 0) && (count <= 10); --i) {
-            TextView poolName = new TextView(this);
-            TextView poolBlock = new TextView(this);
-            TableRow tableRow = new TableRow(this);
+                fetchTableRow.addView(firstPool);
+                fetchTableRow.addView(firstBlock);
+                for (int i = entryList.size() - 2; (i >= 0) && (count <= 10); --i) {
+                    TextView poolName = new TextView(MainActivity.this);
+                    TextView poolBlock = new TextView(MainActivity.this);
+                    TableRow tableRow = new TableRow(MainActivity.this);
 
-            getEntry = entryList.get(i);
-            poolName.setText(getEntry.getKey());
-            poolBlock.setText(String.valueOf(getEntry.getValue()));
+                    getEntry = entryList.get(i);
+                    poolName.setText(getEntry.getKey());
+                    poolBlock.setText(String.valueOf(getEntry.getValue()));
 
-            poolName.setTypeface(Typeface.DEFAULT_BOLD);
-            poolName.setTextSize(16f);
+                    poolName.setTypeface(Typeface.DEFAULT_BOLD);
+                    poolName.setTextSize(16f);
 
-            poolBlock.setTypeface(Typeface.MONOSPACE);
-            poolBlock.setTextSize(16f);
+                    poolBlock.setTypeface(Typeface.MONOSPACE);
+                    poolBlock.setTextSize(16f);
 
-            tableRow.setLayoutParams(TABLE_PARAMS);
-            tableRow.addView(poolName);
-            tableRow.addView(poolBlock);
+                    tableRow.setLayoutParams(TABLE_PARAMS);
+                    tableRow.addView(poolName);
+                    tableRow.addView(poolBlock);
 
-            destinationTable.addView(tableRow);
-            ++count;
-        }
-        destinationTable.invalidate();
+                    destinationTable.addView(tableRow);
+                    ++count;
+                }
+                destinationTable.invalidate();
+            }
+        };
+        tableThread.start();
     }
 
     /**
@@ -202,13 +269,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.onBackPressed();
                 break;
             case R.id.license:
-                Intent intentLicense = new Intent(this, License.class);
-                startActivity(intentLicense);
+                Thread licenseThread = new Thread() {
+                    public void run() {
+                        Intent intentLicense = new Intent(MainActivity.this, License.class);
+                        startActivity(intentLicense);
+                    }
+                };
+                licenseThread.start();
                 break;
             case R.id.settings:
-                Intent intentSettings = new Intent(this, SpinnerActivity.class);
-                startActivity(intentSettings);
-                MainActivity.this.finish();
+                Thread settingsThread = new Thread() {
+                    public void run() {
+                        Intent intentSettings = new Intent(MainActivity.this, SpinnerActivity.class);
+                        startActivity(intentSettings);
+                        MainActivity.this.finish();
+                    }
+                };
+                settingsThread.start();
                 break;
             case R.id.update:
                 refresh();
@@ -227,6 +304,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         }
+    }
+
+    private void closeApp() {
+        this.onBackPressed();
     }
 }
 

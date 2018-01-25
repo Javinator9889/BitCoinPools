@@ -5,3 +5,4 @@ SHARED_PREFERENCES:
 3. boolean | notified_high 	   | false
 4. boolean | notified_low 	   | false
 5. int 	   | value_to_check 	   | 1000
+6. String  | APP_VERSION           | 1.0

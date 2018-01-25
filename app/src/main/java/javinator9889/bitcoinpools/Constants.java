@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class Constants {
     public static final boolean PERSISTED = true;
     public static final long SCHEDULING_TIME = TimeUnit.HOURS.toMillis(1);
+    public static final long BACKOFF_CRITERIA = TimeUnit.SECONDS.toMillis(30);
     public static final int JOB_ID = 1;
     public static final class SHARED_PREFERENCES {
         public static final String SHARED_PREFERENCES_KEY = "javinator9889.bitcoinpools.usrPreferences";
@@ -19,12 +20,16 @@ public class Constants {
         public static final String DAYS_TO_CHECK = "days_to_check";
         public static final String VALUE_TO_CHECK = "value_to_check";
         public static final String SHARED_PREFERENCES_INITIALIZED = "initialized";
+        public static final String APP_VERSION = "APP_VERSION";
     }
     public static final String CHANNEL_ID = "javinator9889.bitcoinpools.Alerts";
     public static final int NOTIFICATION_ID = 1;
     public static final int REQUEST_CODE = 0;
-    public static final String GITHUB_USER = "YOUR_GITHUB_USER";
-    public static final String GITHUB_REPO = "YOUR_REPO_NAME";
+    public static final String GITHUB_USER = "Javinator9889";
+    public static final String GITHUB_REPO = "BitCoinPools";
+    public static final String STATS_URL = "https://api.blockchain.info/stats";
+    public static final String MARKET_NAME = "market_price_usd";
+    public static final String POOLS_URL = "https://api.blockchain.info/pools?timespan=";
     public static final class LOG {
         public static final String UNCAUGHT_ERROR = "Uncaught error on: ";
 
@@ -43,6 +48,10 @@ public class Constants {
         public static final String INIT_VALUES = "Initialising application values";
         public static final String LISTENING = "Listening to buttons";
         public static final String CHECKING_PERMISSIONS = "Checking for required permissions";
+        public static final String LOADING_MPU = "Loading MPU in a new thread...";
+        public static final String LOADING_RD = "Loading data in a new thread...";
+        public static final String LOADING_CHART = "Loading PieChart in a new thread...";
+        public static final String LOADING_TABLE = "Loading table in a new thread...";
         public static final String MARKET_PRICE_ERROR = "Error on MainActivity.initMPU(): ";
         public static final String DATA_ERROR = "Error on MainActivity.initRD(): ";
 
@@ -56,7 +65,7 @@ public class Constants {
         public static final String JTAG = ".JobSchedulerService";
         public static final String RECEIVED_JOB = "Correctly received job";
         public static final String STARTING_JOB = "Starting current job and notification handler. Job ID: ";
-        public static final String STOPPING_JOB = "Stopping current job. Job ID: ";
+        public static final String STOPPING_JOB = "Stopping current job. The job was interrupted. Job ID: ";
 
         public static final String NTAG = ".NotificationHandler";
         public static final String CREATING_NOTIFICATION = "Creating current notification";
