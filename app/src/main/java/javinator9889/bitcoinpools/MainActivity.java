@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
     private static float MARKET_PRICE_USD;
     private static ViewGroup.LayoutParams TABLE_PARAMS;
+    private Thread rdThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             initRD();
             initT();
             CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
-            setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
 
             final FloatingActionsMenu mainButton = (FloatingActionsMenu) findViewById(R.id.menu_fab);
             final FloatingActionButton licenseButton = (FloatingActionButton) findViewById(R.id.license);
@@ -142,14 +142,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } catch (InterruptedException | ExecutionException | JSONException e) {
                     Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
                     MARKET_PRICE_USD = 0;
+                } finally {
+                    setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
                 }
             }
         };
+        mpuThread.setName("mpu_thread");
         mpuThread.start();
     }
 
     private void initRD() {
-        Thread rdThread = new Thread() {
+        rdThread = new Thread() {
             public void run() {
                 int days = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
                 Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_RD);
@@ -164,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         };
+        rdThread.setName("rd_thread");
         rdThread.start();
     }
 
@@ -200,7 +204,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 destinationChart.invalidate();
             }
         };
-        pieChartThread.start();
+        try {
+            rdThread.join();
+        } catch (InterruptedException e) {
+            Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR + rdThread.getName());
+        } finally {
+            pieChartThread.setName("chart_thread");
+            pieChartThread.start();
+        }
     }
 
     private void createTable(final TableLayout destinationTable) {
@@ -252,7 +263,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 destinationTable.invalidate();
             }
         };
-        tableThread.start();
+        try {
+            rdThread.join();
+        } catch (InterruptedException e) {
+            Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR + rdThread.getName());
+        } finally {
+            tableThread.setName("table_thread");
+            tableThread.start();
+        }
     }
 
     /**
@@ -275,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intentLicense);
                     }
                 };
+                licenseThread.setName("license_thread");
                 licenseThread.start();
                 break;
             case R.id.settings:
@@ -285,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         MainActivity.this.finish();
                     }
                 };
+                settingsThread.setName("settings_thread");
                 settingsThread.start();
                 break;
             case R.id.update:

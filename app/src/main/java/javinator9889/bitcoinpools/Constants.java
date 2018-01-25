@@ -54,6 +54,7 @@ public class Constants {
         public static final String LOADING_TABLE = "Loading table in a new thread...";
         public static final String MARKET_PRICE_ERROR = "Error on MainActivity.initMPU(): ";
         public static final String DATA_ERROR = "Error on MainActivity.initRD(): ";
+        public static final String JOIN_ERROR = "Failed to join thread ";
 
         public static final String STAG = "SpinnerActivity";
         public static final String INIT_SETTINGS_VIEW = "Starting settings view...";
