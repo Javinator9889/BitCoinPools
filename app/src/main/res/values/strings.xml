@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name">BitCoin Pools</string>
+    <string name="exit">Exit</string>
+    <string name="pools">Pools</string>
+    <string name="blocks">Blocks</string>
+    <string name="latest_24h_pools_information">Latest pools information</string>
+    <string name="settings">Settings</string>
+    <string name="tos">License</string>
+    <string name="update">Update content</string>
+    <string name="close">Close app</string>
+    <string-array name="days">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string name="cDays">Days to show latest pools information: </string>
+    <string name="numDays">1</string>
+    <string name="error">An error occurred. Please, check permissions</string>
+    <string name="updated">Updated</string>
+    <string name="ftos" translatable="false"><![CDATA[
+    <b><i>Copyright © 2017 - Javinator9889</i></b><br />
+    <h3>1. Permissions</h3>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions. <br />
+<h3>2. Conditions</h3>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software. <br />
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.<br />
+<h3>END OF TERMS AND CONDITIONS</h3>]]></string>
+    <string name="license">More info about MIT license: https://goo.gl/tiitU5</string>
+    <string name="fullcode">View full project and other licenses here: https://goo.gl/LbLmBq</string>
+    <string name="basedCode">Code based on:</string>
+    <string name="daysDescrip">When looking for information about pools and mined blocks, it can be about the latest 24 hours (by default) or about more days</string>
+    <string name="settingsTitle">Settings</string>
+    <string name="licenseTitle">License</string>
+    <string name="prefUpdated">Preferences updated correctly</string>
+    <string name="BTCP">Current BTC price: $</string>
+    <string name="porcent">% of mined blocks</string>
+    <string name="alerts">Alerts</string>
+    <string name="description">Show notification when BTC reaches an specified price</string>
+    <string name="morePriceX">BitCoin price has exceeded $</string>
+    <string name="lowerPriceX">BitCoin price is lower than $</string>
+    <string name="lowerPrice">BitCoin price is going down</string>
+    <string name="morePrice">BitCoin price is rising</string>
+    <string name="notifications">Enable notifications</string>
+    <string name="notifDesc">When notifications are enabled, this app will tell you when the BitCoin price is upper (or lower) than the price you selected (in dolars)</string>
+    <string-array name="prices">
+        <item>$1000</item>
+        <item>$2000</item>
+        <item>$5000</item>
+        <item>$7000</item>
+        <item>$8000</item>
+        <item>$9000</item>
+        <item>$10000</item>
+        <item>$11000</item>
+        <item>$12000</item>
+        <item>$13000</item>
+        <item>$14000</item>
+        <item>$15000</item>
+        <item>$16000</item>
+        <item>$17000</item>
+        <item>$18000</item>
+        <item>$19000</item>
+        <item>$20000</item>
+        <item>$25000</item>
+        <item>$30000</item>
+    </string-array>
+    <string name="actualCost">Its current price is $</string>
+    <string name="updateAvailable">There is an update available</string>
+    <string name="updateDescrip">Download the latest version to have new features and get problems solved</string>
+    <string name="updateNow">Update</string>
+    <string name="updateLater">Remind me later</string>
+    <string name="updatePage">Update page</string>
+    <string name="crash">Ooops, BitCoin Pools has failed. Please, help me improving this application sending me a crash report</string>
+    <string name="noConnectionTitle">No Internet connection</string>
+    <string name="noConnectionDesc">This app requires Internet connection for working. Please, turn on your mobile data or connect to a WiFi network</string>
+    <string name="accept">OK</string>
+    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>get information about the latest BTC pools</i> and more<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">GitHub project</a>]]></string>
+    <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
+    <string name="changelog">
+        <![CDATA[
+        <h1>Version 1.12 (25/01/18)</h1><i>
+        - Solved bugs when no Internet connection<br />
+        - Implementation of new methods and libraries (see: <i>License</i>)<br />
+        - New: changelog when app update (what you are reading)<br />
+        - App optimization in order to not to get freeze (async threads)<br /></i>
+        <br />
+        <h1>Version 1.1 (23/01/18)</h1><i>
+        - Included notifications<br />
+        - Added new dialogs when a new update is found<br />
+        - Crash report included<br /></i>
+        <br />
+        <h1>Version 1.0 (23/12/17)</h1><i>
+        - Initial version</i>
+        ]]>
+    </string>
+</resources>

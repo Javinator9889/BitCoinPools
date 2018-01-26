@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BitCoin Pools</string>
+    <string name="exit">Salir</string>
+    <string name="pools">Pools</string>
+    <string name="blocks">Bloques</string>
+    <string name="latest_24h_pools_information">Última información de las pools</string>
+    <string name="settings">Ajustes</string>
+    <string name="tos">Licencia</string>
+    <string name="update">Actualizar contenido</string>
+    <string name="close">Cerrar aplicación</string>
+    <string-array name="days">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string name="cDays">Días para mostrar la información de las pools: </string>
+    <string name="numDays">1</string>
+    <string name="error">Ha ocurrido un error. Por favor, compruebe los permisos</string>
+    <string name="updated">Actualizado</string>
+    <string name="license">Más información sobre la licencia MIT: https://goo.gl/tiitU5</string>
+    <string name="fullcode">Mira el proyecto y las licencias empleadas aquí: https://goo.gl/LbLmBq</string>
+    <string name="basedCode">Código basado en:</string>
+    <string name="daysDescrip">Al buscar información sobre las pools y los bloques minados, ésta puede ser de las últimas 24 horas (por defecto) o de más días</string>
+    <string name="settingsTitle">Ajustes</string>
+    <string name="licenseTitle">Licencia</string>
+    <string name="prefUpdated">Preferencias actualizadas correctamente</string>
+    <string name="BTCP">Precio del BTC actual: $</string>
+    <string name="porcent">% de los bloques minados</string>
+    <string-array name="prices">
+        <item>$1000</item>
+        <item>$2000</item>
+        <item>$5000</item>
+        <item>$7000</item>
+        <item>$8000</item>
+        <item>$9000</item>
+        <item>$10000</item>
+        <item>$11000</item>
+        <item>$12000</item>
+        <item>$13000</item>
+        <item>$14000</item>
+        <item>$15000</item>
+        <item>$16000</item>
+        <item>$17000</item>
+        <item>$18000</item>
+        <item>$19000</item>
+        <item>$20000</item>
+        <item>$25000</item>
+        <item>$30000</item>
+    </string-array>
+    <string name="alerts">Alertas</string>
+    <string name="description">Muestra una notificación cuando el BTC alcanza un precio establecido</string>
+    <string name="morePriceX">El precio del BitCoin ha superado los $</string>
+    <string name="lowerPriceX">El precio del BitCoin es menor que $</string>
+    <string name="lowerPrice">El BitCoin está cayendo</string>
+    <string name="morePrice">El BitCoin está en alza</string>
+    <string name="notifications">Activar notificaciones</string>
+    <string name="notifDesc">Cuando las notificaciones están activadas, la aplicación te dirá cuándo el precio del BitCoin está por encima (o por debajo) de la cantidad que hayas especificado (en dólares)</string>
+    <string name="actualCost">Su precio actual es de $</string>
+    <string name="updateAvailable">Hay una actualización de la app</string>
+    <string name="updateDescrip">Descarga la última versión para disfrutar de más novedades y correcciones de errores</string>
+    <string name="updateNow">Actualizar</string>
+    <string name="updateLater">Recordar más tarde</string>
+    <string name="updatePage">Página de actualización</string>
+    <string name="crash">Ooops, BitCoin Pools ha fallado. Ayuda a mejorar la aplicación enviándome un reporte con los fallos</string>
+    <string name="noConnectionTitle">No hay conexión a Internet</string>
+    <string name="noConnectionDesc">Esta aplicación necesita conexión a Internet para funcionar. Por favor, activa tu conexión de datos o conéctate a una red WiFi</string>
+    <string name="accept">Aceptar</string>
+    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>obtén información sobre las últimas pools de BTC</i> y más<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">Proyecto en GitHub</a>]]></string>
+    <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
+    <string name="changelog">
+        <![CDATA[
+        <h1>Versión 1.12 (25/01/18)</h1><i>
+        - Solución de bugs cuando no había conexión a Internet<br />
+        - Implementación de nuevos métodos y librerías (mirar: <i>Licencia</i>)<br />
+        - Nuevo: changelog cuando la app se actualiza (lo que estás leyendo)<br />
+        - Optimización de la app para evitar bloqueos (hilos asíncronos)<br /></i>
+        <br />
+        <h1>Versión 1.1 (23/01/18)</h1><i>
+        - Incluídas notificaciones<br />
+        - Añadido un nuevo mensaje cuando hay una actualización disponible<br />
+        - Incluido un reporte de errores<br /></i>
+        <br />
+        <h1>Versión 1.0 (23/12/17)</h1><i>
+        - Versión inicial</i>
+        ]]>
+    </string>
+</resources>
