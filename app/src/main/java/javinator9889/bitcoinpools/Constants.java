@@ -25,8 +25,8 @@ public class Constants {
     public static final String CHANNEL_ID = "javinator9889.bitcoinpools.Alerts";
     public static final int NOTIFICATION_ID = 1;
     public static final int REQUEST_CODE = 0;
-    public static final String GITHUB_USER = "GITHUB_USER";
-    public static final String GITHUB_REPO = "GITHUB_REPO";
+    public static final String GITHUB_USER = "Javinator9889";
+    public static final String GITHUB_REPO = "BitCoinPools";
     public static final String STATS_URL = "https://api.blockchain.info/stats";
     public static final String MARKET_NAME = "market_price_usd";
     public static final String POOLS_URL = "https://api.blockchain.info/pools?timespan=";
