@@ -70,7 +70,7 @@
     <string name="noConnectionTitle">No hay conexión a Internet</string>
     <string name="noConnectionDesc">Esta aplicación necesita conexión a Internet para funcionar. Por favor, activa tu conexión de datos o conéctate a una red WiFi</string>
     <string name="accept">Aceptar</string>
-    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>obtén información sobre las últimas pools de BTC</i> y más<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">Proyecto en GitHub</a>]]></string>
+    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>obtén información sobre las últimas pools de BTC</i> y más<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">🛠 Proyecto en GitHub</a>]]></string>
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[

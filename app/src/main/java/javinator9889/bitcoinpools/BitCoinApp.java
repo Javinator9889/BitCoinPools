@@ -25,7 +25,7 @@ import javinator9889.bitcoinpools.BackgroundJobs.JobSchedulerService;
  * Based on: https://github.com/ZonaRMR/SimpleForFacebook/blob/master/app/src/main/java/com/creativetrends/simple/app/activities/SimpleApp.java
  */
 @ReportsCrashes(
-        mailTo = "javialonso007@hotmail.es",
+        mailTo = "YOUR_MAIL",
         mode = ReportingInteractionMode.DIALOG,
         resDialogText = R.string.crash,
         logcatArguments = {"-t", "200", "-v", "long"}

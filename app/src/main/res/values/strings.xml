@@ -91,7 +91,7 @@ SOFTWARE.<br />
     <string name="noConnectionTitle">No Internet connection</string>
     <string name="noConnectionDesc">This app requires Internet connection for working. Please, turn on your mobile data or connect to a WiFi network</string>
     <string name="accept">OK</string>
-    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>get information about the latest BTC pools</i> and more<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">GitHub project</a>]]></string>
+    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>get information about the latest BTC pools</i> and more<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">🛠 Proyecto en GitHub</a>]]></string>
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
