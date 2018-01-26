@@ -1,6 +1,9 @@
 # BitCoinPools
 
-**This is an app for retrieving latest information about BTC pools**. Go to: [*Releases*](https://goo.gl/qeaU85) for getting the latest version or [click here](https://goo.gl/5sqsNP)
+**This is an app for retrieving latest information about BTC pools**.
+
+[![BitCoinApp - Aptiode](https://img.shields.io/badge/Download%20-Aptoide-green.svg)](https://goo.gl/5sqsNP)
+[![BitCoinApp - Releases](https://img.shields.io/badge/Download%20-GitHub%20APK-green.svg)](https://goo.gl/qeaU85)
 
 ## Changelog 
 
