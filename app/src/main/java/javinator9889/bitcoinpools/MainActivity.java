@@ -8,8 +8,12 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -40,6 +45,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javinator9889.bitcoinpools.AppUpdaterManager.CheckUpdates;
+import javinator9889.bitcoinpools.FragmentViews.PoolsView;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.NetTools.net;
 
@@ -50,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static ViewGroup.LayoutParams TABLE_PARAMS;
     private Thread rdThread;
     private Thread mpuThread;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,27 +93,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
             checkPermissions();
-            initMPU();
+            /*initMPU();
             initRD();
-            initT();
+            initT();*/
             CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
-            try {
-                mpuThread.join();
+            /*try {
+                //mpuThread.join();
             } catch (InterruptedException e) {
                 Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR);
-            } finally {
-                setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
+            } finally {*/
+                //setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
 
                 final FloatingActionsMenu mainButton = (FloatingActionsMenu) findViewById(R.id.menu_fab);
                 final FloatingActionButton licenseButton = (FloatingActionButton) findViewById(R.id.license);
                 final FloatingActionButton closeButton = (FloatingActionButton) findViewById(R.id.close);
                 final FloatingActionButton settingsButton = (FloatingActionButton) findViewById(R.id.settings);
                 final FloatingActionButton refreshButton = (FloatingActionButton) findViewById(R.id.update);
-                final PieChart chart = (PieChart) findViewById(R.id.chart);
+                /*final PieChart chart = (PieChart) findViewById(R.id.chart);
+                final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                toolbar.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
+                setSupportActionBar(toolbar);*/
+                //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+                viewPager = (ViewPager) findViewById(R.id.viewpager);
+                setupViewPager(viewPager);
+
+                tabLayout = (TabLayout) findViewById(R.id.tabs);
+                tabLayout.setupWithViewPager(viewPager);
+                setupTabIcons();
+                /*final ViewPager pager = (ViewPager) findViewById(R.id.tabs);*/
+
+                //pager.setAdapter(getSupportFragmentManager());
 
                 Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
-                createPieChart(chart);
-                createTable((TableLayout) findViewById(R.id.poolstable));
+                /*createPieChart(chart);
+                createTable((TableLayout) findViewById(R.id.poolstable));*/
                 mainButton.bringToFront();
                 mainButton.invalidate();
 
@@ -115,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 refreshButton.setOnClickListener(this);
 
                 ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
-            }
+            //}
         } else {
             new MaterialDialog.Builder(this)
                     .title(R.string.noConnectionTitle)
@@ -335,6 +358,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void closeApp() {
         this.onBackPressed();
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new PoolsView(), "ONE");
+        adapter.addFragment(new TwoFragment(), "TWO");
+        //adapter.addFragment(new ThreeFragment(), "THREE");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_poll_white_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_attach_money_white_24dp);
     }
 }
 
