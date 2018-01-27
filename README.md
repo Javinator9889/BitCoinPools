@@ -1,4 +1,5 @@
 # BitCoinPools
+## Development branch
 
 **This is an app for retrieving latest information about BTC pools**.
 
