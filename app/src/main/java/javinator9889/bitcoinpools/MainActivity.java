@@ -45,7 +45,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javinator9889.bitcoinpools.AppUpdaterManager.CheckUpdates;
-import javinator9889.bitcoinpools.FragmentViews.PoolsView;
+import javinator9889.bitcoinpools.FragmentViews.Tab1PoolsChart;
+import javinator9889.bitcoinpools.FragmentViews.Tab2BTCChart;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.NetTools.net;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,15 +95,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
             checkPermissions();
-            /*initMPU();
-            initRD();
+            initMPU();
+            /*initRD();
             initT();*/
             CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
-            /*try {
-                //mpuThread.join();
+            try {
+                mpuThread.join();
             } catch (InterruptedException e) {
                 Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR);
-            } finally {*/
+            } finally {
                 //setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
 
                 final FloatingActionsMenu mainButton = (FloatingActionsMenu) findViewById(R.id.menu_fab);
@@ -109,18 +111,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 final FloatingActionButton closeButton = (FloatingActionButton) findViewById(R.id.close);
                 final FloatingActionButton settingsButton = (FloatingActionButton) findViewById(R.id.settings);
                 final FloatingActionButton refreshButton = (FloatingActionButton) findViewById(R.id.update);
-                /*final PieChart chart = (PieChart) findViewById(R.id.chart);
+                //final PieChart chart = (PieChart) findViewById(R.id.chart);
+                mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
                 final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                 toolbar.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
-                setSupportActionBar(toolbar);*/
+                setSupportActionBar(toolbar);
                 //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-                viewPager = (ViewPager) findViewById(R.id.viewpager);
-                setupViewPager(viewPager);
+                viewPager = (ViewPager) findViewById(R.id.viewContainer);
+                viewPager.setAdapter(mSectionsPagerAdapter);
+                //setupViewPager(viewPager);
 
                 tabLayout = (TabLayout) findViewById(R.id.tabs);
-                tabLayout.setupWithViewPager(viewPager);
-                setupTabIcons();
+                setupTabs(tabLayout);
+                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+                //tabLayout.setupWithViewPager(viewPager);
+                //setupTabIcons();
+
+                //viewPager.invalidate();
                 /*final ViewPager pager = (ViewPager) findViewById(R.id.tabs);*/
 
                 //pager.setAdapter(getSupportFragmentManager());
@@ -138,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 refreshButton.setOnClickListener(this);
 
                 ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
-            //}
+            }
         } else {
             new MaterialDialog.Builder(this)
                     .title(R.string.noConnectionTitle)
@@ -201,10 +211,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rdThread.start();
     }
 
-    private void initT() {
+    /*private void initT() {
         TableRow masterRow = (TableRow) findViewById(R.id.masterRow);
         TABLE_PARAMS = masterRow.getLayoutParams();
-    }
+    }*/
 
     private void createPieChart(final PieChart destinationChart) {
         Thread pieChartThread = new Thread() {
@@ -244,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void createTable(final TableLayout destinationTable) {
+    /*private void createTable(final TableLayout destinationTable) {
         Thread tableThread = new Thread() {
             public void run() {
                 Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_TABLE);
@@ -301,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tableThread.setName("table_thread");
             tableThread.start();
         }
-    }
+    }*/
 
     /**
      * Based on: https://stackoverflow.com/questions/8911356/whats-the-best-practice-to-round-a-float-to-2-decimals
@@ -360,15 +370,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.onBackPressed();
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    /*private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new PoolsView(), "ONE");
         adapter.addFragment(new TwoFragment(), "TWO");
         //adapter.addFragment(new ThreeFragment(), "THREE");
         viewPager.setAdapter(adapter);
-    }
+    }*/
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    /*class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -395,11 +405,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
+    }*/
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_poll_white_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_attach_money_white_24dp);
+    }
+
+    private void setupTabs(TabLayout destinationTab) {
+        destinationTab.addTab(destinationTab.newTab().setText("Tab 1 - test").setIcon(R.drawable.ic_poll_white_24dp));
+        destinationTab.addTab(destinationTab.newTab().setText("Tab 2 - test").setIcon(R.drawable.ic_attach_money_white_24dp));
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            //return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    return new Tab1PoolsChart();
+                case 1:
+                    return new Tab2BTCChart();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 2;
+        }
     }
 }
 

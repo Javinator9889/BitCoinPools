@@ -1,19 +1,13 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
-import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,9 +19,6 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.json.JSONException;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,97 +32,45 @@ import javinator9889.bitcoinpools.NetTools.net;
 import javinator9889.bitcoinpools.R;
 
 /**
- * Created by Javinator9889 on 27/01/2018.
- * Based on: https://www.androidhive.info/2015/09/android-material-design-working-with-tabs/
+ * Created by Javinator9889 on 28/01/2018.
+ * Created view for main chart (pools chart)
  */
 
-public class PoolsView extends Fragment {
-    private Thread rdThread;
-    private Thread mpuThread;
+public class Tab1PoolsChart extends Fragment {
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
-    private static float MARKET_PRICE_USD;
     private static ViewGroup.LayoutParams TABLE_PARAMS;
-    private FragmentActivity activity;
+    private Thread rdThread;
+    private Thread pieChartThread;
+    private Thread tableThread;
 
-    public PoolsView() {
-        //this.activity = getActivity();
-    }
-
-    /*public PoolsView setActivity(AppCompatActivity activity) {
-        this.activity = activity;
-        return this;
-    }*/
+    public Tab1PoolsChart() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.activity = getActivity();/*
-        //activity.setContentView(R.layout.fragment_one);
-        initMPU();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View createdView = inflater.inflate(R.layout.tab1_poolschart, container, false);
+
+        final PieChart chart = createdView.findViewById(R.id.chart);
+        final TableLayout tableLayout = createdView.findViewById(R.id.poolstable);
+
         initRD();
-        initT();
+        initT(createdView);
+
+        createPieChart(chart);
+        createTable(tableLayout, createdView);
+
         try {
-            mpuThread.join();
+            pieChartThread.join();
+            tableThread.join();
+            return createdView;
         } catch (InterruptedException e) {
-            Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR);
-        } finally {
-            final PieChart chart = (PieChart) activity.findViewById(R.id.chart);
-            /*final Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
-            toolbar.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);*/
-            //activity.setSupportActionBar(toolbar);
-
-            /*Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
-            createPieChart(chart);
-            createTable((TableLayout) activity.findViewById(R.id.poolstable));
-        }*/
-    }
-
-    private void initMPU(View view) {
-        mpuThread = new Thread() {
-            public void run() {
-                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_MPU);
-                net market = new net();
-                market.execute(Constants.STATS_URL);
-                try {
-                    MARKET_PRICE_USD = round((float) market.get().getDouble(Constants.MARKET_NAME), 2);
-                } catch (InterruptedException | ExecutionException | JSONException e) {
-                    Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
-                    MARKET_PRICE_USD = 0;
-                }
-            }
-        };
-        mpuThread.setName("mpu_thread");
-        mpuThread.start();
-    }
-
-    private void initRD(View view) {
-        rdThread = new Thread() {
-            public void run() {
-                int days = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
-                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_RD);
-                String url = Constants.POOLS_URL + days + "days";
-                net httpsResponse = new net();
-                httpsResponse.execute(url);
-                try {
-                    RETRIEVED_DATA = JSONTools.sortByValue(JSONTools.convert2HashMap(httpsResponse.get()));
-                } catch (InterruptedException | ExecutionException e) {
-                    RETRIEVED_DATA = null;
-                    Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
-                }
-            }
-        };
-        rdThread.setName("rd_thread");
-        rdThread.start();
-    }
-
-    private void initT(View view) {
-        TableRow masterRow = view.findViewById(R.id.masterRow);
-        TABLE_PARAMS = masterRow.getLayoutParams();
-        //TABLE_PARAMS = new TableLayout.LayoutParams(0, 0, 1);
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void createPieChart(final PieChart destinationChart) {
-        Thread pieChartThread = new Thread() {
+        pieChartThread = new Thread() {
             public void run() {
                 Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_CHART);
                 List<PieEntry> values = new ArrayList<>();
@@ -169,7 +108,7 @@ public class PoolsView extends Fragment {
     }
 
     private void createTable(final TableLayout destinationTable, final View view) {
-        Thread tableThread = new Thread() {
+        tableThread = new Thread() {
             public void run() {
                 Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_TABLE);
                 List<Map.Entry<String, Float>> entryList = new ArrayList<>(RETRIEVED_DATA.entrySet());
@@ -227,36 +166,28 @@ public class PoolsView extends Fragment {
         }
     }
 
-    /**
-     * Based on: https://stackoverflow.com/questions/8911356/whats-the-best-practice-to-round-a-float-to-2-decimals
-     */
-    public static float round(float d, int decimalPlace) {
-        return BigDecimal.valueOf(d).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
+    private void initRD() {
+        rdThread = new Thread() {
+            public void run() {
+                int days = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
+                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_RD);
+                String url = Constants.POOLS_URL + days + "days";
+                net httpsResponse = new net();
+                httpsResponse.execute(url);
+                try {
+                    RETRIEVED_DATA = JSONTools.sortByValue(JSONTools.convert2HashMap(httpsResponse.get()));
+                } catch (InterruptedException | ExecutionException e) {
+                    RETRIEVED_DATA = null;
+                    Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
+                }
+            }
+        };
+        rdThread.setName("rd_thread");
+        rdThread.start();
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_one, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        initMPU(view);
-        initRD(view);
-        initT(view);
-        try {
-            mpuThread.join();
-        } catch (InterruptedException e) {
-            Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR);
-        } finally {
-            final PieChart chart = (PieChart) view.findViewById(R.id.chart);
-            /*final Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
-            toolbar.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);*/
-            //activity.setSupportActionBar(toolbar);
-
-            Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
-            createPieChart(chart);
-            createTable((TableLayout) view.findViewById(R.id.poolstable), view);
-        }
+    private void initT(View view) {
+        TableRow masterRow = (TableRow) view.findViewById(R.id.masterRow);
+        TABLE_PARAMS = masterRow.getLayoutParams();
     }
 }
