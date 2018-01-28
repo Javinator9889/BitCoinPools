@@ -2,6 +2,7 @@ package javinator9889.bitcoinpools.FragmentViews;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,17 +35,17 @@ import javinator9889.bitcoinpools.R;
 
 /**
  * Created by Javinator9889 on 28/01/2018.
- * Created view for main chart (pools chart)
+ * Creates view for main chart (pools chart)
  */
 
 public class Tab1PoolsChart extends Fragment {
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
     private static ViewGroup.LayoutParams TABLE_PARAMS;
     private Thread rdThread;
-    private Thread pieChartThread;
     private Thread tableThread;
 
-    public Tab1PoolsChart() {}
+    public Tab1PoolsChart() {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -61,7 +62,6 @@ public class Tab1PoolsChart extends Fragment {
         createTable(tableLayout, createdView);
 
         try {
-            pieChartThread.join();
             tableThread.join();
             return createdView;
         } catch (InterruptedException e) {
@@ -71,7 +71,8 @@ public class Tab1PoolsChart extends Fragment {
     }
 
     private void createPieChart(final PieChart destinationChart) {
-        pieChartThread = new Thread() {
+        new Handler().postDelayed(new Runnable() {  // Required for animation
+            @Override
             public void run() {
                 Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_CHART);
                 List<PieEntry> values = new ArrayList<>();
@@ -95,19 +96,11 @@ public class Tab1PoolsChart extends Fragment {
                 description.setText(getString(R.string.porcent));
                 destinationChart.setDescription(description);
                 destinationChart.getLegend().setEnabled(false);
-                //destinationChart.setHoleRadius(58f);
-                //destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+                destinationChart.setDragDecelerationFrictionCoef(0.95f);
+                destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                 destinationChart.invalidate();
             }
-        };
-        try {
-            rdThread.join();
-        } catch (InterruptedException e) {
-            Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR + rdThread.getName());
-        } finally {
-            pieChartThread.setName("chart_thread");
-            pieChartThread.start();
-        }
+        }, 100);
     }
 
     private void createTable(final TableLayout destinationTable, final View view) {
