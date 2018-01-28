@@ -38,7 +38,12 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } catch (InterruptedException e) {
                 Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR);
             } finally {
+                printValues();
                 //setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
 
                 final FloatingActionsMenu mainButton = (FloatingActionsMenu) findViewById(R.id.menu_fab);
@@ -447,6 +453,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Show 3 total pages.
             return 2;
         }
+    }
+
+    private void printValues() {
+        String url = "https://api.coindesk.com/v1/bpi/historical/close.json?start=2011-09-01&end=2018-01-01";
+        net httpsResponse = new net();
+        httpsResponse.execute(url);
+        Map<Date, Float> newData = new LinkedHashMap<>();
+        try {
+            newData = JSONTools.sortDateByValue(JSONTools.convert2DateHashMap(httpsResponse.get().getJSONObject("bpi")));
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            newData = null;
+            Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
+        }
+        /*assert newData != null;
+        System.out.println(newData.toString());
+        System.out.println(newData.entrySet().toString());
+        Iterator<Date> it = newData.keySet().iterator();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        while (it.hasNext()) {
+            System.out.println(df.format(it.next()));
+        }*/
     }
 }
 
