@@ -12,6 +12,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -48,7 +49,7 @@ public class Tab1PoolsChart extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View createdView = inflater.inflate(R.layout.tab1_poolschart, container, false);
+        View createdView = inflater.inflate(R.layout.poolschart, container, false);
 
         final PieChart chart = createdView.findViewById(R.id.chart);
         final TableLayout tableLayout = createdView.findViewById(R.id.poolstable);
@@ -94,6 +95,8 @@ public class Tab1PoolsChart extends Fragment {
                 description.setText(getString(R.string.porcent));
                 destinationChart.setDescription(description);
                 destinationChart.getLegend().setEnabled(false);
+                //destinationChart.setHoleRadius(58f);
+                //destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                 destinationChart.invalidate();
             }
         };
