@@ -2,68 +2,126 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/initialConstraint"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerHorizontal="true">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
+    <!--<android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:paddingTop="8dp"
-        android:background="@color/colorPrimary"
-        app:expanded="false"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/chart">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            app:titleTextColor="#FAFAFAFA"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:title="@string/app_name">
-
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
+        <GridLayout
+            android:id="@+id/poolstableName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:tabSelectedTextColor="#FAFAFAFA">
+            android:layout_below="@+id/latest"
+            android:layout_centerHorizontal="true"
+            android:columnCount="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/latest">
 
-            <!--<android.support.design.widget.TabItem
-                android:id="@+id/tabItem"
+            <TextView
+                android:id="@+id/poolText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tab1" />
+                android:layout_columnWeight="1"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/pools"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/tabItem2"
+            <TextView
+                android:id="@+id/blockText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tab2" />-->
+                android:layout_columnWeight="1"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/blocks"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        </android.support.design.widget.TabLayout>
-    </android.support.design.widget.AppBarLayout>
+        </GridLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewContainer"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/latest"
+            style="@android:style/Widget.DeviceDefault.Light.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/latest_24h_pools_information"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@+id/poolstableName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:fillViewport="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+        app:layout_constraintTop_toBottomOf="parent">
 
-    <!--<ScrollView
+
+        <TableLayout
+            android:id="@+id/poolstable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1">
+
+            <TableRow
+                android:id="@+id/masterRow"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="1dp"
+                android:layout_weight="1">
+
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_width="0dp"
+        android:layout_height="445dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+    </com.github.mikephil.charting.charts.PieChart>-->
+
+    <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="96dp"
@@ -166,71 +224,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-    </com.github.mikephil.charting.charts.PieChart>-->
-
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/menu_fab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_labels_margin"
-        android:visibility="visible"
-        app:fab_addButtonColorNormal="@color/colorPrimary"
-        app:fab_addButtonSize="normal"
-        app:fab_labelStyle="@style/etq"
-        app:fab_labelsPosition="left"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:fab_addButtonColorPressed="@color/colorPrimaryDark">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
-            app:fab_icon="@drawable/ic_settings_black_48dp"
-            app:fab_size="mini"
-            app:fab_title="@string/settings" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/license"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
-            app:fab_icon="@drawable/ic_security"
-            app:fab_size="mini"
-            app:fab_title="@string/tos" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
-            app:fab_icon="@drawable/ic_sync"
-            app:fab_size="mini"
-            app:fab_title="@string/update" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccent"
-            app:fab_icon="@drawable/ic_close"
-            app:fab_size="mini"
-            app:fab_title="@string/close" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    <!--<android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeReload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-
-    </android.support.v4.widget.SwipeRefreshLayout>-->
+    </com.github.mikephil.charting.charts.PieChart>
 
 </android.support.constraint.ConstraintLayout>
