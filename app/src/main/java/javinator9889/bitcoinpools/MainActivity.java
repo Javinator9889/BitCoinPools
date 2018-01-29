@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refresh() {
+        Tab2BTCChart.setLineChartCreated();
         Intent intentMain = new Intent(MainActivity.this, MainActivity.class);
         intentMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intentMain);

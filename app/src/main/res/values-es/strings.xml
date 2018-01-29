@@ -89,4 +89,7 @@
         - Versión inicial</i>
         ]]>
     </string>
+    <string name="btcprice">Historial de precios de BitCoin</string>
+    <string name="latest30days">Mostrando los últimos 30 días…</string>
+    <string name="since">Mostrando desde </string>
 </resources>

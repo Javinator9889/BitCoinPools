@@ -1,25 +1,42 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.support.v4.app.DialogFragment;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONException;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -33,55 +50,190 @@ import javinator9889.bitcoinpools.R;
  * Based on https://www.coindesk.com/api/ API
  */
 
-public class Tab2BTCChart extends Fragment {
+public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSetListener {
     private static Map<Date, Float> BTCPRICE = new LinkedHashMap<>();
-    private static String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";  //?start=2011-09-01&end=2018-01-01";
+    private static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";  //?start=2011-09-01&end=2018-01-01";
+    private static String REQUEST_URL;
+    private static LineChart DESTINATIONLINECHART;
+    private static final String LIMIT_DATE = "2010/07/17";
+    @SuppressLint("StaticFieldLeak")
+    private static Context FRAGMENT_CONTEXT;
+    private static boolean lineChartCreated = false;
+    //private final DatePickerFragment dialogFragment = new DatePickerFragment();
+    private int year;
+    private int month;
+    private int day;
+    private boolean date_set = false;
 
-    public Tab2BTCChart() {}
+    public Tab2BTCChart() {
+    }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab2_btcchart, container, false);
+        System.out.println("Inflating view");
+        View createdView = inflater.inflate(R.layout.btcdata, container, false);
+        ((Button) createdView.findViewById(R.id.datebutton)).setText(R.string.latest30days);
+        ((Button) createdView.findViewById(R.id.datebutton))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        createDialog().show();
+                    }
+                });
+        REQUEST_URL = API_URL;
+        System.out.println("Request URL: " + REQUEST_URL);
+        System.out.println("Setting up values...");
+        setupValues();
+        DESTINATIONLINECHART = (LineChart) createdView.findViewById(R.id.lineChart);
+        FRAGMENT_CONTEXT = createdView.getContext();
+        return createdView;
     }
 
     private void setupValues() {
-        //String url = "https://api.coindesk.com/v1/bpi/historical/close.json?start=2011-09-01&end=2018-01-01";
         net httpsResponse = new net();
-        httpsResponse.execute(API_URL);
-        //Map<Date, Float> newData = new LinkedHashMap<>();
+        httpsResponse.execute(REQUEST_URL);
         try {
             BTCPRICE = JSONTools.sortDateByValue(JSONTools.convert2DateHashMap(httpsResponse.get().getJSONObject("bpi")));
         } catch (InterruptedException | ExecutionException | JSONException e) {
             BTCPRICE = null;
             Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
         }
-        /*assert newData != null;
-        System.out.println(newData.toString());
-        System.out.println(newData.entrySet().toString());
-        Iterator<Date> it = newData.keySet().iterator();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        while (it.hasNext()) {
-            System.out.println(df.format(it.next()));
-        }*/
     }
 
-    private void createLineChart(final LineChart destinationChart) {
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        System.out.println(lineChartCreated);
+        System.out.println("Is view visible for user? " + isVisibleToUser);
+        if (isVisibleToUser && !lineChartCreated) {
+            createLineChart(DESTINATIONLINECHART, FRAGMENT_CONTEXT);
+        }
+    }
+
+    private void createLineChart(@NonNull final LineChart destinationChart, @NonNull final Context fragmentContext) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<Entry> values = new ArrayList<>();
+                destinationChart.setDrawGridBackground(false);
+                destinationChart.getDescription().setEnabled(false);
+                destinationChart.setTouchEnabled(true);
+                destinationChart.setDragEnabled(true);
+                destinationChart.setScaleEnabled(true);
+                destinationChart.setPinchZoom(true);
+                CustomMarkerView mv = new CustomMarkerView(fragmentContext, R.layout.marker_view);
+                mv.setChartView(destinationChart);
+                destinationChart.setMarker(mv);
+                //MarkerView mv = new MarkerView(this, R.layout.)
+                ArrayList<Entry> values = new ArrayList<>();
                 int i = 0;
-                LineDataSet lds = new LineDataSet(values, "label");
-                Entry entry = new Entry(i, 140000f);
-                List<Map.Entry<Date, Float>> entryList = new ArrayList<>(BTCPRICE.entrySet());
-                Map.Entry<Date, Float> getEntry;
-                int count = 0;
-                for (int i = entryList.size() - 1; i >= 0; --i) {
-                    getEntry = entryList.get(i);
-                    values.add()
+                for (Date o : BTCPRICE.keySet()) {
+                    values.add(new Entry(i, BTCPRICE.get(o)));
+                    ++i;
                 }
+                LineDataSet lineDataSet;
+                if ((destinationChart.getData() != null) && (destinationChart.getData().getDataSetCount() > 0)) {
+                    lineDataSet = (LineDataSet) destinationChart.getData().getDataSetByIndex(0);
+                    lineDataSet.setValues(values);
+                    destinationChart.getData().notifyDataChanged();
+                    destinationChart.notifyDataSetChanged();
+                } else {
+                    lineDataSet = new LineDataSet(values, fragmentContext.getString(R.string.btcprice));
+                    lineDataSet.setDrawIcons(false);
+                    lineDataSet.enableDashedLine(10f, 5f, 0f);
+                    lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+                    lineDataSet.setColor(Color.BLACK);
+                    lineDataSet.setCircleColor(Color.BLACK);
+                    lineDataSet.setLineWidth(1f);
+                    lineDataSet.setCircleRadius(3f);
+                    lineDataSet.setDrawCircleHole(false);
+                    lineDataSet.setValueTextSize(9f);
+                    lineDataSet.setDrawFilled(true);
+                    lineDataSet.setFormLineWidth(1f);
+                    lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+                    lineDataSet.setFormSize(15.f);
+                    lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                    lineDataSet.setFillDrawable(ContextCompat.getDrawable(fragmentContext, R.drawable.fade_red));
+                    lineDataSet.setDrawCircles(false);
+                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                    dataSets.add(lineDataSet);
+                    LineData data = new LineData(dataSets);
+                    destinationChart.setData(data);
+                }
+                /*String[] svalues = new String[]{"2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018"};
+                YAxis left = destinationChart.getAxisLeft();
+                left.setValueFormatter(new MyXAxisValueFormatter(svalues));
+                left.setGranularity(1f);*/
+                destinationChart.getAxisLeft().setValueFormatter(new LargeValueFormatter());
+                destinationChart.animateX(2500);
+                //destinationChart.getData().setHighlightEnabled(true);
+                destinationChart.invalidate();
+                lineChartCreated = true;
             }
         }, 100);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        //Toast.makeText(view.getContext(), "Day/Month/Year: " + dayOfMonth + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
+        this.day = dayOfMonth;
+        this.month = ++month;
+        this.year = year;
+        this.date_set = true;
+        String buttonText = getString(R.string.since) + " " + parseDate();
+        ((Button) getActivity().findViewById(R.id.datebutton)).setText(buttonText);
+        forceReload();
+    }
+
+    private String parseDate() {
+        String dateParsed = this.year + "-";
+        if (this.month <= 9)
+            dateParsed += "0" + this.month + "-";
+        else
+            dateParsed += this.month + "-";
+        if (this.day <= 9)
+            dateParsed += "0" + this.day;
+        else
+            dateParsed += this.day;
+        return dateParsed;
+    }
+
+    @NonNull
+    public Dialog createDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        final Calendar limitDate = Calendar.getInstance();
+        limitDate.set(2010, 7, 17);
+
+        if (!this.date_set) {
+            this.year = calendar.get(Calendar.YEAR);
+            this.month = calendar.get(Calendar.MONTH);
+            this.day = calendar.get(Calendar.DAY_OF_MONTH);
+            this.date_set = true;
+        }
+
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, this.year, this.month, this.day);
+
+        calendar.add(Calendar.DATE, -1);
+
+        dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+        dialog.getDatePicker().setMinDate(limitDate.getTimeInMillis());
+
+        return dialog;
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public void forceReload() {
+        //String currentDate;
+        //currentDate = actualDate.format(Calendar.getInstance().getTime());
+        String dateParsed = parseDate();
+        REQUEST_URL = API_URL + "?start=" + dateParsed + "&end=" + new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        System.out.println(REQUEST_URL);
+        setupValues();
+        createLineChart(DESTINATIONLINECHART, FRAGMENT_CONTEXT);
+    }
+
+    public static void setLineChartCreated() {
+        lineChartCreated = false;
     }
 }
