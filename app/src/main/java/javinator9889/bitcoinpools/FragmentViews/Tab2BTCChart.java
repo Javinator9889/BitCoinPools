@@ -60,6 +60,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     private static Context FRAGMENT_CONTEXT;
     private static boolean lineChartCreated = false;
     //private final DatePickerFragment dialogFragment = new DatePickerFragment();
+    //https://api.blockchain.info/stats
     private int year;
     private int month;
     private int day;
@@ -73,7 +74,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         System.out.println("Inflating view");
-        View createdView = inflater.inflate(R.layout.btcdata, container, false);
+        View createdView = inflater.inflate(R.layout.bitcoindata, container, false);
         ((Button) createdView.findViewById(R.id.datebutton)).setText(R.string.latest30days);
         ((Button) createdView.findViewById(R.id.datebutton))
                 .setOnClickListener(new View.OnClickListener() {
