@@ -110,4 +110,7 @@ SOFTWARE.<br />
         - Initial version</i>
         ]]>
     </string>
+    <string name="btcprice">BitCoin prices history</string>
+    <string name="latest30days">Showing latest 30 days…</string>
+    <string name="since">Showing since </string>
 </resources>
