@@ -3,6 +3,7 @@ package javinator9889.bitcoinpools.FragmentViews;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.json.JSONException;
 
@@ -74,6 +77,9 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         System.out.println("Inflating view");
+        DisplayMetrics dp = this.getResources().getDisplayMetrics();
+        float dpWidth = dp.widthPixels / dp.density;
+        int finalDP = (int) ((int) dpWidth * 0.7);
         View createdView = inflater.inflate(R.layout.bitcoindata, container, false);
         ((Button) createdView.findViewById(R.id.datebutton)).setText(R.string.latest30days);
         ((Button) createdView.findViewById(R.id.datebutton))
@@ -88,6 +94,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         System.out.println("Setting up values...");
         setupValues();
         DESTINATIONLINECHART = (LineChart) createdView.findViewById(R.id.lineChart);
+        //DESTINATIONLINECHART.setMinimumWidth(finalDP);
         FRAGMENT_CONTEXT = createdView.getContext();
         return createdView;
     }
