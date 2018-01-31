@@ -1,9 +1,15 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Color;
@@ -13,11 +19,17 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -34,17 +46,23 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import org.json.JSONException;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
+import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.NetTools.net;
 import javinator9889.bitcoinpools.R;
 
@@ -59,6 +77,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     private static String REQUEST_URL;
     private static LineChart DESTINATIONLINECHART;
     private static final String LIMIT_DATE = "2010/07/17";
+    private static final String STATS_URL = "https://api.blockchain.info/stats";
     @SuppressLint("StaticFieldLeak")
     private static Context FRAGMENT_CONTEXT;
     private static boolean lineChartCreated = false;
@@ -68,6 +87,10 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     private int month;
     private int day;
     private boolean date_set = false;
+    private static int FINALDP;
+    private RecyclerView recyclerView;
+    private CardsAdapter adapter;
+    private List<CardsContent> cardsContents;
 
     public Tab2BTCChart() {
     }
@@ -78,8 +101,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
                              Bundle savedInstanceState) {
         System.out.println("Inflating view");
         DisplayMetrics dp = this.getResources().getDisplayMetrics();
-        float dpWidth = dp.widthPixels / dp.density;
-        int finalDP = (int) ((int) dpWidth * 0.7);
+        float dpHeight = dp.heightPixels;
         View createdView = inflater.inflate(R.layout.bitcoindata, container, false);
         ((Button) createdView.findViewById(R.id.datebutton)).setText(R.string.latest30days);
         ((Button) createdView.findViewById(R.id.datebutton))
@@ -93,11 +115,40 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         System.out.println("Request URL: " + REQUEST_URL);
         System.out.println("Setting up values...");
         setupValues();
+        cardsContents = new ArrayList<>();
+        adapter = new CardsAdapter(createdView.getContext(), cardsContents);
         DESTINATIONLINECHART = (LineChart) createdView.findViewById(R.id.lineChart);
-        //DESTINATIONLINECHART.setMinimumWidth(finalDP);
+        recyclerView = (RecyclerView) createdView.findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(createdView.getContext(), 1);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+
+        prepareCards();
+
+        int[] attrs = new int[]{R.attr.actionBarSize};
+        TypedArray a = createdView.getContext().obtainStyledAttributes(attrs);
+        int size = a.getDimensionPixelSize(0, 0);
+        a.recycle();
+        System.out.println(size);
+        System.out.println("Screen height: " + dpHeight + " | AppBar height: " + size + " | Screen - AppBar: " + (dpHeight - size));
+        FINALDP = (int) ((dpHeight - size)*0.7);
+        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) DESTINATIONLINECHART.getLayoutParams();
+        lp.height = FINALDP;
+        DESTINATIONLINECHART.setLayoutParams(lp);
+        DESTINATIONLINECHART.invalidate();
         FRAGMENT_CONTEXT = createdView.getContext();
         return createdView;
     }
+
+    /*@Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (isAdded() && isVisible()) {
+            MainActivity.MAINACTIVITY_TOOLBAR.setTitle(getString(R.string.btcinfo));
+        }
+    }*/
 
     private void setupValues() {
         net httpsResponse = new net();
@@ -118,6 +169,8 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         if (isVisibleToUser && !lineChartCreated) {
             createLineChart(DESTINATIONLINECHART, FRAGMENT_CONTEXT);
         }
+        if (isVisibleToUser)
+            MainActivity.MAINACTIVITY_TOOLBAR.setTitle(getString(R.string.btcinfo));
     }
 
     private void createLineChart(@NonNull final LineChart destinationChart, @NonNull final Context fragmentContext) {
@@ -243,5 +296,73 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     public static void setLineChartCreated() {
         lineChartCreated = false;
+    }
+
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+
+        /*@Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            /*int position = parent.getChildAdapterPosition(view); // item position
+            int column = position % spanCount; // item column
+
+            if (includeEdge) {
+                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing;
+                }
+                outRect.bottom = spacing; // item bottom
+            } else {
+                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing; // item top
+                }
+            }*/
+            /*super.getItemOffsets(outRect, view, parent, state);
+        }*/
+    }
+
+    /**
+     * Converting dp to pixel
+     */
+    private int dpToPx(int dp) {
+        Resources r = getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void prepareCards() {
+        net httpsResponse = new net();
+        Map<String, Float> cardsData = new LinkedHashMap<>();
+        httpsResponse.execute(STATS_URL);
+        try {
+            cardsData = JSONTools.sortByValue(JSONTools.convert2HashMap(httpsResponse.get()));
+        } catch (InterruptedException | ExecutionException e) {
+            cardsData = null;
+            Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
+        } finally {
+            assert cardsData != null;
+            DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+            cardsContents.add(new CardsContent("Market price", "$" + df.format(cardsData.get("market_price_usd"))));
+            cardsContents.add(new CardsContent("Hash rate", df.format(cardsData.get("hash_rate")) + " GH/s"));
+            cardsContents.add(new CardsContent("Difficulty", df.format(cardsData.get("difficulty"))));
+            cardsContents.add(new CardsContent("Mined blocks", df.format(cardsData.get("n_blocks_mined")) + " blocks"));
+            cardsContents.add(new CardsContent("Minutes between blocks", df.format(cardsData.get("minutes_between_blocks")) + " minutes"));
+            cardsContents.add(new CardsContent("Total fees BTC", df.format(cardsData.get("total_fees_btc")) + " BTC"));
+            cardsContents.add(new CardsContent("Total transactions", df.format(cardsData.get("n_tx"))));
+            cardsContents.add(new CardsContent("Miners benefit", "$" + df.format(cardsData.get("miners_revenue_usd"))));
+        }
     }
 }

@@ -1,6 +1,7 @@
 package javinator9889.bitcoinpools;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -8,6 +9,8 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -18,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -57,6 +61,7 @@ import javinator9889.bitcoinpools.NetTools.net;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    public static int APPBAR_HEIGHT = 0;
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
     private static float MARKET_PRICE_USD;
     private static ViewGroup.LayoutParams TABLE_PARAMS;
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    public static Toolbar MAINACTIVITY_TOOLBAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +126,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //final PieChart chart = (PieChart) findViewById(R.id.chart);
                 mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-                final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-                toolbar.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
-                setSupportActionBar(toolbar);
+                //final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                MAINACTIVITY_TOOLBAR = (Toolbar) findViewById(R.id.toolbar);
+                //toolbar.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
+                setSupportActionBar(MAINACTIVITY_TOOLBAR);
                 //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
                 viewPager = (ViewPager) findViewById(R.id.viewContainer);
@@ -152,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 closeButton.setOnClickListener(this);
                 settingsButton.setOnClickListener(this);
                 refreshButton.setOnClickListener(this);
+                //APPBAR = (AppBarLayout) findViewById(R.id.appbar);
 
                 ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
             }
