@@ -113,4 +113,5 @@ SOFTWARE.<br />
     <string name="btcprice">BitCoin prices history</string>
     <string name="latest30days">Showing latest 30 days…</string>
     <string name="since">Showing since </string>
+    <string name="btcinfo">BitCoin information</string>
 </resources>

@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,8 +33,11 @@ import java.util.concurrent.ExecutionException;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
+import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.NetTools.net;
 import javinator9889.bitcoinpools.R;
+
+import static javinator9889.bitcoinpools.MainActivity.round;
 
 /**
  * Created by Javinator9889 on 28/01/2018.
@@ -41,8 +47,10 @@ import javinator9889.bitcoinpools.R;
 public class Tab1PoolsChart extends Fragment {
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
     private static ViewGroup.LayoutParams TABLE_PARAMS;
+    private static float MARKET_PRICE_USD;
     private Thread rdThread;
     private Thread tableThread;
+    private Thread mpuThread;
 
     public Tab1PoolsChart() {
     }
@@ -57,16 +65,42 @@ public class Tab1PoolsChart extends Fragment {
 
         initRD();
         initT(createdView);
+        initMPU();
 
         createPieChart(chart);
         createTable(tableLayout, createdView);
 
         try {
             tableThread.join();
+            mpuThread.join();
             return createdView;
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /*@Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            MainActivity.MAINACTIVITY_TOOLBAR.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
+        }
+    }*/
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isAdded() && isVisibleToUser) {
+            MainActivity.MAINACTIVITY_TOOLBAR.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (isAdded() && isVisible()) {
+            MainActivity.MAINACTIVITY_TOOLBAR.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
         }
     }
 
@@ -185,5 +219,23 @@ public class Tab1PoolsChart extends Fragment {
     private void initT(View view) {
         TableRow masterRow = (TableRow) view.findViewById(R.id.masterRow);
         TABLE_PARAMS = masterRow.getLayoutParams();
+    }
+
+    private void initMPU() {
+        mpuThread = new Thread() {
+            public void run() {
+                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_MPU);
+                net market = new net();
+                market.execute(Constants.STATS_URL);
+                try {
+                    MARKET_PRICE_USD = round((float) market.get().getDouble(Constants.MARKET_NAME), 2);
+                } catch (InterruptedException | ExecutionException | JSONException e) {
+                    Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
+                    MARKET_PRICE_USD = 0;
+                }
+            }
+        };
+        mpuThread.setName("mpu_thread");
+        mpuThread.start();
     }
 }
