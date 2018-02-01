@@ -93,8 +93,19 @@ SOFTWARE.<br />
     <string name="accept">OK</string>
     <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>get information about the latest BTC pools</i> and more<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">GitHub project</a>]]></string>
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
-    <string name="changelog">
-        <![CDATA[
+    <string name="changelog"><![CDATA[
+
+        <h1>Version 1.15 (01/02/18)</h1><i>
+        <b> BIG UPDATE WITH A LOT OF CHANGES: </b><br />
+        - Included new options: <b>tab view</b> in main screen<br />
+        - Optimized code, application faster than ever<br />
+        - BitCoin information<b> in real time</b><br />
+        - New charts, cards, and more<br />
+        - Added missing libraries in "License"<br />
+        - New dialogs, new styles, everything redefined<br />
+        - Solved bugs: now, devices with Android Lollipop can use this application (there was an error an sometimes latest version crashed)<br />
+        - And more…<br /></i>
+        <br />
         <h1>Version 1.12 (25/01/18)</h1><i>
         - Solved bugs when no Internet connection<br />
         - Implementation of new methods and libraries (see: <i>License</i>)<br />
@@ -108,10 +119,74 @@ SOFTWARE.<br />
         <br />
         <h1>Version 1.0 (23/12/17)</h1><i>
         - Initial version</i>
-        ]]>
-    </string>
+
+    ]]></string>
     <string name="btcprice">BitCoin prices history</string>
     <string name="latest30days">Showing latest 30 days…</string>
     <string name="since">Showing since </string>
     <string name="btcinfo">BitCoin information</string>
+    <string name="market_price">Market price</string>
+    <string name="hash_rate">Hash rate</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="min_blocks">Today mined blocks</string>
+    <string name="minutes_blocks">Minutes between blocks</string>
+    <string name="total_fees">Total fees BTC</string>
+    <string name="total_trans">Total transactions</string>
+    <string name="min_benefit">Miners benefit</string>
+    <string name="blocks_name">blocks</string>
+    <string name="minutes_name">minutes</string>
+    <string name="market_price_desc">
+        <![CDATA[
+        The <i>market price</i> is the current price at which an asset or service can be <b>bought or sold</b>.<br /><br />
+        <small><i>Definition by: <a href="https://www.investopedia.com/terms/m/market-price.asp">Investopedia</a></i></small>
+        ]]>
+    </string>
+    <string name="hash_rate_desc">
+        <![CDATA[
+        The <i>hash rate</i> is the <b>measure of the capacity of processing BitCoins</b>. For security reasons,
+        BitCoin network has to perform very intense mathematical operations. If the network is working at
+        10 TH/s means that it can do 10 billion calculations per second.<br /><br />
+        <small><i>Definition by: <a href="https://bitcoin.org/es/vocabulario">Bitcoin.org</a></i></small>
+        ]]>
+    </string>
+    <string name="difficulty_desc">
+        <![CDATA[
+        <i>Difficulty</i> is a measure of how difficult it is to <b>find a hash below a given target</b>.
+        The BitCoin network has a global block difficulty. Valid blocks must have a hash below this target.
+         Mining pools also have a pool-specific share difficulty setting a lower limit for shares.<br /><br />
+        <small><i>Definition by: <a href="https://en.bitcoin.it/wiki/Difficulty">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="min_blocks_desc">
+        <![CDATA[
+        <i>Mined blocks</i> (today) is the amount of blocks that confirms a BitCoin transaction to the rest of the network.
+        ]]>
+    </string>
+    <string name="minutes_blocks_desc">
+        <![CDATA[
+        <i>Minutes between blocks</i> is the average time to mine a block (in minutes).
+        ]]>
+    </string>
+    <string name="total_fees_desc">
+        <![CDATA[
+        <i>Transaction fees</i> are a fee that spenders may include in any Bitcoin transaction. The fee may be collected by the miner who includes the transaction in a block.<br /><br />
+        <small><i>Definition by: <a href="https://en.bitcoin.it/wiki/Transaction_fees">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="total_trans_desc">
+        <![CDATA[
+        <i>Total transaction</i> is the amount of fees until now.<br /><br />
+        <small><i>Definition by: <a href="https://en.bitcoin.it/wiki/Transaction_fees">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="min_benefit_desc">
+        <![CDATA[
+        When a block is discovered, the discoverer may award themselves a certain number of bitcoins, which is agreed-upon by everyone in the network.
+        This is the <i>mining benefits</i>.<br /><br />
+        <small><i>Definition by: <a href="https://en.bitcoin.it/wiki/Transaction_fees">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="longclick">Long click on the cards above for getting more information</string>
+    <string name="poolsChart" translatable="false">Pools</string>
+    <string name="bitcoinChart" translatable="false">BitCoin</string>
 </resources>

@@ -80,14 +80,6 @@ public class Tab1PoolsChart extends Fragment {
         }
     }
 
-    /*@Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            MainActivity.MAINACTIVITY_TOOLBAR.setTitle(getString(R.string.BTCP) + MARKET_PRICE_USD);
-        }
-    }*/
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -217,7 +209,7 @@ public class Tab1PoolsChart extends Fragment {
     }
 
     private void initT(View view) {
-        TableRow masterRow = (TableRow) view.findViewById(R.id.masterRow);
+        TableRow masterRow = view.findViewById(R.id.masterRow);
         TABLE_PARAMS = masterRow.getLayoutParams();
     }
 

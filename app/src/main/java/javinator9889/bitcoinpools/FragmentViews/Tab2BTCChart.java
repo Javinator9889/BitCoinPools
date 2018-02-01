@@ -1,22 +1,17 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.DialogFragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,30 +20,24 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.json.JSONException;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,7 +48,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.MainActivity;
@@ -73,23 +61,18 @@ import javinator9889.bitcoinpools.R;
 
 public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSetListener {
     private static Map<Date, Float> BTCPRICE = new LinkedHashMap<>();
-    private static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";  //?start=2011-09-01&end=2018-01-01";
+    private static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
     private static String REQUEST_URL;
     private static LineChart DESTINATIONLINECHART;
-    private static final String LIMIT_DATE = "2010/07/17";
     private static final String STATS_URL = "https://api.blockchain.info/stats";
     @SuppressLint("StaticFieldLeak")
     private static Context FRAGMENT_CONTEXT;
     private static boolean lineChartCreated = false;
-    //private final DatePickerFragment dialogFragment = new DatePickerFragment();
-    //https://api.blockchain.info/stats
     private int year;
     private int month;
     private int day;
+    private int writable_month;
     private boolean date_set = false;
-    private static int FINALDP;
-    private RecyclerView recyclerView;
-    private CardsAdapter adapter;
     private List<CardsContent> cardsContents;
 
     public Tab2BTCChart() {
@@ -97,33 +80,35 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     @SuppressLint("SimpleDateFormat")
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        System.out.println("Inflating view");
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         DisplayMetrics dp = this.getResources().getDisplayMetrics();
         float dpHeight = dp.heightPixels;
+
         View createdView = inflater.inflate(R.layout.bitcoindata, container, false);
         ((Button) createdView.findViewById(R.id.datebutton)).setText(R.string.latest30days);
-        ((Button) createdView.findViewById(R.id.datebutton))
+        createdView.findViewById(R.id.datebutton)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         createDialog().show();
                     }
                 });
+
         REQUEST_URL = API_URL;
-        System.out.println("Request URL: " + REQUEST_URL);
-        System.out.println("Setting up values...");
+
         setupValues();
+
         cardsContents = new ArrayList<>();
-        adapter = new CardsAdapter(createdView.getContext(), cardsContents);
-        DESTINATIONLINECHART = (LineChart) createdView.findViewById(R.id.lineChart);
-        recyclerView = (RecyclerView) createdView.findViewById(R.id.recycler_view);
+        CardsAdapter adapter = new CardsAdapter(getContext(), cardsContents);
+        DESTINATIONLINECHART = createdView.findViewById(R.id.lineChart);
+        RecyclerView recyclerView = createdView.findViewById(R.id.recycler_view);
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(createdView.getContext(), 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+        recyclerView.setNestedScrollingEnabled(false);
 
         prepareCards();
 
@@ -131,24 +116,19 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         TypedArray a = createdView.getContext().obtainStyledAttributes(attrs);
         int size = a.getDimensionPixelSize(0, 0);
         a.recycle();
-        System.out.println(size);
-        System.out.println("Screen height: " + dpHeight + " | AppBar height: " + size + " | Screen - AppBar: " + (dpHeight - size));
-        FINALDP = (int) ((dpHeight - size)*0.7);
+        int FINALDP = (int) ((dpHeight - size) * 0.7);
+
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) DESTINATIONLINECHART.getLayoutParams();
         lp.height = FINALDP;
+        lp.matchConstraintMaxHeight = (int) dpHeight;
         DESTINATIONLINECHART.setLayoutParams(lp);
         DESTINATIONLINECHART.invalidate();
+
         FRAGMENT_CONTEXT = createdView.getContext();
+        ((TextView) createdView.findViewById(R.id.longPressInfo)).setText(R.string.longclick);
+
         return createdView;
     }
-
-    /*@Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (isAdded() && isVisible()) {
-            MainActivity.MAINACTIVITY_TOOLBAR.setTitle(getString(R.string.btcinfo));
-        }
-    }*/
 
     private void setupValues() {
         net httpsResponse = new net();
@@ -186,7 +166,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
                 CustomMarkerView mv = new CustomMarkerView(fragmentContext, R.layout.marker_view);
                 mv.setChartView(destinationChart);
                 destinationChart.setMarker(mv);
-                //MarkerView mv = new MarkerView(this, R.layout.)
                 ArrayList<Entry> values = new ArrayList<>();
                 int i = 0;
                 for (Date o : BTCPRICE.keySet()) {
@@ -222,13 +201,8 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
                     LineData data = new LineData(dataSets);
                     destinationChart.setData(data);
                 }
-                /*String[] svalues = new String[]{"2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018"};
-                YAxis left = destinationChart.getAxisLeft();
-                left.setValueFormatter(new MyXAxisValueFormatter(svalues));
-                left.setGranularity(1f);*/
                 destinationChart.getAxisLeft().setValueFormatter(new LargeValueFormatter());
                 destinationChart.animateX(2500);
-                //destinationChart.getData().setHighlightEnabled(true);
                 destinationChart.invalidate();
                 lineChartCreated = true;
             }
@@ -237,10 +211,28 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        //Toast.makeText(view.getContext(), "Day/Month/Year: " + dayOfMonth + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
-        this.day = dayOfMonth;
-        this.month = ++month;
-        this.year = year;
+        if (year <= 2010) {
+            this.year = 2010;
+            if ((month <= 6) && (dayOfMonth < 17)) {
+                this.month = 6;
+                this.writable_month = 7;
+                this.day = 17;
+            } else if ((month < 6) && (dayOfMonth > 17)) {
+                this.month = 6;
+                this.writable_month = 7;
+                this.day = 17;
+            } else {
+                this.day = dayOfMonth;
+                this.month = month;
+                this.writable_month = ++month;
+                this.year = year;
+            }
+        } else {
+            this.day = dayOfMonth;
+            this.month = month;
+            this.writable_month = ++month;
+            this.year = year;
+        }
         this.date_set = true;
         String buttonText = getString(R.string.since) + " " + parseDate();
         ((Button) getActivity().findViewById(R.id.datebutton)).setText(buttonText);
@@ -249,10 +241,10 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     private String parseDate() {
         String dateParsed = this.year + "-";
-        if (this.month <= 9)
-            dateParsed += "0" + this.month + "-";
+        if (this.writable_month <= 9)
+            dateParsed += "0" + this.writable_month + "-";
         else
-            dateParsed += this.month + "-";
+            dateParsed += this.writable_month + "-";
         if (this.day <= 9)
             dateParsed += "0" + this.day;
         else
@@ -264,7 +256,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     public Dialog createDialog() {
         final Calendar calendar = Calendar.getInstance();
         final Calendar limitDate = Calendar.getInstance();
-        limitDate.set(2010, 7, 17);
+        limitDate.set(2010, 6, 17);
 
         if (!this.date_set) {
             this.year = calendar.get(Calendar.YEAR);
@@ -272,6 +264,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             this.day = calendar.get(Calendar.DAY_OF_MONTH);
             this.date_set = true;
         }
+        System.out.println(this.year + " " + this.month + " " + this.day);
 
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, this.year, this.month, this.day);
 
@@ -285,8 +278,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     @SuppressLint("SimpleDateFormat")
     public void forceReload() {
-        //String currentDate;
-        //currentDate = actualDate.format(Calendar.getInstance().getTime());
         String dateParsed = parseDate();
         REQUEST_URL = API_URL + "?start=" + dateParsed + "&end=" + new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         System.out.println(REQUEST_URL);
@@ -309,29 +300,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             this.spacing = spacing;
             this.includeEdge = includeEdge;
         }
-
-        /*@Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            /*int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }*/
-            /*super.getItemOffsets(outRect, view, parent, state);
-        }*/
     }
 
     /**
@@ -355,14 +323,22 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         } finally {
             assert cardsData != null;
             DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
-            cardsContents.add(new CardsContent("Market price", "$" + df.format(cardsData.get("market_price_usd"))));
-            cardsContents.add(new CardsContent("Hash rate", df.format(cardsData.get("hash_rate")) + " GH/s"));
-            cardsContents.add(new CardsContent("Difficulty", df.format(cardsData.get("difficulty"))));
-            cardsContents.add(new CardsContent("Mined blocks", df.format(cardsData.get("n_blocks_mined")) + " blocks"));
-            cardsContents.add(new CardsContent("Minutes between blocks", df.format(cardsData.get("minutes_between_blocks")) + " minutes"));
-            cardsContents.add(new CardsContent("Total fees BTC", df.format(cardsData.get("total_fees_btc")) + " BTC"));
-            cardsContents.add(new CardsContent("Total transactions", df.format(cardsData.get("n_tx"))));
-            cardsContents.add(new CardsContent("Miners benefit", "$" + df.format(cardsData.get("miners_revenue_usd"))));
+            cardsContents.add(new CardsContent(getString(R.string.market_price),
+                    "$" + df.format(cardsData.get("market_price_usd"))));
+            cardsContents.add(new CardsContent(getString(R.string.hash_rate),
+                    df.format(cardsData.get("hash_rate")) + " GH/s"));
+            cardsContents.add(new CardsContent(getString(R.string.difficulty),
+                    df.format(cardsData.get("difficulty"))));
+            cardsContents.add(new CardsContent(getString(R.string.min_blocks),
+                    df.format(cardsData.get("n_blocks_mined")) + " " + getString(R.string.blocks_name)));
+            cardsContents.add(new CardsContent(getString(R.string.minutes_blocks),
+                    df.format(cardsData.get("minutes_between_blocks")) + " " + getString(R.string.minutes_name)));
+            cardsContents.add(new CardsContent(getString(R.string.total_fees),
+                    df.format(cardsData.get("total_fees_btc")) + " BTC"));
+            cardsContents.add(new CardsContent(getString(R.string.total_trans),
+                    df.format(cardsData.get("n_tx"))));
+            cardsContents.add(new CardsContent(getString(R.string.min_benefit),
+                    "$" + df.format(cardsData.get("miners_revenue_usd"))));
         }
     }
 }

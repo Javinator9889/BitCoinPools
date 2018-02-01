@@ -22,7 +22,7 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
                 android:layout_width="0dp"
-                android:layout_height="428dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +34,6 @@
                 android:id="@+id/datebutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="148dp"
-                android:layout_marginStart="148dp"
                 android:layout_marginTop="8dp"
                 android:text=""
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +41,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/lineChart" />
 
             <include
+                android:id="@+id/include"
                 layout="@layout/cards_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,6 +50,18 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/datebutton" />
+
+            <TextView
+                android:id="@+id/longPressInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include" />
 
         </android.support.constraint.ConstraintLayout>
 
