@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -76,27 +75,10 @@ public class JSONTools {
 
     public static Map<Date, Float> sortDateByValue(Map<Date, Float> unsortMap) {
 
-        /*// 1. Convert Map to List of Map
-        List<Map.Entry<Date, Float>> list =
-                new LinkedList<>(unsortMap.entrySet());
-
-        Collections.sort(list, new Comparator<Map.Entry<Date, Float>>() {
-            public int compare(Map.Entry<Date, Float> o1, Map.Entry<Date, Float> o2) {
-                return (o1.getValue()).compareTo(o2.getValue());
-            }
-        });
-
-        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
-        Map<Date, Float> sortedMap = new LinkedHashMap<>();
-        for (Map.Entry<Date, Float> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-        return sortedMap;*/
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+//        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         Map<Date, Float> m1 = new TreeMap<>(unsortMap);
         Map<Date, Float> returnMap = new LinkedHashMap<>();
         for (Map.Entry<Date, Float> entry : m1.entrySet()) {
-            //System.out.println(df.format(entry.getKey()));
             returnMap.put(entry.getKey(), entry.getValue());
         }
         return returnMap;

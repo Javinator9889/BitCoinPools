@@ -74,6 +74,17 @@
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Versión 1.15 (01/02/18)</h1><i>
+        <b> GRAN ACTUALIZACIÓN CON UN MONTÓN DE CAMBIOS: </b><br />
+        - Añadidas nuevas optiones: <b>vista en pestañas</b> en la interfaz principal<br />
+        - Código optimizado, la aplicación más rápida que nunca<br />
+        - Información del BitCoin<b> en tiempo real</b><br />
+        - Nuevos gráficos, tarjetas y más<br />
+        - Añadidas nuevas librerías (y algunas antes en uso) en el apartado "Licencia"<br />
+        - Nuevos diálogos, nuevos estilos, todo redefinido<br />
+        - Solucionados bugs: ahora, los dispositivos con Android Lollipop pueden usar esta aplicación (había un error por el cual, en la última versión, se bloqueaba la aplicación)<br />
+        - Y más…<br /></i>
+        <br />
         <h1>Versión 1.12 (25/01/18)</h1><i>
         - Solución de bugs cuando no había conexión a Internet<br />
         - Implementación de nuevos métodos y librerías (mirar: <i>Licencia</i>)<br />
@@ -93,4 +104,66 @@
     <string name="latest30days">Mostrando los últimos 30 días…</string>
     <string name="since">Mostrando desde </string>
     <string name="btcinfo">Información sobre el BitCoin</string>
+    <string name="market_price">Precio de mercado</string>
+    <string name="hash_rate">Potencia de minado</string>
+    <string name="difficulty">Dificultad</string>
+    <string name="min_blocks">Bloques minados hoy</string>
+    <string name="minutes_blocks">Tiempo entre bloques</string>
+    <string name="total_fees">Comisiones totales por transacción</string>
+    <string name="total_trans">Número de transacciones</string>
+    <string name="min_benefit">Beneficio de los mineros</string>
+    <string name="blocks_name">bloques</string>
+    <string name="minutes_name">minutos</string>
+    <string name="market_price_desc">
+        <![CDATA[
+        El <i>precio de mercado</i> es el valor actual por el que una moneda o servicio puede ser <b>comprado o vendido</b>.<br /><br />
+        <small><i>Definición por: <a href="https://www.investopedia.com/terms/m/market-price.asp">Investopedia</a></i></small>
+        ]]>
+    </string>
+    <string name="hash_rate_desc">
+        <![CDATA[
+        La <i>tasa de "hash"</i> es la <b>medida de la capacidad de procesado de BitCoins</b>. Por razones de seguridad,
+        la red de BitCoin tiene que efectuar operaciones matemáticas muy complejas. Si la red está trabajando a
+        10 TH/s significa que puede efectuar 10 billones de cálculos por segundo.<br /><br />
+        <small><i>Definición por: <a href="https://bitcoin.org/es/vocabulario">Bitcoin.org</a></i></small>
+        ]]>
+    </string>
+    <string name="difficulty_desc">
+        <![CDATA[
+        <i>La dificultad</i> es una medida de cuán complicado es <b>encontrar un "hash" por debajo de un objetivo</b>.
+        La red de BitCoin tiene una dificultad global por bloque. Aquellos bloques válidos tienen que tener un "hash" por debajo de esta dificultad.
+         Las "pools" de minado tienen que tener también una dificultad específica mínima para poder compartir sus ganancias.<br /><br />
+        <small><i>Definition by: <a href="https://en.bitcoin.it/wiki/Difficulty">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="min_blocks_desc">
+        <![CDATA[
+        <i>Los bloques minados</i> (de hoy) es la cantidad de bloques que confirman una transacción exitosa de BitCoin al resto de la red.
+        ]]>
+    </string>
+    <string name="minutes_blocks_desc">
+        <![CDATA[
+        <i>El tiempo entre bloques</i> es el tiempo medio para minar un bloque (en minutos).
+        ]]>
+    </string>
+    <string name="total_fees_desc">
+        <![CDATA[
+        <i>Las comisiones de transacción</i> son unas tarifas que se puede incluir en cualquier transacción de BitCoin. La comisión puede ser cobrada por el minero que efectúa la transacción del bloque.<br /><br />
+        <small><i>Definición por: <a href="https://en.bitcoin.it/wiki/Transaction_fees">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="total_trans_desc">
+        <![CDATA[
+        <i>El total de transacciones</i> es la cantidad de bloques vendidos hasta ahora.<br /><br />
+        <small><i>Definición por: <a href="https://en.bitcoin.it/wiki/Transaction_fees">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="min_benefit_desc">
+        <![CDATA[
+        Cuando se consigue minar un bloque, la "pool" que lo descubre puede adjudicarse un cierto número de BitCoins, previamente pactado con todos en la red.
+        Estos son <i>los beneficios del minado</i>.<br /><br />
+        <small><i>Definición por: <a href="https://en.bitcoin.it/wiki/Transaction_fees">Bitcoinwiki</a></i></small>
+        ]]>
+    </string>
+    <string name="longclick">Mantén pulsado en las tarjetas de arriba para obtener más información</string>
 </resources>
