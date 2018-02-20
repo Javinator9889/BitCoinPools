@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.math.BigDecimal;
 
@@ -32,9 +34,10 @@ import javinator9889.bitcoinpools.FragmentViews.Tab1PoolsChart;
 import javinator9889.bitcoinpools.FragmentViews.Tab2BTCChart;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static Toolbar MAINACTIVITY_TOOLBAR;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (BitCoinApp.isOnline()) {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
             setContentView(R.layout.activity_main);
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
             if (BitCoinApp.getSharedPreferences().contains(Constants.SHARED_PREFERENCES.APP_VERSION)) {
                 if (!BitCoinApp.getSharedPreferences().getString(Constants.SHARED_PREFERENCES.APP_VERSION, "1.0").equals(BitCoinApp.appVersion())) {
@@ -71,11 +75,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             checkPermissions();
             CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
 
-            final FloatingActionsMenu mainButton = findViewById(R.id.menu_fab);
+            /*final FloatingActionsMenu mainButton = findViewById(R.id.menu_fab);
             final FloatingActionButton licenseButton = findViewById(R.id.license);
             final FloatingActionButton closeButton = findViewById(R.id.close);
             final FloatingActionButton settingsButton = findViewById(R.id.settings);
-            final FloatingActionButton refreshButton = findViewById(R.id.update);
+            final FloatingActionButton refreshButton = findViewById(R.id.update);*/
 
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
             MAINACTIVITY_TOOLBAR = findViewById(R.id.toolbar);
@@ -90,14 +94,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
-            mainButton.bringToFront();
-            mainButton.invalidate();
+            /*mainButton.bringToFront();
+            mainButton.invalidate();*/
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
-            licenseButton.setOnClickListener(this);
+            /*licenseButton.setOnClickListener(this);
             closeButton.setOnClickListener(this);
             settingsButton.setOnClickListener(this);
-            refreshButton.setOnClickListener(this);
+            refreshButton.setOnClickListener(this);*/
 
             ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
         } else {
@@ -117,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
     private void refresh() {
         Tab2BTCChart.setLineChartCreated();
         Intent intentMain = new Intent(MainActivity.this, MainActivity.class);
@@ -132,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return BigDecimal.valueOf(d).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.close:
@@ -167,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e(Constants.LOG.MATAG, Constants.LOG.UNCAUGHT_ERROR + "MainActivity.onClick(View v)", new UnknownError());
                 System.exit(1);
         }
-    }
+    }*/
 
     private void checkPermissions() {
         Log.d(Constants.LOG.MATAG, Constants.LOG.CHECKING_PERMISSIONS);

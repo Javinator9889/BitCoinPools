@@ -28,7 +28,6 @@
             app:titleTextColor="#FAFAFAFA"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="">
-
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
@@ -63,7 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
+    <!--<com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/menu_fab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,7 +117,7 @@
             app:fab_size="mini"
             app:fab_title="@string/close" />
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>-->
 
     <!--<android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeReload"
