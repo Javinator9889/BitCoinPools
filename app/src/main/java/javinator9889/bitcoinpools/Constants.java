@@ -12,6 +12,7 @@ public class Constants {
     public static final long SCHEDULING_TIME = TimeUnit.HOURS.toMillis(1);
     public static final long BACKOFF_CRITERIA = TimeUnit.SECONDS.toMillis(30);
     public static final int JOB_ID = 1;
+    public static final int REQUEST_INVITE = 0;
     public static final class SHARED_PREFERENCES {
         public static final String SHARED_PREFERENCES_KEY = "javinator9889.bitcoinpools.usrPreferences";
         public static final String NOTIFICATIONS_ENABLED = "notifications_enabled";
@@ -30,6 +31,7 @@ public class Constants {
     public static final String STATS_URL = "https://api.blockchain.info/stats";
     public static final String MARKET_NAME = "market_price_usd";
     public static final String POOLS_URL = "https://api.blockchain.info/pools?timespan=";
+    public static final String GITHUB_URL = "https://github.com/Javinator9889/BitCoinPools/releases#latest";
     public static final class LOG {
         public static final String UNCAUGHT_ERROR = "Uncaught error on: ";
 

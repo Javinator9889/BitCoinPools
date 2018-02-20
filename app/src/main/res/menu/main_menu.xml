@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="javinator9889.bitcoinpools.MainActivity">
+
+    <item android:id="@+id/settings"
+        android:orderInCategory="100"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings_black_48dp"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/license"
+        android:orderInCategory="100"
+        android:title="@string/tos"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/update"
+        android:title="@string/update"
+        app:showAsAction="never"
+        android:orderInCategory="100"/>
+
+    <item android:id="@+id/share"
+        android:title="@string/shareApp"
+        app:showAsAction="never"
+        android:orderInCategory="100" />
+</menu>
