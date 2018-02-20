@@ -95,6 +95,10 @@ SOFTWARE.<br />
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog"><![CDATA[
 
+        <h1>Version 1.16 (20/02/18)</h1><i>
+        - App optimization & bug fixes <br />
+        - Deleted floating action button - now implemented in <b>three dots</b> menu <br />
+        - Included Firebase managing - analytics and more <br /></i>
         <h1>Version 1.15 (01/02/18)</h1><i>
         <b> BIG UPDATE WITH A LOT OF CHANGES: </b><br />
         - Included new options: <b>tab view</b> in main screen<br />
@@ -189,4 +193,9 @@ SOFTWARE.<br />
     <string name="longclick">Long click on the cards above for getting more information</string>
     <string name="poolsChart" translatable="false">Pools</string>
     <string name="bitcoinChart" translatable="false">BitCoin</string>
+    <string name="shareApp">Share this app</string>
+    <string name="invitation_title" translatable="false">BitCoin Pools - APP</string>
+    <string name="inv_message">Download BitCoin Pools, an app for getting information about BitCoin and more</string>
+    <string name="loadingData">Loading data…</string>
+    <string name="please_wait">Getting the latest information… Please, wait</string>
 </resources>

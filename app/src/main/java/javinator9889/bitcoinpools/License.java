@@ -39,10 +39,6 @@ public class License extends AppCompatActivity {
                 .withAutoDetect(true)
                 .withAboutDescription(getString(R.string.bitcoindesc))
                 .withLicenseDialog(true)
-                .withLibraries("ACRA")
-                .withLibraryModification("ACRA", Libs.LibraryFields.LIBRARY_DESCRIPTION, getString(R.string.library_acra_libraryDescription))
-                .withLibraryModification("ACRA", Libs.LibraryFields.LIBRARY_REPOSITORY_LINK, "https://github.com/ACRA/acra")
-                .withLibraryModification("ACRA", Libs.LibraryFields.LICENSE_NAME, "Apache Version 2.0")
                 .supportFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
