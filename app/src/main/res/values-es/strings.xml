@@ -74,6 +74,10 @@
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Versión 1.16 (20/02/18)</h1><i>
+        - Optimización de la app y corrección de errores <br />
+        - Eliminado el botón flotante - ahora implementado en el <b>menú de tres puntos</b> <br />
+        - Incluido Firebase - analíticas y más <br /></i>
         <h1>Versión 1.15 (01/02/18)</h1><i>
         <b> GRAN ACTUALIZACIÓN CON UN MONTÓN DE CAMBIOS: </b><br />
         - Añadidas nuevas optiones: <b>vista en pestañas</b> en la interfaz principal<br />
@@ -166,4 +170,8 @@
         ]]>
     </string>
     <string name="longclick">Mantén pulsado en las tarjetas de arriba para obtener más información</string>
+    <string name="shareApp">¡Comparte esta app!</string>
+    <string name="inv_message">Descarga BitCoin Pools, una aplicación para obtener información sobre el BitCoin y más</string>
+    <string name="loadingData">Cargando datos…</string>
+    <string name="please_wait">Obteniendo la última información… Por favor, espera</string>
 </resources>
