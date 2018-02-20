@@ -19,6 +19,10 @@
         <item name="colorControlNormal">#ffffff</item>
     </style>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="etq">
         <item name="android:background">@drawable/background_label</item>
         <item name="android:textColor">#FAFAFA</item>
