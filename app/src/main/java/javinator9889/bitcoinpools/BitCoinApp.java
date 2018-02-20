@@ -13,22 +13,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-
 import javinator9889.bitcoinpools.BackgroundJobs.JobSchedulerService;
 
 /**
  * Created by Javinator9889 on 22/01/2018.
  * Based on: https://github.com/ZonaRMR/SimpleForFacebook/blob/master/app/src/main/java/com/creativetrends/simple/app/activities/SimpleApp.java
  */
-@ReportsCrashes(
-        mailTo = "javialonso007@hotmail.es",
-        mode = ReportingInteractionMode.DIALOG,
-        resDialogText = R.string.crash,
-        logcatArguments = {"-t", "200", "-v", "long"}
-)
 
 public class BitCoinApp extends Application {
     @SuppressLint("StaticFieldLeak")
@@ -50,8 +40,6 @@ public class BitCoinApp extends Application {
         initSharedPreferences();
         startBackgroundJobs();
         super.onCreate();
-        ACRA.init(this);
-        //ACRA.getErrorReporter().handleException(null);
         Log.d(Constants.LOG.BCTAG, Constants.LOG.CREATED_APP);
     }
 
