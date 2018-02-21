@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -148,6 +149,7 @@ public class CheckUpdates {
                 }
             }
         } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
+            Crashlytics.logException(e);
             Log.e(Constants.LOG.CTAG, Constants.LOG.NO_INFO + e.getMessage());
         }
     }
