@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -320,6 +321,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         } catch (InterruptedException | ExecutionException e) {
             cardsData = null;
             Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
+            Crashlytics.logException(e);
         } finally {
             assert cardsData != null;
             DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
@@ -330,15 +332,15 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             cardsContents.add(new CardsContent(getString(R.string.difficulty),
                     df.format(cardsData.get("difficulty"))));
             cardsContents.add(new CardsContent(getString(R.string.min_blocks),
-                    df.format(cardsData.get("n_blocks_mined")) + " " + getString(R.string.blocks_name)));
+                    df.format(cardsData.get("n_blocks_mined") / 10) + " " + getString(R.string.blocks_name)));
             cardsContents.add(new CardsContent(getString(R.string.minutes_blocks),
                     df.format(cardsData.get("minutes_between_blocks")) + " " + getString(R.string.minutes_name)));
             cardsContents.add(new CardsContent(getString(R.string.total_fees),
-                    df.format(cardsData.get("total_fees_btc")) + " BTC"));
+                    df.format(cardsData.get("total_fees_btc") / 10000000) + " BTC"));
             cardsContents.add(new CardsContent(getString(R.string.total_trans),
                     df.format(cardsData.get("n_tx"))));
             cardsContents.add(new CardsContent(getString(R.string.min_benefit),
-                    "$" + df.format(cardsData.get("miners_revenue_usd"))));
+                    "$" + df.format(cardsData.get("miners_revenue_usd") / 100)));
         }
     }
 }
