@@ -13,6 +13,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import javinator9889.bitcoinpools.BackgroundJobs.JobSchedulerService;
 
 /**
@@ -93,6 +95,7 @@ public class BitCoinApp extends Application {
             PackageInfo pInfo = getAppContext().getPackageManager().getPackageInfo(getAppContext().getPackageName(), 0);
             return pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
+            Crashlytics.logException(e);
             return "1.0";
         }
     }
