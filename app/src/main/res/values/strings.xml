@@ -209,4 +209,5 @@ SOFTWARE.<br />
         <item>8 € (Euros)</item>
         <item>13 € (Euros)</item>
     </string-array>
+    <string name="support">Support me!</string>
 </resources>
