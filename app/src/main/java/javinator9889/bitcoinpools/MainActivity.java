@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 
 import javinator9889.bitcoinpools.AppUpdaterManager.CheckUpdates;
+import javinator9889.bitcoinpools.FragmentViews.DonationsActivity;
 import javinator9889.bitcoinpools.FragmentViews.Tab1PoolsChart;
 import javinator9889.bitcoinpools.FragmentViews.Tab2BTCChart;
 
@@ -172,7 +173,10 @@ public class MainActivity extends AppCompatActivity {
                         .build();
                 startActivityForResult(intent, Constants.REQUEST_CODE);
                 break;
-
+            case R.id.donate:
+                Intent donateIntent = new Intent(MainActivity.this, DonationsActivity.class);
+                startActivity(donateIntent);
+                break;
         }
         return true;
     }
