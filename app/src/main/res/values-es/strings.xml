@@ -180,4 +180,5 @@
     <string name="please_wait">Obteniendo la última información… Por favor, espera</string>
     <string name="donations__description">¿Te ha parecido útil la app? ¡Motívame a seguir trabjando!\nApóyame con una pequeña donación, te lo agradeceré :D</string>
     <string name="donations__google_android_market_description">Google se queda con un 30% de lo que selecciones</string>
+    <string name="support">¡Apóyame!</string>
 </resources>
