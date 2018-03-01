@@ -201,4 +201,13 @@ SOFTWARE.<br />
     <string name="inv_message">Download BitCoin Pools, an app for getting information about BitCoin and more</string>
     <string name="loadingData">Loading data…</string>
     <string name="please_wait">Getting the latest information… Please, wait</string>
+    <string-array name="donation_google_catalog_values" translatable="false">
+        <item>1 € (Euro)</item>
+        <item>2 € (Euros)</item>
+        <item>3 € (Euros)</item>
+        <item>5 € (Euros)</item>
+        <item>8 € (Euros)</item>
+        <item>13 € (Euros)</item>
+    </string-array>
+    <string name="support">Support me!</string>
 </resources>

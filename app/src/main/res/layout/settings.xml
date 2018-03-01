@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/daysTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -33,17 +33,18 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/daysDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView5"
+            android:layout_below="@+id/daysTitle"
             android:layout_marginTop="8dp"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_info_outline_black_18dp"
             android:paddingBottom="8dp"
             android:text="@string/daysDescrip"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:alpha=".7"
             tools:layout_editor_absoluteY="24dp" />
 
         <Spinner
@@ -51,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView16"
+            android:layout_below="@+id/daysDesc"
             android:layout_columnWeight="1"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -59,9 +60,11 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <View
+            android:id="@+id/firstSeparator"
             style="@style/Divider"
             android:layout_below="@+id/spinner2"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:alpha=".7"/>
 
         <Switch
             android:id="@+id/switch1"
@@ -81,12 +84,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView17"
+            android:layout_below="@+id/notDesc"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/notDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -95,12 +98,15 @@
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_info_outline_black_18dp"
             android:text="@string/notifDesc"
+            android:alpha=".7"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <View
+            android:id="@+id/secSeparator"
             style="@style/Divider"
             android:layout_below="@+id/spinner3"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:alpha=".7"/>
 
     </RelativeLayout>
 

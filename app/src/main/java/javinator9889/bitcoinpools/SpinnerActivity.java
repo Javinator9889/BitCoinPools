@@ -43,7 +43,7 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
         ACTUAL_ENABLED = BitCoinApp.getSharedPreferences().getBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, false);
         NEW_VALUE_ENABLED = ACTUAL_ENABLED;
 
-        TextView tv = (TextView) findViewById(R.id.textView5);
+        TextView tv = (TextView) findViewById(R.id.daysTitle);
         final Spinner spinner = (Spinner) findViewById(R.id.spinner2);
 
         Log.d(Constants.LOG.STAG, Constants.LOG.INIT_SPINNER);
