@@ -13,6 +13,13 @@ public class Constants {
     public static final long BACKOFF_CRITERIA = TimeUnit.SECONDS.toMillis(30);
     public static final int JOB_ID = 1;
     public static final int REQUEST_INVITE = 0;
+    public static class PAYMENTS {
+        public static final String GOOGLE_PUBKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgt71diQE3dVAJ/KEJSpt+ZIEeeKDOWl5cBdwRirkjiVPtzwbOlOyJsf+tJzQrYvxJejmkfdwR5TlG4Z+NAZDtcS4mq63JVoPyEbmx0wvVYC3+zav2MbJO9P/gSmwTK0KGwVSyItcH5sqXjK9Mv280uj2jM0IMW0UpM91vzeitCGCbJRwMe1CnzLzFPFI01YJ/QjG+1KY7MzIhn3P2ZbS9C7fhP0BwJIBPoZJkp64pKhXf7iI5qsbZGby4V+iQiU5ONiS+ggy8X076IAB1DijL90BUnbTXCwa1WufChb3da7xV/AiPEHl9UJ2J70I3+/1Dx9MXOrYkBmOKAYFLJlcQwIDAQAB";
+        public static final String[] GOOGLE_CATALOG = new String[]{"ntpsync.donation.1",
+                "ntpsync.donation.2", "ntpsync.donation.3", "ntpsync.donation.5", "ntpsync.donation.8",
+                "ntpsync.donation.13"};
+        public static final String PAYPALME = "https://paypal.me/Javinator9889";
+    }
     public static final class SHARED_PREFERENCES {
         public static final String SHARED_PREFERENCES_KEY = "javinator9889.bitcoinpools.usrPreferences";
         public static final String NOTIFICATIONS_ENABLED = "notifications_enabled";
