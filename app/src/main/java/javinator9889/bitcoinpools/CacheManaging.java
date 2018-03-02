@@ -19,7 +19,7 @@ public class CacheManaging {
     private String filename;
 
     private CacheManaging(Context applicationContext) {
-        this.filename = applicationContext.getCacheDir().getPath() + File.separator + BuildConfig.APPLICATION_ID;
+        this.filename = applicationContext.getCacheDir().getPath() + File.separator + "DataCache";
     }
 
     public static CacheManaging newInstance(Context applicationContext) {
@@ -28,7 +28,7 @@ public class CacheManaging {
 
     public boolean setupFile() throws IOException {
         File cacheFile = new File(filename);
-        return !cacheFile.exists() ? cacheFile.createNewFile() : false;
+        return cacheFile.createNewFile();
     }
 
     public void writeCache(HashMap<String, String> objectData) throws IOException {
@@ -41,10 +41,14 @@ public class CacheManaging {
 
     @SuppressWarnings("unchecked")
     public HashMap<String, String> readCache() throws IOException, ClassNotFoundException {
-        File cacheDir = new File(filename);
-        ObjectInputStream inputFile = new ObjectInputStream(new FileInputStream(cacheDir));
-        Object readData = inputFile.readObject();
-        inputFile.close();
-        return (readData instanceof HashMap) ? (HashMap<String, String>) readData : null;
+        try {
+            File cacheDir = new File(filename);
+            ObjectInputStream inputFile = new ObjectInputStream(new FileInputStream(cacheDir));
+            Object readData = inputFile.readObject();
+            inputFile.close();
+            return (HashMap<String, String>) readData;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
