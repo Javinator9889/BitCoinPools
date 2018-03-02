@@ -24,13 +24,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
     private List<CardsContent> btcData;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title, body;
+        TextView title, body, oldData;
         View v;
 
         MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title_text);
             body = view.findViewById(R.id.body_text);
+            oldData = view.findViewById(R.id.balance);
             this.v = view;
         }
     }
@@ -51,80 +52,90 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
         final CardsContent content = btcData.get(position);
         holder.title.setText(content.getTitle());
         holder.body.setText(content.getBody());
-        holder.v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                switch (position) {
-                    case 0:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.market_price))
-                                .content(R.string.market_price_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    case 1:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.hash_rate))
-                                .content(R.string.hash_rate_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    case 2:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.difficulty))
-                                .content(R.string.difficulty_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    case 3:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.min_blocks))
-                                .content(R.string.min_blocks_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    case 4:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.minutes_blocks))
-                                .content(R.string.minutes_blocks_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    case 5:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.total_fees))
-                                .content(R.string.total_fees_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    case 6:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.total_trans))
-                                .content(R.string.total_trans_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    case 7:
-                        new MaterialDialog.Builder(context)
-                                .title(context.getString(R.string.min_benefit))
-                                .content(R.string.min_benefit_desc, true)
-                                .cancelable(true)
-                                .positiveText(R.string.accept)
-                                .build().show();
-                        break;
-                    default:
-                        break;
+        if (content.getOldData() == null)
+            holder.oldData.setText("");
+        else {
+            //holder.oldData.setText(content.getOldData());
+            holder.oldData.setText(content.getOldData());
+            /*switch (position) {
+                case 0:
+                    holder.oldData.setText(String.valueOf(Float.parseFloat(content.getOldData()) != Float.parseFloat(content.getBody())));
+            }*/
+            holder.v.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    switch (position) {
+                        case 0:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.market_price))
+                                    .content(R.string.market_price_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        case 1:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.hash_rate))
+                                    .content(R.string.hash_rate_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        case 2:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.difficulty))
+                                    .content(R.string.difficulty_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        case 3:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.min_blocks))
+                                    .content(R.string.min_blocks_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        case 4:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.minutes_blocks))
+                                    .content(R.string.minutes_blocks_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        case 5:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.total_fees))
+                                    .content(R.string.total_fees_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        case 6:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.total_trans))
+                                    .content(R.string.total_trans_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        case 7:
+                            new MaterialDialog.Builder(context)
+                                    .title(context.getString(R.string.min_benefit))
+                                    .content(R.string.min_benefit_desc, true)
+                                    .cancelable(true)
+                                    .positiveText(R.string.accept)
+                                    .build().show();
+                            break;
+                        default:
+                            break;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 
     @Override

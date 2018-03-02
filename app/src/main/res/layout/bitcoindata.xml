@@ -60,6 +60,8 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textStyle="italic"
+                android:drawableStart="@drawable/ic_info_outline_black_18dp"
+                android:alpha=".7"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

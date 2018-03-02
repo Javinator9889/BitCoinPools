@@ -37,12 +37,15 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -50,6 +53,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javinator9889.bitcoinpools.BitCoinApp;
+import javinator9889.bitcoinpools.CacheManaging;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.MainActivity;
@@ -325,23 +329,78 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             Crashlytics.logException(e);
         } finally {
             assert cardsData != null;
+            HashMap<String, String> cachedMap = getCachedMap(cardsData);
+            String market_price = null;
+            String hash_rate = null;
+            String difficulty = null;
+            String blocks_mined = null;
+            String minutes = null;
+            String total_fees = null;
+            String tx = null;
+            String miners_revenue = null;
+            if (cachedMap != null) {
+                market_price = cachedMap.get("market_price_usd");
+                hash_rate = cachedMap.get("hash_rate");
+                difficulty = cachedMap.get("difficulty");
+                blocks_mined = cachedMap.get("n_blocks_mined");
+                minutes = cachedMap.get("minutes_between_blocks");
+                total_fees = cachedMap.get("total_fees_btc");
+                tx = cachedMap.get("n_tx");
+                miners_revenue = cachedMap.get("miners_revenue_usd");
+                System.out.println(cachedMap.toString());
+            }
             DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
             cardsContents.add(new CardsContent(getString(R.string.market_price),
-                    "$" + df.format(cardsData.get("market_price_usd"))));
+                    "$" + df.format(cardsData.get("market_price_usd")),
+                    market_price));
             cardsContents.add(new CardsContent(getString(R.string.hash_rate),
-                    df.format(cardsData.get("hash_rate")) + " GH/s"));
+                    df.format(cardsData.get("hash_rate")) + " GH/s",
+                    hash_rate));
             cardsContents.add(new CardsContent(getString(R.string.difficulty),
-                    df.format(cardsData.get("difficulty"))));
+                    df.format(cardsData.get("difficulty")),
+                    difficulty));
             cardsContents.add(new CardsContent(getString(R.string.min_blocks),
-                    df.format(cardsData.get("n_blocks_mined") / 10) + " " + getString(R.string.blocks_name)));
+                    df.format(cardsData.get("n_blocks_mined") / 10) + " " + getString(R.string.blocks_name),
+                    blocks_mined));
             cardsContents.add(new CardsContent(getString(R.string.minutes_blocks),
-                    df.format(cardsData.get("minutes_between_blocks")) + " " + getString(R.string.minutes_name)));
+                    df.format(cardsData.get("minutes_between_blocks")) + " " + getString(R.string.minutes_name),
+                    minutes));
             cardsContents.add(new CardsContent(getString(R.string.total_fees),
-                    df.format(cardsData.get("total_fees_btc") / 10000000) + " BTC"));
+                    df.format(cardsData.get("total_fees_btc") / 10000000) + " BTC",
+                    total_fees));
             cardsContents.add(new CardsContent(getString(R.string.total_trans),
-                    df.format(cardsData.get("n_tx"))));
+                    df.format(cardsData.get("n_tx")),
+                    tx));
             cardsContents.add(new CardsContent(getString(R.string.min_benefit),
-                    "$" + df.format(cardsData.get("miners_revenue_usd") / 100)));
+                    "$" + df.format(cardsData.get("miners_revenue_usd") / 100),
+                    miners_revenue));
+        }
+    }
+
+    private HashMap<String, String> getCachedMap(Map<String, Float> newValues) {
+        CacheManaging cache = CacheManaging.newInstance(BitCoinApp.getAppContext());
+        try {
+            cache.setupFile();
+        } catch (IOException e) {
+            Log.e(Constants.LOG.MATAG, "Unable to create cache file");
+        }
+        try {
+            HashMap<String, String> oldCache = cache.readCache();
+            if (oldCache == null) {
+                HashMap<String, String> newCacheValues = new LinkedHashMap<>();
+                newCacheValues.put("date",
+                        new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime()));
+                for (String key : newValues.keySet()) {
+                    newCacheValues.put(key, newValues.get(key).toString());
+                    //System.out.println(key + " | " + newValues.get(key).toString());
+                }
+                cache.writeCache(newCacheValues);
+                return null;
+            } else return oldCache;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error while reading cache. Full trace: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 }
