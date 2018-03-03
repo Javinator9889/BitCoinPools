@@ -9,7 +9,7 @@
 
 Here you have the link where you will be able to *read the docs* for this app: https://javinator9889.github.io/BitCoinPools/
 
-(Doing a test) -> This should reference the issue: https://github.com/Javinator9889/BitCoinPools/issues/2
+(Doing a test) -> This should reference the issue: https://github.com/Javinator9889/BitCoinPools/issues/2 | And this? #2
 
 ## Changelog 
 
