@@ -2,6 +2,8 @@
 
 **This is an app for retrieving latest information about BTC pools**.
 
+#2
+
 [![BitCoinApp - Aptiode](https://img.shields.io/badge/Download%20-Aptoide-green.svg)](https://goo.gl/5sqsNP)
 [![BitCoinApp - Releases](https://img.shields.io/badge/Download%20-GitHub%20APK-green.svg)](https://goo.gl/qeaU85)
 
