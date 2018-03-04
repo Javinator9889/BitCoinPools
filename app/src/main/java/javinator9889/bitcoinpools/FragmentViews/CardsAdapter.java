@@ -65,7 +65,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
             switch (position) {
                 case 0:
                     float newPrice = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldPrice = Float.parseFloat(content.getOldData());
+                    float oldPrice = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
                     System.out.println("Comparing: " + newPrice + " | " + oldPrice);
                     float pricePercentage = percentageCalculator(newPrice, oldPrice);
                     switch (Float.compare(pricePercentage, 0f)) {
@@ -86,7 +86,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     break;
                 case 1:
                     float newPower = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldPower = Float.parseFloat(content.getOldData());
+                    float oldPower = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
                     System.out.println("Comparing: " + newPower + " | " + oldPower);
                     float powerPercentage = percentageCalculator(newPower, oldPower);
                     switch (Float.compare(powerPercentage, 0f)) {
@@ -107,9 +107,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     break;
                 case 2:
                     float newDifficulty = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldDifficulty = Float.parseFloat(content.getOldData());
+                    float oldDifficulty = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
                     System.out.println("Comparing: " + newDifficulty + " | " + oldDifficulty);
-                    float difficultyPercentage = - percentageCalculator(newDifficulty, oldDifficulty);
+                    float difficultyPercentage;
+                    float result = percentageCalculator(newDifficulty, oldDifficulty);
+                    if (result == 0)
+                        difficultyPercentage = 0;
+                    else
+                        difficultyPercentage = - result;
                     switch (Float.compare(difficultyPercentage, 0f)) {
                         case 0:
                             holder.oldData.setText("0%");
@@ -128,7 +133,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     break;
                 case 3:
                     float newBlock = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldBlock = Float.parseFloat(content.getOldData()) / 10;
+                    float oldBlock = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData()) / 10));
                     System.out.println("Comparing: " + newBlock + " | " + oldBlock);
                     float blockPercentage = percentageCalculator(newBlock, oldBlock);
                     switch (Float.compare(blockPercentage, 0f)) {
@@ -149,9 +154,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     break;
                 case 4:
                     float newMinutes = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldMinutes = Float.parseFloat(content.getOldData());
+                    float oldMinutes = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
                     System.out.println("Comparing: " + newMinutes + " | " + oldMinutes);
-                    float minutesPercentage = - percentageCalculator(newMinutes, oldMinutes);
+                    float minutesPercentage;
+                    float resultMinutes = percentageCalculator(newMinutes, oldMinutes);
+                    if (resultMinutes == 0)
+                        minutesPercentage = 0;
+                    else
+                        minutesPercentage = - resultMinutes;
                     switch (Float.compare(minutesPercentage, 0f)) {
                         case 0:
                             holder.oldData.setText("0%");
@@ -170,9 +180,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     break;
                 case 5:
                     float newBtcFees = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldBtcFees = Float.parseFloat(content.getOldData()) / 10000000;
+                    float oldBtcFees = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData()) / 10000000));
                     System.out.println("Comparing: " + newBtcFees + " | " + oldBtcFees);
-                    float feePercentage = - percentageCalculator(newBtcFees, oldBtcFees);
+                    float feePercentage;
+                    float resultFees = percentageCalculator(newBtcFees, oldBtcFees);
+                    if (resultFees == 0)
+                        feePercentage = 0;
+                    else
+                        feePercentage = - resultFees;
                     switch (Float.compare(feePercentage, 0f)) {
                         case 0:
                             holder.oldData.setText("0%");
@@ -191,7 +206,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     break;
                 case 6:
                     float newTrans = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldTrans = Float.parseFloat(content.getOldData());
+                    float oldTrans = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
                     System.out.println("Comparing: " + newTrans + " | " + oldTrans);
                     float transPercentage = percentageCalculator(newTrans, oldTrans);
                     switch (Float.compare(transPercentage, 0f)) {
@@ -212,7 +227,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     break;
                 case 7:
                     float newBenefit = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldBenefit = Float.parseFloat(content.getOldData()) / 100;
+                    float oldBenefit = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData()) / 100));
                     System.out.println("Comparing: " + newBenefit + " | " + oldBenefit);
                     float benefitPercentage = percentageCalculator(newBenefit, oldBenefit);
                     switch (Float.compare(benefitPercentage, 0f)) {
@@ -318,10 +333,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
      * @return difference in percentage of values
      */
     private float percentageCalculator(float newValue, float oldValue) {
-        float difference = newValue - oldValue;
-        float averageValues = (newValue + oldValue) / 2;
-        float diffDividedAverage = difference / averageValues;
-        return (diffDividedAverage * 100);
+        if (newValue == oldValue)
+            return 0;
+        else {
+            float difference = newValue - oldValue;
+            float averageValues = (newValue + oldValue) / 2;
+            float diffDividedAverage = difference / averageValues;
+            return (diffDividedAverage * 100);
+        }
     }
 
     @Override

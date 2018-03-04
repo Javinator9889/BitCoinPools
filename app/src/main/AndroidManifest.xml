@@ -35,7 +35,7 @@
         <activity
             android:name=".License"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SpinnerActivity"
             android:configChanges="orientation"
@@ -46,6 +46,8 @@
             android:name=".BackgroundJobs.JobSchedulerService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             tools:ignore="InnerclassSeparator" />
+        <service android:name=".BackgroundJobs.CacheJobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

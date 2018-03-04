@@ -145,9 +145,22 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         DESTINATIONLINECHART.invalidate();
 
         FRAGMENT_CONTEXT = createdView.getContext();
-        ((TextView) createdView.findViewById(R.id.longPressInfo)).setText(R.string.longclick);
-
-        return createdView;
+        String longPressInfo;
+        try {
+            CacheManaging cache = CacheManaging.newInstance(createdView.getContext());
+            String date = cache.readCache().get("date");
+            if (date != null) {
+                longPressInfo = getString(R.string.longclick) + "\n" +
+                        getString(R.string.comparationDate) + date;
+            } else
+                longPressInfo = getString(R.string.longclick);
+            ((TextView) createdView.findViewById(R.id.longPressInfo)).setText(longPressInfo);
+            return createdView;
+        } catch (Exception e) {
+            longPressInfo = getString(R.string.longclick);
+            ((TextView) createdView.findViewById(R.id.longPressInfo)).setText(longPressInfo);
+            return createdView;
+        }
     }
 
     private void setupValues() {
@@ -400,8 +413,8 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         }
         try {
             HashMap<String, String> oldCache = cache.readCache();
-            if (oldCache == null) {
-                HashMap<String, String> newCacheValues = new LinkedHashMap<>();
+            if (oldCache != null) {
+                /*HashMap<String, String> newCacheValues = new LinkedHashMap<>();
                 newCacheValues.put("date",
                         new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime()));
                 for (String key : newValues.keySet()) {
@@ -409,8 +422,9 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
                     //System.out.println(key + " | " + newValues.get(key).toString());
                 }
                 cache.writeCache(newCacheValues);
-                return null;
-            } else return oldCache;
+                return null;*/
+                return oldCache;
+            } else return null;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error while reading cache. Full trace: " + e.getMessage());
             e.printStackTrace();
