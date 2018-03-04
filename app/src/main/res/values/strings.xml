@@ -210,4 +210,11 @@ SOFTWARE.<br />
         <item>13 € (Euros)</item>
     </string-array>
     <string name="support">Support me!</string>
+    <string name="errorLoading">There was an error</string>
+    <string name="errorLoadingDescription">
+        <![CDATA[
+        We were not able to fetch data. Please, check your Internet connection.<br />
+        If this happens to you usually, please contact me to <a href="mailto:javialonso007@hotmail.es">this email.</a>
+        ]]>
+    </string>
 </resources>

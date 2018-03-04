@@ -125,7 +125,7 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
     }
 
     private void refresh() {
-        Intent intentMain = new Intent(SpinnerActivity.this, MainActivity.class);
+        Intent intentMain = new Intent(SpinnerActivity.this, DataLoaderScreen.class);
         intentMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intentMain);
         SpinnerActivity.this.finish();

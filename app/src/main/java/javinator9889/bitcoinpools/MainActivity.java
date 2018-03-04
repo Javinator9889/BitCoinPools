@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -24,38 +26,68 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import javinator9889.bitcoinpools.AppUpdaterManager.CheckUpdates;
 import javinator9889.bitcoinpools.FragmentViews.DonationsActivity;
 import javinator9889.bitcoinpools.FragmentViews.Tab1PoolsChart;
 import javinator9889.bitcoinpools.FragmentViews.Tab2BTCChart;
+import javinator9889.bitcoinpools.JSONTools.JSONTools;
+import javinator9889.bitcoinpools.NetTools.net;
 
 
 public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static Toolbar MAINACTIVITY_TOOLBAR;
+
+    private float mpu;
+    private HashMap<String, Float> retrievedData;
+    private HashMap<String, Float> cardsData;
+    private HashMap<Date, Float> btcPrice;
+
     private FirebaseAnalytics mFirebaseAnalytics;
+    //private MaterialDialog progressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (BitCoinApp.isOnline()) {
+        //if (BitCoinApp.isOnline()) {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
             setContentView(R.layout.activity_main);
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            Bundle appOpen = new Bundle();
-            appOpen.putString("Date", Calendar.getInstance().getTime().toString());
-            appOpen.putString("DeviceBrand", Build.BRAND);
-            appOpen.putString("DeviceID", Build.ID);
-            appOpen.putString("DeviceName", Build.PRODUCT);
-            appOpen.putString("AndroidVersion", Build.VERSION.RELEASE);
-            mFirebaseAnalytics.logEvent("main_activity", appOpen);
-
+            /*progressDialog = new MaterialDialog.Builder(this)
+                    .cancelable(false)
+                    .title(R.string.loadingData)
+                    .content(R.string.please_wait)
+                    .progress(true, 0)
+                    .build();
+            progressDialog.show();
+            new DataLoader().execute();*/
+            Intent dataFromDataLoaderClass = getIntent();
+            this.mpu = dataFromDataLoaderClass.getFloatExtra("MPU", 0);
+            this.retrievedData = JSONTools.sortByValue((HashMap<String, Float>) dataFromDataLoaderClass.getSerializableExtra("RD"));
+            this.cardsData = JSONTools.sortByValue((HashMap<String, Float>) dataFromDataLoaderClass.getSerializableExtra("CARDS"));
+            this.btcPrice = JSONTools.sortDateByValue((HashMap<Date, Float>) dataFromDataLoaderClass.getSerializableExtra("BTCPRICE"));
+            //System.out.println(this.mpu + " " +this.retrievedData.toString() + " " + this.cardsData.toString() + " " + this.btcPrice.toString());
             if (BitCoinApp.getSharedPreferences().contains(Constants.SHARED_PREFERENCES.APP_VERSION)) {
                 if (!BitCoinApp.getSharedPreferences().getString(Constants.SHARED_PREFERENCES.APP_VERSION, "1.0").equals(BitCoinApp.appVersion())) {
                     new MaterialDialog.Builder(this)
@@ -100,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
             ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
-        } else {
+        /*} else {
             new MaterialDialog.Builder(this)
                     .title(R.string.noConnectionTitle)
                     .content(R.string.noConnectionDesc)
@@ -114,8 +146,15 @@ public class MainActivity extends AppCompatActivity {
                     })
                     .build()
                     .show();
-        }
+        }*/
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DataLoaderScreen.progressDialog.dismiss();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
         Tab2BTCChart.setLineChartCreated();
         Intent intentMain = new Intent(MainActivity.this, MainActivity.class);
         intentMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intentMain.putExtra("MPU", mpu);
+        intentMain.putExtra("RD", retrievedData);
+        intentMain.putExtra("CARDS", cardsData);
+        intentMain.putExtra("BTCPRICE", btcPrice);
         startActivity(intentMain);
         MainActivity.this.finish();
     }
@@ -216,9 +259,11 @@ public class MainActivity extends AppCompatActivity {
             //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    return new Tab1PoolsChart();
+                    //return new Tab1PoolsChart();
+                    return Tab1PoolsChart.newInstance(mpu, retrievedData);
                 case 1:
-                    return new Tab2BTCChart();
+                    //return new Tab2BTCChart();
+                    return Tab2BTCChart.newInstance(cardsData, btcPrice);
                 default:
                     return null;
             }
