@@ -67,6 +67,7 @@ import javinator9889.bitcoinpools.R;
 
 public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSetListener {
     private static Map<Date, Float> BTCPRICE = new LinkedHashMap<>();
+    private HashMap<String, Float> cardsContentData;
     private static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
     private static String REQUEST_URL;
     private static LineChart DESTINATIONLINECHART;
@@ -82,6 +83,17 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     private List<CardsContent> cardsContents;
 
     public Tab2BTCChart() {
+    }
+
+    public static Tab2BTCChart newInstance(Object... params) {
+        Bundle args = new Bundle();
+        System.out.println(((HashMap<String, Float>) params[0]).toString());
+        System.out.println(((HashMap<String, Float>) params[1]).toString());
+        args.putSerializable("CARDS", (HashMap<String, Float>) params[0]);
+        args.putSerializable("BTCPRICE", (HashMap<Date, Float>) params[1]);
+        Tab2BTCChart fragment = new Tab2BTCChart();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -102,7 +114,9 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
         REQUEST_URL = API_URL;
 
-        setupValues();
+        //setupValues();
+        BTCPRICE = (HashMap<Date, Float>) getArguments().getSerializable("BTCPRICE");
+        this.cardsContentData = (HashMap<String, Float>) getArguments().getSerializable("CARDS");
 
         cardsContents = new ArrayList<>();
         CardsAdapter adapter = new CardsAdapter(getContext(), cardsContents);
@@ -318,7 +332,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     @SuppressLint("DefaultLocale")
     private void prepareCards() {
-        net httpsResponse = new net();
+        /*net httpsResponse = new net();
         Map<String, Float> cardsData = new LinkedHashMap<>();
         httpsResponse.execute(STATS_URL);
         try {
@@ -328,8 +342,8 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
             Crashlytics.logException(e);
         } finally {
-            assert cardsData != null;
-            HashMap<String, String> cachedMap = getCachedMap(cardsData);
+            *///assert cardsData != null;
+            HashMap<String, String> cachedMap = getCachedMap(this.cardsContentData);
             String market_price = null;
             String hash_rate = null;
             String difficulty = null;
@@ -351,30 +365,30 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             }
             DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
             cardsContents.add(new CardsContent(getString(R.string.market_price),
-                    "$" + df.format(cardsData.get("market_price_usd")),
+                    "$" + df.format(this.cardsContentData.get("market_price_usd")),
                     market_price));
             cardsContents.add(new CardsContent(getString(R.string.hash_rate),
-                    df.format(cardsData.get("hash_rate")) + " GH/s",
+                    df.format(this.cardsContentData.get("hash_rate")) + " GH/s",
                     hash_rate));
             cardsContents.add(new CardsContent(getString(R.string.difficulty),
-                    df.format(cardsData.get("difficulty")),
+                    df.format(this.cardsContentData.get("difficulty")),
                     difficulty));
             cardsContents.add(new CardsContent(getString(R.string.min_blocks),
-                    df.format(cardsData.get("n_blocks_mined") / 10) + " " + getString(R.string.blocks_name),
+                    df.format(this.cardsContentData.get("n_blocks_mined") / 10) + " " + getString(R.string.blocks_name),
                     blocks_mined));
             cardsContents.add(new CardsContent(getString(R.string.minutes_blocks),
-                    df.format(cardsData.get("minutes_between_blocks")) + " " + getString(R.string.minutes_name),
+                    df.format(this.cardsContentData.get("minutes_between_blocks")) + " " + getString(R.string.minutes_name),
                     minutes));
             cardsContents.add(new CardsContent(getString(R.string.total_fees),
-                    df.format(cardsData.get("total_fees_btc") / 10000000) + " BTC",
+                    df.format(this.cardsContentData.get("total_fees_btc") / 10000000) + " BTC",
                     total_fees));
             cardsContents.add(new CardsContent(getString(R.string.total_trans),
-                    df.format(cardsData.get("n_tx")),
+                    df.format(this.cardsContentData.get("n_tx")),
                     tx));
             cardsContents.add(new CardsContent(getString(R.string.min_benefit),
-                    "$" + df.format(cardsData.get("miners_revenue_usd") / 100),
+                    "$" + df.format(this.cardsContentData.get("miners_revenue_usd") / 100),
                     miners_revenue));
-        }
+        //}
     }
 
     private HashMap<String, String> getCachedMap(Map<String, Float> newValues) {

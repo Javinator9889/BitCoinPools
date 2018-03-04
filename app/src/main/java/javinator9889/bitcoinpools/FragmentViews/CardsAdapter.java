@@ -2,6 +2,7 @@ package javinator9889.bitcoinpools.FragmentViews;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,12 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
+import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.R;
 
 /**
@@ -52,15 +57,183 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
         final CardsContent content = btcData.get(position);
         holder.title.setText(content.getTitle());
         holder.body.setText(content.getBody());
+        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
         if (content.getOldData() == null)
             holder.oldData.setText("");
         else {
             //holder.oldData.setText(content.getOldData());
-            holder.oldData.setText(content.getOldData());
-            /*switch (position) {
+            switch (position) {
                 case 0:
-                    holder.oldData.setText(String.valueOf(Float.parseFloat(content.getOldData()) != Float.parseFloat(content.getBody())));
-            }*/
+                    float newPrice = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldPrice = Float.parseFloat(content.getOldData());
+                    System.out.println("Comparing: " + newPrice + " | " + oldPrice);
+                    float pricePercentage = percentageCalculator(newPrice, oldPrice);
+                    switch (Float.compare(pricePercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(pricePercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(pricePercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                case 1:
+                    float newPower = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldPower = Float.parseFloat(content.getOldData());
+                    System.out.println("Comparing: " + newPower + " | " + oldPower);
+                    float powerPercentage = percentageCalculator(newPower, oldPower);
+                    switch (Float.compare(powerPercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(powerPercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(powerPercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                case 2:
+                    float newDifficulty = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldDifficulty = Float.parseFloat(content.getOldData());
+                    System.out.println("Comparing: " + newDifficulty + " | " + oldDifficulty);
+                    float difficultyPercentage = - percentageCalculator(newDifficulty, oldDifficulty);
+                    switch (Float.compare(difficultyPercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(difficultyPercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(- difficultyPercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                case 3:
+                    float newBlock = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldBlock = Float.parseFloat(content.getOldData()) / 10;
+                    System.out.println("Comparing: " + newBlock + " | " + oldBlock);
+                    float blockPercentage = percentageCalculator(newBlock, oldBlock);
+                    switch (Float.compare(blockPercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(blockPercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(blockPercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                case 4:
+                    float newMinutes = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldMinutes = Float.parseFloat(content.getOldData());
+                    System.out.println("Comparing: " + newMinutes + " | " + oldMinutes);
+                    float minutesPercentage = - percentageCalculator(newMinutes, oldMinutes);
+                    switch (Float.compare(minutesPercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(minutesPercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(minutesPercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                case 5:
+                    float newBtcFees = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldBtcFees = Float.parseFloat(content.getOldData()) / 10000000;
+                    System.out.println("Comparing: " + newBtcFees + " | " + oldBtcFees);
+                    float feePercentage = - percentageCalculator(newBtcFees, oldBtcFees);
+                    switch (Float.compare(feePercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(feePercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(feePercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                case 6:
+                    float newTrans = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldTrans = Float.parseFloat(content.getOldData());
+                    System.out.println("Comparing: " + newTrans + " | " + oldTrans);
+                    float transPercentage = percentageCalculator(newTrans, oldTrans);
+                    switch (Float.compare(transPercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(transPercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(transPercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                case 7:
+                    float newBenefit = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldBenefit = Float.parseFloat(content.getOldData()) / 100;
+                    System.out.println("Comparing: " + newBenefit + " | " + oldBenefit);
+                    float benefitPercentage = percentageCalculator(newBenefit, oldBenefit);
+                    switch (Float.compare(benefitPercentage, 0f)) {
+                        case 0:
+                            holder.oldData.setText("0%");
+                            break;
+                        case 1:
+                            String positiveText = "+" + decimalFormat.format(benefitPercentage) + "%";
+                            holder.oldData.setText(positiveText);
+                            holder.oldData.setTextColor(Color.GREEN);
+                            break;
+                        case -1:
+                            String negativeText = decimalFormat.format(benefitPercentage) + "%";
+                            holder.oldData.setText(negativeText);
+                            holder.oldData.setTextColor(Color.RED);
+                            break;
+                    }
+                    break;
+                default:
+                    holder.oldData.setText(content.getOldData());
+            }
             holder.v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -136,6 +309,19 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                 }
             });
         }
+    }
+
+    /**
+     * Based on: https://www.calculatorsoup.com/calculators/algebra/percent-difference-calculator.php
+     * @param newValue new value
+     * @param oldValue old value
+     * @return difference in percentage of values
+     */
+    private float percentageCalculator(float newValue, float oldValue) {
+        float difference = newValue - oldValue;
+        float averageValues = (newValue + oldValue) / 2;
+        float diffDividedAverage = difference / averageValues;
+        return (diffDividedAverage * 100);
     }
 
     @Override

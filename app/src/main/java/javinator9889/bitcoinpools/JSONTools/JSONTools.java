@@ -24,20 +24,20 @@ import java.util.TreeMap;
  */
 
 public class JSONTools {
-    public static Map<String, Float> sortByValue(Map<String, Float> unsortMap) {
+    public static HashMap<String, Float> sortByValue(HashMap<String, Float> unsortMap) {
 
         // 1. Convert Map to List of Map
-        List<Map.Entry<String, Float>> list =
+        List<HashMap.Entry<String, Float>> list =
                 new LinkedList<>(unsortMap.entrySet());
 
-        Collections.sort(list, new Comparator<Map.Entry<String, Float>>() {
-            public int compare(Map.Entry<String, Float> o1, Map.Entry<String, Float> o2) {
+        Collections.sort(list, new Comparator<HashMap.Entry<String, Float>>() {
+            public int compare(HashMap.Entry<String, Float> o1, HashMap.Entry<String, Float> o2) {
                 return (o1.getValue()).compareTo(o2.getValue());
             }
         });
 
         // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
-        Map<String, Float> sortedMap = new LinkedHashMap<>();
+        HashMap<String, Float> sortedMap = new LinkedHashMap<>();
         for (Map.Entry<String, Float> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
@@ -73,11 +73,11 @@ public class JSONTools {
         }
     }
 
-    public static Map<Date, Float> sortDateByValue(Map<Date, Float> unsortMap) {
+    public static HashMap<Date, Float> sortDateByValue(HashMap<Date, Float> unsortMap) {
 
 //        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         Map<Date, Float> m1 = new TreeMap<>(unsortMap);
-        Map<Date, Float> returnMap = new LinkedHashMap<>();
+        HashMap<Date, Float> returnMap = new LinkedHashMap<>();
         for (Map.Entry<Date, Float> entry : m1.entrySet()) {
             returnMap.put(entry.getKey(), entry.getValue());
         }

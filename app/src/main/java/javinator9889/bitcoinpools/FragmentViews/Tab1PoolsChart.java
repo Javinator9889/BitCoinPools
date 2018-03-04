@@ -25,6 +25,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,17 @@ public class Tab1PoolsChart extends Fragment {
     public Tab1PoolsChart() {
     }
 
+    public static Tab1PoolsChart newInstance(Object... params) {
+        Bundle args = new Bundle();
+        System.out.println(Float.valueOf(String.valueOf(params[0])));
+        System.out.println(((HashMap<String, Float>) params[1]).toString());
+        args.putFloat("MPU", Float.valueOf(String.valueOf(params[0])));
+        args.putSerializable("RD", (HashMap<String, Float>) params[1]);
+        Tab1PoolsChart fragment = new Tab1PoolsChart();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,7 +75,7 @@ public class Tab1PoolsChart extends Fragment {
         final PieChart chart = createdView.findViewById(R.id.chart);
         final TableLayout tableLayout = createdView.findViewById(R.id.poolstable);
 
-        initRD();
+        /*initRD();
         initT(createdView);
         initMPU();
 
@@ -73,6 +85,18 @@ public class Tab1PoolsChart extends Fragment {
         try {
             tableThread.join();
             mpuThread.join();
+            return createdView;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }*/
+        MARKET_PRICE_USD = getArguments().getFloat("MPU");
+        RETRIEVED_DATA = (HashMap<String, Float>) getArguments().getSerializable("RD");
+        initT(createdView);
+        createPieChart(chart);
+        createTable(tableLayout, createdView);
+        try {
+            tableThread.join();
             return createdView;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -178,14 +202,14 @@ public class Tab1PoolsChart extends Fragment {
                 destinationTable.invalidate();
             }
         };
-        try {
+        /*try {
             rdThread.join();
         } catch (InterruptedException e) {
             Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR + rdThread.getName());
-        } finally {
+        } finally {*/
             tableThread.setName("table_thread");
             tableThread.start();
-        }
+        //}
     }
 
     private void initRD() {

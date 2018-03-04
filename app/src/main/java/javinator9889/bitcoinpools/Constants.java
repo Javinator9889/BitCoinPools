@@ -20,6 +20,7 @@ public class Constants {
                 "ntpsync.donation.13"};
         public static final String PAYPALME = "https://paypal.me/Javinator9889";
     }
+    public static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
     public static final class SHARED_PREFERENCES {
         public static final String SHARED_PREFERENCES_KEY = "javinator9889.bitcoinpools.usrPreferences";
         public static final String NOTIFICATIONS_ENABLED = "notifications_enabled";
