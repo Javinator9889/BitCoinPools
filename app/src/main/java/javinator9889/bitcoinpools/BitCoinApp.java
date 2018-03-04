@@ -15,6 +15,14 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javinator9889.bitcoinpools.BackgroundJobs.CacheJobSchedulerService;
 import javinator9889.bitcoinpools.BackgroundJobs.JobSchedulerService;
 
 /**
@@ -41,11 +49,19 @@ public class BitCoinApp extends Application {
         SHARED_PREFERENCES = getSharedPreferences(Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         initSharedPreferences();
         startBackgroundJobs();
+        try {
+            System.out.println(CacheManaging.newInstance(this).readCache());
+        } catch (Exception e) {
+            System.out.println("No cache values found");
+        }
         super.onCreate();
         Log.d(Constants.LOG.BCTAG, Constants.LOG.CREATED_APP);
     }
 
     private static void startBackgroundJobs() {
+        JobScheduler globalJobScheduler = (JobScheduler) APPLICATION_CONTEXT.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        List<JobInfo> pendingJobs = globalJobScheduler != null ? globalJobScheduler.getAllPendingJobs() : new ArrayList<JobInfo>(0);
+
         JobScheduler mJobScheduler = (JobScheduler) APPLICATION_CONTEXT.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(APPLICATION_CONTEXT.getPackageName(), JobSchedulerService.class.getName()));
 
@@ -58,6 +74,23 @@ public class BitCoinApp extends Application {
         if (mJobScheduler.schedule(builder.build()) == JobScheduler.RESULT_FAILURE) {
             Log.e(Constants.LOG.BCTAG, Constants.LOG.NO_INIT + "JobScheduler" + mJobScheduler.getAllPendingJobs().toString());
         }
+
+        JobScheduler cacheJobScheduler = (JobScheduler) APPLICATION_CONTEXT.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        JobInfo.Builder cacheBuilder = new JobInfo.Builder(2, new ComponentName(APPLICATION_CONTEXT.getPackageName(), CacheJobSchedulerService.class.getName()));
+
+
+        cacheBuilder.setPeriodic(TimeUnit.DAYS.toMillis(1));
+        cacheBuilder.setPersisted(Constants.PERSISTED);
+        cacheBuilder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+        cacheBuilder.setBackoffCriteria(Constants.BACKOFF_CRITERIA, JobInfo.BACKOFF_POLICY_LINEAR);
+
+        if ((pendingJobs.size() != 0) && !(pendingJobs.contains(cacheBuilder.build()))) {
+            assert cacheJobScheduler != null;
+            if (cacheJobScheduler.schedule(cacheBuilder.build()) == JobScheduler.RESULT_FAILURE) {
+                Log.e(Constants.LOG.BCTAG, Constants.LOG.NO_INIT + "JobScheduler" + mJobScheduler.getAllPendingJobs().toString());
+            }
+        } else
+            System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE EL JOB YA EXISTE");
     }
 
     private void initSharedPreferences() {
@@ -87,7 +120,7 @@ public class BitCoinApp extends Application {
         ConnectivityManager connectionManager = (ConnectivityManager) getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connectionManager != null;
         NetworkInfo netInfo = connectionManager.getActiveNetworkInfo();
-        return ((netInfo != null) && netInfo.isConnectedOrConnecting());
+        return ((netInfo != null) && netInfo.isConnected());
     }
 
     public static String appVersion() {
