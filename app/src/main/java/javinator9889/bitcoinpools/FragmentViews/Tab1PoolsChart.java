@@ -1,5 +1,6 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;

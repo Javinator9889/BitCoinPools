@@ -36,6 +36,7 @@ import static javinator9889.bitcoinpools.MainActivity.round;
 
 public class DataLoaderScreen extends AppCompatActivity {
     public static MaterialDialog progressDialog = null;
+    public static AppCompatActivity dataLoaderScreenActivity;
 
     private float mpu;
     private HashMap<String, Float> retrievedData;
@@ -45,6 +46,7 @@ public class DataLoaderScreen extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dataLoaderScreenActivity = this;
         if (BitCoinApp.isOnline()) {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
             setContentView(R.layout.activity_loading);
@@ -58,6 +60,20 @@ public class DataLoaderScreen extends AppCompatActivity {
             progressDialog.show();
             new DataLoader().execute();
             //new MainActivity.DataLoader().execute();
+        } else {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.noConnectionTitle)
+                    .content(R.string.noConnectionDesc)
+                    .cancelable(false)
+                    .positiveText(R.string.accept)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            onBackPressed();
+                        }
+                    })
+                    .build()
+                    .show();
         }
     }
 
@@ -88,7 +104,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                 activityMainIntent.putExtra("CARDS", cardsData);
                 activityMainIntent.putExtra("BTCPRICE", btcPrice);
                 startActivity(activityMainIntent);
-                DataLoaderScreen.this.finish();
+                //DataLoaderScreen.this.finish();
             } else {
                 Log.i("DLS", "Data non-loaded...");
                 if (progressDialog != null) {
