@@ -30,6 +30,7 @@ public class Constants {
         public static final String VALUE_TO_CHECK = "value_to_check";
         public static final String SHARED_PREFERENCES_INITIALIZED = "initialized";
         public static final String APP_VERSION = "APP_VERSION";
+        public static final String CACHE_JOB = "CACHE_JOB";
     }
     public static final String CHANNEL_ID = "javinator9889.bitcoinpools.Alerts";
     public static final int NOTIFICATION_ID = 1;

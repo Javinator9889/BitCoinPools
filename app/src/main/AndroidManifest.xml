@@ -40,14 +40,16 @@
             android:name=".SpinnerActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".FragmentViews$DonationsActivity" />
+        <activity android:name=".FragmentViews.DonationsActivity"
+            tools:ignore="InnerclassSeparator" />
 
         <service
             android:name=".BackgroundJobs.JobSchedulerService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             tools:ignore="InnerclassSeparator" />
         <service android:name=".BackgroundJobs.CacheJobSchedulerService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            tools:ignore="InnerclassSeparator" />
 
     </application>
 

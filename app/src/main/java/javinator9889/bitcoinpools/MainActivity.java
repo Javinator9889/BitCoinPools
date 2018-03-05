@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     //private MaterialDialog progressDialog = null;
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //if (BitCoinApp.isOnline()) {
@@ -114,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
-            checkPermissions();
-            CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
+            //checkPermissions();
+            //CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
 
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
             MAINACTIVITY_TOOLBAR = findViewById(R.id.toolbar);
@@ -132,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
-            ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
+            //ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
+        //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
         /*} else {
             new MaterialDialog.Builder(this)
                     .title(R.string.noConnectionTitle)
@@ -153,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 5);
         DataLoaderScreen.progressDialog.dismiss();
     }
 

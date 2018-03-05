@@ -55,6 +55,7 @@ import java.util.concurrent.ExecutionException;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.CacheManaging;
 import javinator9889.bitcoinpools.Constants;
+import javinator9889.bitcoinpools.DataLoaderScreen;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.NetTools.net;
@@ -160,6 +161,8 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             longPressInfo = getString(R.string.longclick);
             ((TextView) createdView.findViewById(R.id.longPressInfo)).setText(longPressInfo);
             return createdView;
+        } finally {
+            DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
         }
     }
 
