@@ -1,5 +1,6 @@
 package javinator9889.bitcoinpools;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -52,7 +53,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                     .cancelable(false)
                     .title(R.string.loadingData)
                     .content(R.string.please_wait)
-                    .progress(true, 0)
+                    .progress(false, 100)
                     .build();
             progressDialog.show();
             new DataLoader().execute();
@@ -60,6 +61,7 @@ public class DataLoaderScreen extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class DataLoader extends AsyncTask<Void, Void, Boolean> {
         private Thread marketPriceThread;
         private Thread poolsDataThread;
@@ -86,7 +88,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                 activityMainIntent.putExtra("CARDS", cardsData);
                 activityMainIntent.putExtra("BTCPRICE", btcPrice);
                 startActivity(activityMainIntent);
-                //DataLoaderScreen.this.finish();
+                DataLoaderScreen.this.finish();
             } else {
                 Log.i("DLS", "Data non-loaded...");
                 if (progressDialog != null) {
@@ -156,6 +158,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }*/
                     try {
                         mpu = round((float) getHTTPSRequest(Constants.STATS_URL).getDouble(Constants.MARKET_NAME), 2);
+                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
                         mpu = -1;
@@ -183,6 +186,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }*/
                     try {
                         retrievedData = JSONTools.convert2HashMap(getHTTPSRequest(url));
+                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         retrievedData = null;
                         Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
@@ -209,6 +213,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                         }*/
                     try {
                         cardsData = JSONTools.convert2HashMap(getHTTPSRequest(Constants.STATS_URL));
+                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         cardsData = null;
                         Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
@@ -233,6 +238,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }*/
                     try {
                         btcPrice = JSONTools.convert2DateHashMap(getHTTPSRequest(Constants.API_URL).getJSONObject("bpi"));
+                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         btcPrice = null;
                         Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());

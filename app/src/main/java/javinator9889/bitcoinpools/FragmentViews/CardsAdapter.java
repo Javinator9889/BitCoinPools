@@ -16,7 +16,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 
-import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.R;
 
 /**
@@ -76,11 +75,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(pricePercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(pricePercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
@@ -97,11 +98,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(powerPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(powerPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
@@ -123,11 +126,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(difficultyPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(- difficultyPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
@@ -144,11 +149,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(blockPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(blockPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
@@ -170,11 +177,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(minutesPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(minutesPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
@@ -196,11 +205,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(feePercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(feePercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
@@ -217,11 +228,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(transPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(transPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
@@ -238,11 +251,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(benefitPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(benefitPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;

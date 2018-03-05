@@ -33,6 +33,7 @@ import java.util.concurrent.ExecutionException;
 
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
+import javinator9889.bitcoinpools.DataLoaderScreen;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.NetTools.net;
@@ -97,6 +98,7 @@ public class Tab1PoolsChart extends Fragment {
         createTable(tableLayout, createdView);
         try {
             tableThread.join();
+            DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
             return createdView;
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -78,7 +78,7 @@ public class CacheJobSchedulerService extends JobService {
     }
 
     private void updateCache() {
-        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime());
+        String date = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US).format(Calendar.getInstance().getTime());
         CacheManaging cache = CacheManaging.newInstance(BitCoinApp.getAppContext());
         try {
             cache.setupFile();
