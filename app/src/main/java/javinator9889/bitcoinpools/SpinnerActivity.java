@@ -120,11 +120,14 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
             Toast.makeText(this, R.string.prefUpdated, Toast.LENGTH_LONG).show();
             if (NEW_VALUE_ENABLED && !ACTUAL_ENABLED)
                 BitCoinApp.forceRestartBackgroundJobs();
+            refresh();
         }
-        refresh();
+        //refresh();
+        super.onBackPressed();
     }
 
     private void refresh() {
+        MainActivity.mainActivity.finish();
         Intent intentMain = new Intent(SpinnerActivity.this, DataLoaderScreen.class);
         intentMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intentMain);

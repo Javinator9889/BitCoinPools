@@ -1,6 +1,7 @@
 package javinator9889.bitcoinpools.AppUpdaterManager;
 
 import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +40,7 @@ public class CheckUpdates {
     private static JSONArray RETRIEVED_DATA;
     private static String LATEST_VERSION;
     private static String DOWNLOAD_URL = null;
-    private static String MORE_INFO;
+    private static String MORE_INFO = "https://play.google.com/store/apps/details?id=com.fastaccess.github";
     private static String APK_NAME;
     private static boolean HTML_PAGE = false;
 
@@ -54,7 +55,7 @@ public class CheckUpdates {
     }
 
     public void checkForUpdates(final Context dialogContext, String title, String description, String positiveText, String negativeText, String neutralText) {
-        if (!APP_VERSION.equals(LATEST_VERSION) && (Float.parseFloat(APP_VERSION) < Float.parseFloat(LATEST_VERSION))) {
+        if (!APP_VERSION.equals(LATEST_VERSION)) {// && (Float.parseFloat(APP_VERSION) < Float.parseFloat(LATEST_VERSION))) {
             Log.d(Constants.LOG.CTAG, Constants.LOG.NEW_VERSION + APP_VERSION + " | " + LATEST_VERSION);
             MaterialDialog materialDialog;
             if (!HTML_PAGE) {
@@ -62,9 +63,9 @@ public class CheckUpdates {
                 materialDialog = new MaterialDialog.Builder(dialogContext)
                         .title(title)
                         .content(description)
-                        .positiveText(positiveText)
+                        //.positiveText(positiveText)
                         .negativeText(negativeText)
-                        .neutralText(neutralText)
+                        .neutralText(positiveText)
                         .cancelable(false)
                         .onAny(new MaterialDialog.SingleButtonCallback() {
                             @Override
@@ -82,9 +83,15 @@ public class CheckUpdates {
                                         manager.enqueue(downloadRequest);
                                         break;
                                     case NEUTRAL:
-                                        Uri webUri = Uri.parse(MORE_INFO);
-                                        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, webUri);
-                                        dialogContext.startActivity(launchBrowser);
+                                        try {
+                                            Uri webUri = Uri.parse("market://details?id=com.fastaccess.github");
+                                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, webUri);
+                                            dialogContext.startActivity(launchBrowser);
+                                        } catch (ActivityNotFoundException e) {
+                                            Uri webUri = Uri.parse(MORE_INFO);
+                                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, webUri);
+                                            dialogContext.startActivity(launchBrowser);
+                                        }
                                         break;
                                     case NEGATIVE:
                                         dialog.dismiss();
@@ -145,7 +152,7 @@ public class CheckUpdates {
                     if (DOWNLOAD_URL == null) {
                         HTML_PAGE = true;
                     }
-                    MORE_INFO = RETRIEVED_DATA.getJSONObject(i).getString("html_url");
+                    //MORE_INFO = RETRIEVED_DATA.getJSONObject(i).getString("html_url");
                 }
             }
         } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {

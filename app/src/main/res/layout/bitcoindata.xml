@@ -60,6 +60,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:alpha=".7"
+                android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_info_outline_black_18dp"
                 android:text=""
                 android:textAlignment="center"
