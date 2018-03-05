@@ -2,9 +2,11 @@ package javinator9889.bitcoinpools;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.PictureInPictureParams;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -20,6 +22,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Rational;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -59,6 +62,7 @@ import javinator9889.bitcoinpools.NetTools.net;
 public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static Toolbar MAINACTIVITY_TOOLBAR;
+    public static AppCompatActivity mainActivity;
 
     private float mpu;
     private HashMap<String, Float> retrievedData;
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainActivity = this;
         //if (BitCoinApp.isOnline()) {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
             setContentView(R.layout.activity_main);
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
             //checkPermissions();
-            //CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
+            CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
 
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
             MAINACTIVITY_TOOLBAR = findViewById(R.id.toolbar);
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
-            //ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
+            ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
         //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
         /*} else {
             new MaterialDialog.Builder(this)
@@ -152,12 +157,35 @@ public class MainActivity extends AppCompatActivity {
         }*/
     }
 
+    /*@Override
+    public void onUserLeaveHint() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            Rational aspectRatio = new Rational(1080, 1920);
+            PictureInPictureParams.Builder builder = new PictureInPictureParams.Builder()
+                    .setAspectRatio(aspectRatio);
+            enterPictureInPictureMode(builder.build());
+        } else {
+            super.onUserLeaveHint();
+        }
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPicture, Configuration newConfig) {
+        if (isInPictureInPicture)
+            this.moveTaskToBack(false);
+        else {
+            Intent restoreActivity = new Intent(MainActivity.this, MainActivity.class);
+            restoreActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(restoreActivity);
+        }
+    }*/
+
     @Override
     protected void onResume() {
         super.onResume();
         //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 5);
-        //DataLoaderScreen.progressDialog.dismiss();
-        Toast.makeText(this, "Hi, the activity is fully loaded", Toast.LENGTH_LONG).show();
+        DataLoaderScreen.progressDialog.dismiss();
+        //Toast.makeText(this, "Hi, the activity is fully loaded", Toast.LENGTH_LONG).show();
         DataLoaderScreen.dataLoaderScreenActivity.finish();
     }
 
@@ -195,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         Intent intentSettings = new Intent(MainActivity.this, SpinnerActivity.class);
                         startActivity(intentSettings);
-                        MainActivity.this.finish();
+                        //MainActivity.this.finish();
                     }
                 };
                 settingsThread.setName("settings_thread");

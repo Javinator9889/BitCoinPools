@@ -19,8 +19,9 @@
         android:theme="@style/CustomTheme">
         <activity
             android:name=".DataLoaderScreen"
-            android:configChanges="orientation"
             android:screenOrientation="portrait"
+            android:configChanges=
+                "screenSize|smallestScreenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,8 +31,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:configChanges="orientation">
         </activity>
         <activity
             android:name=".License"
