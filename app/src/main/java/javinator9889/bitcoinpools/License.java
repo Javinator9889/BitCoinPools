@@ -45,6 +45,14 @@ public class License extends AppCompatActivity {
                 .withAutoDetect(true)
                 .withAboutDescription(getString(R.string.bitcoindesc))
                 .withLicenseDialog(true)
+                .withLibraries(getString(R.string.library_donations_libraryName))
+                /*.withLibraryModification("Donations", Libs.LibraryFields.LIBRARY_NAME, "Donations")
+                .withLibraryModification("Donations", Libs.LibraryFields.LIBRARY_DESCRIPTION,
+                        "Android Donations Lib supports donations by Google Play Store, Flattr, PayPal, and Bitcoin.")
+                .withLibraryModification("Donations", Libs.LibraryFields.LICENSE_NAME, getString(R.string.license_Apache_2_0_licenseName))
+                .withLibraryModification("Donations", Libs.LibraryFields.AUTHOR_NAME, "PrivacyApps")
+                .withLibraryModification("Donations", Libs.LibraryFields.LIBRARY_REPOSITORY_LINK, "https://github.com/PrivacyApps/donations")
+                .withLibraryModification("Donations", Libs.LibraryFields.LIBRARY_VERSION, "2.5")*/
                 .supportFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();

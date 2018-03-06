@@ -17,11 +17,15 @@ import com.crashlytics.android.Crashlytics;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javinator9889.bitcoinpools.BackgroundJobs.CacheJobSchedulerService;
@@ -76,9 +80,9 @@ public class BitCoinApp extends Application {
         }
 
         if (isJobCreationNeeded(mJobScheduler)) {
+            System.out.println("Creating job for cache - true");
             //JobScheduler cacheJobScheduler = (JobScheduler) APPLICATION_CONTEXT.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             JobInfo.Builder cacheBuilder = new JobInfo.Builder(2, new ComponentName(APPLICATION_CONTEXT.getPackageName(), CacheJobSchedulerService.class.getName()));
-
 
             cacheBuilder.setPeriodic(TimeUnit.DAYS.toMillis(1));
             cacheBuilder.setPersisted(Constants.PERSISTED);
@@ -143,14 +147,31 @@ public class BitCoinApp extends Application {
             Iterator<JobInfo> currentPendingJob = pendingJobs.iterator();
             boolean equals = false;
             while (currentPendingJob.hasNext() && !equals) {
-                equals = currentPendingJob.next().toString().equals("job:2/javinator9889.bitcoinpools/.BackgroundJobs.CacheJobSchedulerService");
+                JobInfo pending = currentPendingJob.next();
+                equals = pending.toString().equals("(job:2/javinator9889.bitcoinpools/.BackgroundJobs.CacheJobSchedulerService)");
             }
-            return !equals;
+            final long MILLIS_A_DAY = 86400000;
+            long timeDiff = timeDifference();
+            return timeDiff >= MILLIS_A_DAY && !equals;
+//return (timeDifference() >= MILLIS_A_DAY) || !equals;
         } else {
             SharedPreferences.Editor newEntry = SHARED_PREFERENCES.edit();
             newEntry.putBoolean(Constants.SHARED_PREFERENCES.CACHE_JOB, false);
             newEntry.apply();
             return true;
+        }
+    }
+
+    private static long timeDifference() {
+        CacheManaging cache = CacheManaging.newInstance(APPLICATION_CONTEXT);
+        try {
+            HashMap<String, String> cachedValues = cache.readCache();
+            String date = cachedValues.get("date");
+            DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+            Date dateInCache = format.parse(date);
+            return (Calendar.getInstance().getTime().getTime() - dateInCache.getTime());
+        } catch (Exception e) {
+            return Long.MAX_VALUE;
         }
     }
 }
