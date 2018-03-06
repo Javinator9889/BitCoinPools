@@ -161,9 +161,9 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             longPressInfo = getString(R.string.longclick);
             ((TextView) createdView.findViewById(R.id.longPressInfo)).setText(longPressInfo);
             return createdView;
-        } finally {
-            DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
-        }
+        }/* finally {
+            //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
+        }*/
     }
 
     private void setupValues() {

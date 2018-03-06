@@ -99,7 +99,7 @@ public class Tab1PoolsChart extends Fragment {
         createTable(tableLayout, createdView);
         try {
             tableThread.join();
-            DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
+            //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
             return createdView;
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -35,7 +35,7 @@ import static javinator9889.bitcoinpools.MainActivity.round;
  */
 
 public class DataLoaderScreen extends AppCompatActivity {
-    public static MaterialDialog progressDialog = null;
+    //public static MaterialDialog progressDialog = null;
     public static AppCompatActivity dataLoaderScreenActivity;
 
     private float mpu;
@@ -51,13 +51,13 @@ public class DataLoaderScreen extends AppCompatActivity {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
             setContentView(R.layout.activity_loading);
             //mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            progressDialog = new MaterialDialog.Builder(this)
+            /*progressDialog = new MaterialDialog.Builder(this)
                     .cancelable(false)
                     .title(R.string.loadingData)
                     .content(R.string.please_wait)
                     .progress(false, 100)
                     .build();
-            progressDialog.show();
+            progressDialog.show();*/
             new DataLoader().execute();
             //new MainActivity.DataLoader().execute();
         } else {
@@ -107,9 +107,9 @@ public class DataLoaderScreen extends AppCompatActivity {
                 //DataLoaderScreen.this.finish();
             } else {
                 Log.i("DLS", "Data non-loaded...");
-                if (progressDialog != null) {
+                /*if (progressDialog != null) {
                     progressDialog.dismiss();
-                }
+                }*/
                 new MaterialDialog.Builder(DataLoaderScreen.this)
                         .positiveText(R.string.accept)
                         .cancelable(false)
@@ -174,7 +174,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }*/
                     try {
                         mpu = round((float) getHTTPSRequest(Constants.STATS_URL).getDouble(Constants.MARKET_NAME), 2);
-                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
+                        //progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
                         mpu = -1;
@@ -202,7 +202,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }*/
                     try {
                         retrievedData = JSONTools.convert2HashMap(getHTTPSRequest(url));
-                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
+                        //progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         retrievedData = null;
                         Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
@@ -229,7 +229,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                         }*/
                     try {
                         cardsData = JSONTools.convert2HashMap(getHTTPSRequest(Constants.STATS_URL));
-                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
+                        //progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         cardsData = null;
                         Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
@@ -254,7 +254,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }*/
                     try {
                         btcPrice = JSONTools.convert2DateHashMap(getHTTPSRequest(Constants.API_URL).getJSONObject("bpi"));
-                        progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
+                        //progressDialog.setProgress(progressDialog.getCurrentProgress() + 20);
                     } catch (Exception e) {
                         btcPrice = null;
                         Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
