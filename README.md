@@ -9,7 +9,6 @@
 
 Here you have the link where you will be able to *read the docs* for this app: https://javinator9889.github.io/BitCoinPools/
 
-
 ## Changelog 
 
 With the latest update, we have just integrated the option to *recieve notifications*: as this app is for getting information about [BitCoin Pools](https://en.wikipedia.org/wiki/Mining_pool) is important to know the value of the **BitCoin**. So now, you can configure notifications and more in the app.
