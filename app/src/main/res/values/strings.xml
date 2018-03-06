@@ -218,4 +218,6 @@ SOFTWARE.<br />
         ]]>
     </string>
     <string name="comparationDate">Percentages compared with the date: </string>
+    <string name="donations__description">Have you found this app useful? Support me and my work!\nDonate me what you want, I will be thankful :D</string>
+    <string name="donations__google_android_market_description">Google charges a fee of 30%</string>
 </resources>

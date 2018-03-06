@@ -178,8 +178,8 @@
     <string name="inv_message">Descarga BitCoin Pools, una aplicación para obtener información sobre el BitCoin y más</string>
     <string name="loadingData">Cargando datos…</string>
     <string name="please_wait">Obteniendo la última información… Por favor, espera</string>
-    <string name="donations__description" translatable="false">¿Te ha parecido útil la app? ¡Motívame a seguir trabjando!\nApóyame con una pequeña donación, te lo agradeceré :D</string>
-    <string name="donations__google_android_market_description" translatable="false">Google se queda con un 30% de lo que selecciones</string>
+    <string name="donations__description">¿Te ha parecido útil la app? ¡Motívame a seguir trabjando!\nApóyame con una pequeña donación, te lo agradeceré :D</string>
+    <string name="donations__google_android_market_description">Google se queda con un 30% de lo que selecciones</string>
     <string name="support">¡Apóyame!</string>
     <string name="errorLoading">Se ha producido un error</string>
     <string name="errorLoadingDescription">
