@@ -20,6 +20,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -74,8 +75,8 @@ public class BitCoinApp extends Application {
             Log.e(Constants.LOG.BCTAG, Constants.LOG.NO_INIT + "JobScheduler" + mJobScheduler.getAllPendingJobs().toString());
         }
 
-        if (!(SHARED_PREFERENCES.getBoolean(Constants.SHARED_PREFERENCES.CACHE_JOB, false)) || isCacheCreated) {
-            JobScheduler cacheJobScheduler = (JobScheduler) APPLICATION_CONTEXT.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        if (isJobCreationNeeded(mJobScheduler)) {
+            //JobScheduler cacheJobScheduler = (JobScheduler) APPLICATION_CONTEXT.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             JobInfo.Builder cacheBuilder = new JobInfo.Builder(2, new ComponentName(APPLICATION_CONTEXT.getPackageName(), CacheJobSchedulerService.class.getName()));
 
 
@@ -84,8 +85,8 @@ public class BitCoinApp extends Application {
             cacheBuilder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
             cacheBuilder.setBackoffCriteria(Constants.BACKOFF_CRITERIA, JobInfo.BACKOFF_POLICY_LINEAR);
 
-            assert cacheJobScheduler != null;
-            if (cacheJobScheduler.schedule(cacheBuilder.build()) == JobScheduler.RESULT_FAILURE) {
+            //assert cacheJobScheduler != null;
+            if (mJobScheduler.schedule(cacheBuilder.build()) == JobScheduler.RESULT_FAILURE) {
                 Log.e(Constants.LOG.BCTAG, Constants.LOG.NO_INIT + "JobScheduler" + mJobScheduler.getAllPendingJobs().toString());
             } else {
                 SharedPreferences.Editor newValueForStartedJob = SHARED_PREFERENCES.edit();
@@ -132,6 +133,24 @@ public class BitCoinApp extends Application {
         } catch (PackageManager.NameNotFoundException e) {
             Crashlytics.logException(e);
             return "1.0";
+        }
+    }
+
+    public static boolean isJobCreationNeeded(JobScheduler applicationJobScheduler) {
+        //SHARED_PREFERENCES.getBoolean(Constants.SHARED_PREFERENCES.CACHE_JOB, false);
+        if (SHARED_PREFERENCES.contains(Constants.SHARED_PREFERENCES.CACHE_JOB)) {
+            List<JobInfo> pendingJobs = applicationJobScheduler.getAllPendingJobs();
+            Iterator<JobInfo> currentPendingJob = pendingJobs.iterator();
+            boolean equals = false;
+            while (currentPendingJob.hasNext() && !equals) {
+                equals = currentPendingJob.next().toString().equals("job:2/javinator9889.bitcoinpools/.BackgroundJobs.CacheJobSchedulerService");
+            }
+            return !equals;
+        } else {
+            SharedPreferences.Editor newEntry = SHARED_PREFERENCES.edit();
+            newEntry.putBoolean(Constants.SHARED_PREFERENCES.CACHE_JOB, false);
+            newEntry.apply();
+            return true;
         }
     }
 }

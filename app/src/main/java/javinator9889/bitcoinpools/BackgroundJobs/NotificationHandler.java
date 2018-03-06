@@ -68,14 +68,16 @@ class NotificationHandler {
                 notificationText = BitCoinApp.getAppContext().getString(R.string.lowerPriceX) + SPECIFIC_VALUE;
                 NOTIFIED_HIGH = false;
                 NOTIFIED_LOW = true;
-                notify = true;
+                //notify = true;
+                notify = (MPU != -1);
             } else if ((MPU > SPECIFIC_VALUE) && !NOTIFIED_HIGH) {
                 notificationTitle = BitCoinApp.getAppContext().getString(R.string.morePrice);
                 notificationTextLong = BitCoinApp.getAppContext().getString(R.string.morePriceX) + SPECIFIC_VALUE + ". " + BitCoinApp.getAppContext().getString(R.string.actualCost) + MPU;
                 notificationText = BitCoinApp.getAppContext().getString(R.string.morePriceX) + SPECIFIC_VALUE;
                 NOTIFIED_HIGH = true;
                 NOTIFIED_LOW = false;
-                notify = true;
+                //notify = true;
+                notify = (MPU != -1);
             }
             if (notify) {
                 Log.d(Constants.LOG.NTAG, Constants.LOG.NOTIFYING);
@@ -130,8 +132,8 @@ class NotificationHandler {
         market.execute("https://api.blockchain.info/stats");
         try {
             return MainActivity.round((float) market.get().getDouble("market_price_usd"), 2);
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            return 0;
+        } catch (InterruptedException | ExecutionException | JSONException | NullPointerException e) {
+            return -1;
         }
     }
 

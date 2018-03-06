@@ -104,6 +104,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                 activityMainIntent.putExtra("CARDS", cardsData);
                 activityMainIntent.putExtra("BTCPRICE", btcPrice);
                 startActivity(activityMainIntent);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 //DataLoaderScreen.this.finish();
             } else {
                 Log.i("DLS", "Data non-loaded...");
