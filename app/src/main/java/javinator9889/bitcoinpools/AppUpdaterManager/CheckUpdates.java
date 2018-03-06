@@ -40,7 +40,7 @@ public class CheckUpdates {
     private static JSONArray RETRIEVED_DATA;
     private static String LATEST_VERSION;
     private static String DOWNLOAD_URL = null;
-    private static String MORE_INFO = "https://play.google.com/store/apps/details?id=com.fastaccess.github";
+    private static String MORE_INFO = Constants.GOOGLE_PLAY_URL;
     private static String APK_NAME;
     private static boolean HTML_PAGE = false;
 

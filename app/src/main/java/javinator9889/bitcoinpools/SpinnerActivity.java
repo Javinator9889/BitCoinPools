@@ -124,6 +124,7 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
         }
         //refresh();
         super.onBackPressed();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
     private void refresh() {

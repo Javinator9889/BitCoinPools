@@ -139,7 +139,11 @@ public class MainActivity extends AppCompatActivity {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
 
             Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
-            ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
+            try {
+                ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
+            } catch (NullPointerException e) {
+                Log.e(Constants.LOG.MATAG, "Unable to get updates");
+            }
         //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
         /*} else {
             new MaterialDialog.Builder(this)
@@ -190,6 +194,11 @@ public class MainActivity extends AppCompatActivity {
         //DataLoaderScreen.progressDialog.dismiss();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -224,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         Intent intentSettings = new Intent(MainActivity.this, SpinnerActivity.class);
                         startActivity(intentSettings);
+                        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                         //MainActivity.this.finish();
                     }
                 };
@@ -235,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         Intent intentLicense = new Intent(MainActivity.this, License.class);
                         startActivity(intentLicense);
+                        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     }
                 };
                 licenseThread.setName("license_thread");
@@ -253,13 +264,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent shareAppIntent = new Intent(Intent.ACTION_SEND);
                 shareAppIntent.setType("text/plain");
                 shareAppIntent.putExtra(Intent.EXTRA_SUBJECT, "BitCoin Pools");
-                final Uri googlePlayLink = Uri.parse("https://play.google.com/store/apps/details?id=com.fastaccess.github");
+                final Uri googlePlayLink = Uri.parse(Constants.GOOGLE_PLAY_URL);
                 shareAppIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.inv_message) + " - Google Play Store: " + googlePlayLink.toString());
                 startActivity(Intent.createChooser(shareAppIntent, getString(R.string.invitation_title)));
                 break;
             case R.id.donate:
                 Intent donateIntent = new Intent(MainActivity.this, DonationsActivity.class);
                 startActivity(donateIntent);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 break;
         }
         return true;

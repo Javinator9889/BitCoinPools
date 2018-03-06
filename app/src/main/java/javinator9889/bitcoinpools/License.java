@@ -22,6 +22,12 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
 public class License extends AppCompatActivity {
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.license);
