@@ -1,6 +1,6 @@
 package javinator9889.bitcoinpools.JSONTools;
 
-import android.annotation.SuppressLint;
+import android.support.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -44,6 +45,7 @@ public class JSONTools {
         return sortedMap;
     }
 
+    @Nullable
     public static HashMap<String, Float> convert2HashMap(JSONObject object) {
         HashMap<String, Float> hReturn = new HashMap<>();
         Iterator<String> iterator = object.keys();
@@ -58,10 +60,11 @@ public class JSONTools {
         }
     }
 
+    @Nullable
     public static HashMap<Date, Float> convert2DateHashMap(JSONObject object) {
         HashMap<Date, Float> hReturn = new HashMap<>();
         Iterator<String> iterator = object.keys();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {
             while (iterator.hasNext()) {
                 String key = iterator.next();
@@ -74,8 +77,6 @@ public class JSONTools {
     }
 
     public static HashMap<Date, Float> sortDateByValue(HashMap<Date, Float> unsortMap) {
-
-//        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         Map<Date, Float> m1 = new TreeMap<>(unsortMap);
         HashMap<Date, Float> returnMap = new LinkedHashMap<>();
         for (Map.Entry<Date, Float> entry : m1.entrySet()) {

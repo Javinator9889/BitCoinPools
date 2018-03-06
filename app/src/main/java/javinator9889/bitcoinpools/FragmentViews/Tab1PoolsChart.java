@@ -1,6 +1,5 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,24 +22,15 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
-import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
-import javinator9889.bitcoinpools.DataLoaderScreen;
-import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.MainActivity;
-import javinator9889.bitcoinpools.NetTools.net;
 import javinator9889.bitcoinpools.R;
-
-import static javinator9889.bitcoinpools.MainActivity.round;
 
 /**
  * Created by Javinator9889 on 28/01/2018.
@@ -51,17 +41,14 @@ public class Tab1PoolsChart extends Fragment {
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
     private static ViewGroup.LayoutParams TABLE_PARAMS;
     private static float MARKET_PRICE_USD;
-    private Thread rdThread;
     private Thread tableThread;
-    private Thread mpuThread;
 
     public Tab1PoolsChart() {
     }
 
+    @SuppressWarnings("unchecked")
     public static Tab1PoolsChart newInstance(Object... params) {
         Bundle args = new Bundle();
-        System.out.println(Float.valueOf(String.valueOf(params[0])));
-        System.out.println(((HashMap<String, Float>) params[1]).toString());
         args.putFloat("MPU", Float.valueOf(String.valueOf(params[0])));
         args.putSerializable("RD", (HashMap<String, Float>) params[1]);
         Tab1PoolsChart fragment = new Tab1PoolsChart();
@@ -69,6 +56,7 @@ public class Tab1PoolsChart extends Fragment {
         return fragment;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,30 +64,14 @@ public class Tab1PoolsChart extends Fragment {
 
         final PieChart chart = createdView.findViewById(R.id.chart);
         final TableLayout tableLayout = createdView.findViewById(R.id.poolstable);
-
-        /*initRD();
-        initT(createdView);
-        initMPU();
-
-        createPieChart(chart);
-        createTable(tableLayout, createdView);
-
-        try {
-            tableThread.join();
-            mpuThread.join();
-            return createdView;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return null;
-        }*/
         MARKET_PRICE_USD = getArguments().getFloat("MPU");
         RETRIEVED_DATA = (HashMap<String, Float>) getArguments().getSerializable("RD");
+
         initT(createdView);
         createPieChart(chart);
         createTable(tableLayout, createdView);
         try {
             tableThread.join();
-            //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 10);
             return createdView;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -129,12 +101,14 @@ public class Tab1PoolsChart extends Fragment {
             public void run() {
                 Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_CHART);
                 List<PieEntry> values = new ArrayList<>();
-                List<Map.Entry<String, Float>> entryList = new ArrayList<>(RETRIEVED_DATA.entrySet());
+                List<Map.Entry<String, Float>> entryList = new ArrayList<>(
+                        RETRIEVED_DATA.entrySet());
                 Map.Entry<String, Float> getEntry;
                 int count = 0;
                 for (int i = entryList.size() - 1; (i >= 0) && (count < 10); --i) {
                     getEntry = entryList.get(i);
-                    Log.i(Constants.LOG.MATAG, "Accessing at: " + i + " | Key: " + getEntry.getKey() + " | Value: " + getEntry.getValue());
+                    Log.i(Constants.LOG.MATAG, "Accessing at: " + i + " | Key: "
+                            + getEntry.getKey() + " | Value: " + getEntry.getValue());
                     values.add(new PieEntry(getEntry.getValue(), getEntry.getKey()));
                     ++count;
                 }
@@ -160,7 +134,8 @@ public class Tab1PoolsChart extends Fragment {
         tableThread = new Thread() {
             public void run() {
                 Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_TABLE);
-                List<Map.Entry<String, Float>> entryList = new ArrayList<>(RETRIEVED_DATA.entrySet());
+                List<Map.Entry<String, Float>> entryList = new ArrayList<>(
+                        RETRIEVED_DATA.entrySet());
                 Map.Entry<String, Float> getEntry;
                 int count = 1;
 
@@ -205,56 +180,12 @@ public class Tab1PoolsChart extends Fragment {
                 destinationTable.invalidate();
             }
         };
-        /*try {
-            rdThread.join();
-        } catch (InterruptedException e) {
-            Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR + rdThread.getName());
-        } finally {*/
-            tableThread.setName("table_thread");
-            tableThread.start();
-        //}
-    }
-
-    private void initRD() {
-        rdThread = new Thread() {
-            public void run() {
-                int days = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
-                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_RD);
-                String url = Constants.POOLS_URL + days + "days";
-                net httpsResponse = new net();
-                httpsResponse.execute(url);
-                try {
-                    RETRIEVED_DATA = JSONTools.sortByValue(JSONTools.convert2HashMap(httpsResponse.get()));
-                } catch (InterruptedException | ExecutionException e) {
-                    RETRIEVED_DATA = null;
-                    Log.e(Constants.LOG.MATAG, Constants.LOG.DATA_ERROR + e.getMessage());
-                }
-            }
-        };
-        rdThread.setName("rd_thread");
-        rdThread.start();
+        tableThread.setName("table_thread");
+        tableThread.start();
     }
 
     private void initT(View view) {
         TableRow masterRow = view.findViewById(R.id.masterRow);
         TABLE_PARAMS = masterRow.getLayoutParams();
-    }
-
-    private void initMPU() {
-        mpuThread = new Thread() {
-            public void run() {
-                Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_MPU);
-                net market = new net();
-                market.execute(Constants.STATS_URL);
-                try {
-                    MARKET_PRICE_USD = round((float) market.get().getDouble(Constants.MARKET_NAME), 2);
-                } catch (InterruptedException | ExecutionException | JSONException e) {
-                    Log.e(Constants.LOG.MATAG, Constants.LOG.MARKET_PRICE_ERROR + e.getMessage());
-                    MARKET_PRICE_USD = 0;
-                }
-            }
-        };
-        mpuThread.setName("mpu_thread");
-        mpuThread.start();
     }
 }

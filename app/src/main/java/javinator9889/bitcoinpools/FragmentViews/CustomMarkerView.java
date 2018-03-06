@@ -1,5 +1,6 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import javinator9889.bitcoinpools.R;
  * Based on: https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/com/xxmassdeveloper/mpchartexample/custom/MyMarkerView.java
  */
 
+@SuppressLint("ViewConstructor")
 public class CustomMarkerView extends MarkerView {
 
     private TextView tvContent;
@@ -29,11 +31,13 @@ public class CustomMarkerView extends MarkerView {
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
+    @SuppressLint("SetTextI18n")
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         if (e instanceof CandleEntry) {
             CandleEntry ce = (CandleEntry) e;
-            tvContent.setText("" + Utils.formatNumber(ce.getHigh(), 0, true));
+            tvContent.setText("" + Utils.formatNumber(ce.getHigh(), 0,
+                    true));
         } else {
             tvContent.setText("" + Utils.formatNumber(e.getY(), 0, true));
         }

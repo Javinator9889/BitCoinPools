@@ -35,19 +35,24 @@ public class DonationsActivity extends FragmentActivity {
         setContentView(R.layout.donations_activity);
 
         if (isGooglePlayServicesAvailable(this)) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                    .beginTransaction();
             DonationsFragment donationsFragment;
 
-            donationsFragment = DonationsFragment.newInstance(BuildConfig.DEBUG, true, GOOGLE_PUBKEY, GOOGLE_CATALOG,
-                    getResources().getStringArray(R.array.donation_google_catalog_values), false, null, null,
-                    null, false, null, null, false, null);
+            donationsFragment = DonationsFragment.newInstance(BuildConfig.DEBUG, true,
+                    GOOGLE_PUBKEY, GOOGLE_CATALOG,
+                    getResources().getStringArray(R.array.donation_google_catalog_values),
+                    false, null, null,
+                    null, false, null,
+                    null, false, null);
 
-            fragmentTransaction.replace(R.id.donations_activity_container, donationsFragment, "donationsFragment");
+            fragmentTransaction.replace(R.id.donations_activity_container, donationsFragment,
+                    "donationsFragment");
             fragmentTransaction.commit();
         }
 
-        Button paypalButton = findViewById(R.id.donations__paypal_modified_donate_button);
-        paypalButton.setOnClickListener(new View.OnClickListener() {
+        Button payPalButton = findViewById(R.id.donations__paypal_modified_donate_button);
+        payPalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri uri = Uri.parse(Constants.PAYMENTS.PAYPALME);
@@ -75,11 +80,13 @@ public class DonationsActivity extends FragmentActivity {
     }
 
     public boolean isGooglePlayServicesAvailable(Activity activity) {
-        GoogleApiAvailability googleApiAvailabilityForPlayServices = GoogleApiAvailability.getInstance();
+        GoogleApiAvailability googleApiAvailabilityForPlayServices = GoogleApiAvailability
+                .getInstance();
         int status = googleApiAvailabilityForPlayServices.isGooglePlayServicesAvailable(activity);
         if (status != ConnectionResult.SUCCESS) {
             if (googleApiAvailabilityForPlayServices.isUserResolvableError(status)) {
-                googleApiAvailabilityForPlayServices.getErrorDialog(activity, status, 2404).show();
+                googleApiAvailabilityForPlayServices.getErrorDialog(activity, status, 2404)
+                        .show();
             }
             return false;
         }

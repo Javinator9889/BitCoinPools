@@ -38,47 +38,59 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
         setTitle(R.string.settingsTitle);
         initArrayOfValues();
 
-        ACTUAL_DAYS = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
-        ACTUAL_PRICE = BitCoinApp.getSharedPreferences().getInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
-        ACTUAL_ENABLED = BitCoinApp.getSharedPreferences().getBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, false);
+        ACTUAL_DAYS = BitCoinApp.getSharedPreferences()
+                .getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
+        ACTUAL_PRICE = BitCoinApp.getSharedPreferences()
+                .getInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
+        ACTUAL_ENABLED = BitCoinApp.getSharedPreferences()
+                .getBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, false);
         NEW_VALUE_ENABLED = ACTUAL_ENABLED;
 
-        TextView tv = (TextView) findViewById(R.id.daysTitle);
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner2);
+        TextView tv = findViewById(R.id.daysTitle);
+        final Spinner spinner = findViewById(R.id.spinner2);
 
         Log.d(Constants.LOG.STAG, Constants.LOG.INIT_SPINNER);
         spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.days, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, R.array.days,
+                        android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(ACTUAL_DAYS - 1);
         String output = getString(R.string.cDays);
         tv.setText(output);
 
-        final Spinner spinner1 = (Spinner) findViewById(R.id.spinner3);
+        final Spinner spinner1 = findViewById(R.id.spinner3);
         spinner1.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.prices, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter
+                .createFromResource(this, R.array.prices,
+                        android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter1);
         spinner1.setSelection(PRICES_VALUES.get(ACTUAL_PRICE));
         spinner1.setEnabled(ACTUAL_ENABLED);
 
         Log.d(Constants.LOG.STAG, Constants.LOG.INIT_SWITCH + ACTUAL_ENABLED);
-        final Switch settingsSwitch = (Switch) findViewById(R.id.switch1);
+        final Switch settingsSwitch = findViewById(R.id.switch1);
         settingsSwitch.setChecked(ACTUAL_ENABLED);
         settingsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(Constants.LOG.STAG, Constants.LOG.CHANGE_PREFERENCES + "switch (enables/disables options)");
+                Log.d(Constants.LOG.STAG, Constants.LOG.CHANGE_PREFERENCES
+                        + "switch (enables/disables options)");
                 if (isChecked) {
-                    SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp.getSharedPreferences().edit();
-                    sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, true);
+                    SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp
+                            .getSharedPreferences().edit();
+                    sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES
+                            .NOTIFICATIONS_ENABLED, true);
                     sharedPreferencesEditor.apply();
                     spinner1.setEnabled(true);
                     NEW_VALUE_ENABLED = true;
                 } else {
-                    SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp.getSharedPreferences().edit();
-                    sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, false);
+                    SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp
+                            .getSharedPreferences().edit();
+                    sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES
+                            .NOTIFICATIONS_ENABLED, false);
                     sharedPreferencesEditor.apply();
                     spinner1.setEnabled(false);
                     NEW_VALUE_ENABLED = false;
@@ -91,21 +103,30 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spinner2:
-                Log.d(Constants.LOG.STAG, Constants.LOG.CHANGE_PREFERENCES + "spinner2 (days to check)");
+                Log.d(Constants.LOG.STAG, Constants.LOG.CHANGE_PREFERENCES
+                        + "spinner2 (days to check)");
                 NEW_VALUE_DAYS = Integer.parseInt(parent.getItemAtPosition(position).toString());
-                SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp.getSharedPreferences().edit();
-                sharedPreferencesEditor.putInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, NEW_VALUE_DAYS);
+                SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp
+                        .getSharedPreferences().edit();
+                sharedPreferencesEditor.putInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK,
+                        NEW_VALUE_DAYS);
                 sharedPreferencesEditor.apply();
                 break;
             case R.id.spinner3:
-                Log.d(Constants.LOG.STAG, Constants.LOG.CHANGE_PREFERENCES + "spinner3 (price to check)");
-                NEW_VALUE_PRICE = Integer.parseInt(parent.getItemAtPosition(position).toString().replace("$", ""));
-                SharedPreferences.Editor sharedPreferencesEditor2 = BitCoinApp.getSharedPreferences().edit();
-                sharedPreferencesEditor2.putInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, NEW_VALUE_PRICE);
+                Log.d(Constants.LOG.STAG, Constants.LOG.CHANGE_PREFERENCES
+                        + "spinner3 (price to check)");
+                NEW_VALUE_PRICE = Integer.parseInt(parent.getItemAtPosition(position).toString()
+                        .replace("$", ""));
+                SharedPreferences.Editor sharedPreferencesEditor2 = BitCoinApp
+                        .getSharedPreferences().edit();
+                sharedPreferencesEditor2.putInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK,
+                        NEW_VALUE_PRICE);
                 sharedPreferencesEditor2.apply();
                 break;
             default:
-                Log.e(Constants.LOG.STAG, Constants.LOG.UNCAUGHT_ERROR + "SpinnerActivity.onItemSelected(AdapterView<?> parent, View view, int position, long id)", new UnknownError());
+                Log.e(Constants.LOG.STAG, Constants.LOG.UNCAUGHT_ERROR
+                        + "SpinnerActivity.onItemSelected(AdapterView<?> parent, View view, int position, long id)",
+                        new UnknownError());
                 break;
         }
     }
@@ -116,13 +137,14 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
     @Override
     public void onBackPressed() {
         Log.d(Constants.LOG.STAG, Constants.LOG.BACK_TO_MC);
-        if ((NEW_VALUE_DAYS != ACTUAL_DAYS) || (NEW_VALUE_PRICE != ACTUAL_PRICE) || (NEW_VALUE_ENABLED != ACTUAL_ENABLED)) {
+        if ((NEW_VALUE_DAYS != ACTUAL_DAYS) || (NEW_VALUE_PRICE != ACTUAL_PRICE)
+                || (NEW_VALUE_ENABLED != ACTUAL_ENABLED))
+        {
             Toast.makeText(this, R.string.prefUpdated, Toast.LENGTH_LONG).show();
             if (NEW_VALUE_ENABLED && !ACTUAL_ENABLED)
                 BitCoinApp.forceRestartBackgroundJobs();
             refresh();
         }
-        //refresh();
         super.onBackPressed();
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }

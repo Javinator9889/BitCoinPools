@@ -1,6 +1,7 @@
 package javinator9889.bitcoinpools;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +23,7 @@ public class CacheManaging {
         this.filename = applicationContext.getCacheDir().getPath() + File.separator + "DataCache";
     }
 
+    @NonNull
     public static CacheManaging newInstance(Context applicationContext) {
         return new CacheManaging(applicationContext);
     }
