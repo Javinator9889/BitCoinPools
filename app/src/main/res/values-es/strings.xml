@@ -74,6 +74,13 @@
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Versión 1.18 (06/03/18)</h1><i>
+        - Pantalla de carga: muestra un logotipo y una barra de progreso mientras cargan los datos de la app<br />
+        - Nuevos iconos en las tarjetas: ahora podrás ver la evolución de los distintos valores del BitCoin<br />
+        - Optimización de memoria y mejoras gráficas de la IU<br />
+        - Animaciones en las transiciones entre pantallas<br />
+        - Actualizado el diálogo de actualización: desde ahora se usará el canal oficial de Google Play Store<br />
+        - Mejoras en la velocidad y en la optimización<br /></i>
         <h1>Versión 1.17 (21/02/18)</h1><i>
         - Optimización de la IU y corrección de errores<br />
         - Corregidos los datos del BTC <br />
@@ -84,7 +91,7 @@
         - Incluido Firebase - analíticas y más <br /></i>
         <h1>Versión 1.15 (01/02/18)</h1><i>
         <b> GRAN ACTUALIZACIÓN CON UN MONTÓN DE CAMBIOS: </b><br />
-        - Añadidas nuevas optiones: <b>vista en pestañas</b> en la interfaz principal<br />
+        - Añadidas nuevas opciones: <b>vista en pestañas</b> en la interfaz principal<br />
         - Código optimizado, la aplicación más rápida que nunca<br />
         - Información del BitCoin<b> en tiempo real</b><br />
         - Nuevos gráficos, tarjetas y más<br />
