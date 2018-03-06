@@ -42,7 +42,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.<br />
-<h3>END OF TERMS AND CONDITIONS</h3>]]></string>
+<h3>END OF TERMS AND CONDITIONS</h3>
+
+<h1>FULL TERMS OF SERVICE</h1>
+<br /><a href="https://github.com/Javinator9889/BitCoinPools/blob/master/LICENSE">See the full <b>Terms of Service</b> and conditions</a> by clicking the latest link.
+
+]]></string>
     <string name="license">More info about MIT license: https://goo.gl/tiitU5</string>
     <string name="fullcode">View full project and other licenses here: https://goo.gl/LbLmBq</string>
     <string name="basedCode">Code based on:</string>
@@ -93,7 +98,15 @@ SOFTWARE.<br />
     <string name="accept">OK</string>
     <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>get information about the latest BTC pools</i> and more<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">GitHub project</a>]]></string>
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
-    <string name="changelog"><![CDATA[
+    <string name="changelog">
+        <![CDATA[
+        <h1>Version 1.18 (06/03/18)</h1><i>
+        - Load screen: now the logo is shown and also a progress bar while the app requests information<br />
+        - New icons in cards: you will be able to see the evolution of the different BitCoin values<br />
+        - Memory optimization and UI improvements<br />
+        - Transitions between screens<br />
+        - New update dialog: now the app is using official Google Play Store channel for updates<br />
+        - Speed improvements and optimization too<br /></i>
         <h1>Version 1.17 (21/02/18)</h1><i>
         - UI optimizations and bug fixes<br />
         - BTC data corrected<br />
