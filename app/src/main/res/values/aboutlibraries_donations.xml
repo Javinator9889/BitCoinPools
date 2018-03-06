@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_int_donations"></string>
+    <!-- Author section -->
+    <string name="library_donations_author">PrivacyApps</string>
+    <string name="library_donations_authorWebsite">https://github.com/PrivacyApps/</string>
+    <!-- Library section -->
+    <string name="library_donations_libraryName">Donations</string>
+    <string name="library_donations_libraryDescription">Android Donations Lib supports donations by Google Play Store, Flattr, PayPal, and Bitcoin.</string>
+    <string name="library_donations_libraryWebsite">https://github.com/PrivacyApps/donations</string>
+    <string name="library_donations_libraryVersion">2.5</string>
+    <!-- OpenSource section -->
+    <string name="library_donations_isOpenSource">true</string>
+    <string name="library_donations_repositoryLink">https://github.com/PrivacyApps/donations</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_donations_classPath"></string>
+    <!-- License section -->
+    <string name="library_donations_licenseId">apache_2_0</string>
+    <!-- Custom variables section -->
+</resources>
+
