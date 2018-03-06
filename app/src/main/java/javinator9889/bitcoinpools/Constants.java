@@ -12,7 +12,9 @@ public class Constants {
     public static final long SCHEDULING_TIME = TimeUnit.HOURS.toMillis(1);
     public static final long BACKOFF_CRITERIA = TimeUnit.SECONDS.toMillis(30);
     public static final int JOB_ID = 1;
-    public static final int REQUEST_INVITE = 0;
+    public static final String JOBINFO = "(job:2/javinator9889.bitcoinpools/.BackgroundJobs.CacheJobSchedulerService)";
+    public static final long MILLIS_A_DAY = 86400000;
+
     public static class PAYMENTS {
         public static final String GOOGLE_PUBKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgt71diQE3dVAJ/KEJSpt+ZIEeeKDOWl5cBdwRirkjiVPtzwbOlOyJsf+tJzQrYvxJejmkfdwR5TlG4Z+NAZDtcS4mq63JVoPyEbmx0wvVYC3+zav2MbJO9P/gSmwTK0KGwVSyItcH5sqXjK9Mv280uj2jM0IMW0UpM91vzeitCGCbJRwMe1CnzLzFPFI01YJ/QjG+1KY7MzIhn3P2ZbS9C7fhP0BwJIBPoZJkp64pKhXf7iI5qsbZGby4V+iQiU5ONiS+ggy8X076IAB1DijL90BUnbTXCwa1WufChb3da7xV/AiPEHl9UJ2J70I3+/1Dx9MXOrYkBmOKAYFLJlcQwIDAQAB";
         public static final String[] GOOGLE_CATALOG = new String[]{"ntpsync.donation.1",
@@ -41,7 +43,7 @@ public class Constants {
     public static final String STATS_URL = "https://api.blockchain.info/stats";
     public static final String MARKET_NAME = "market_price_usd";
     public static final String POOLS_URL = "https://api.blockchain.info/pools?timespan=";
-    public static final String GITHUB_URL = "https://github.com/Javinator9889/BitCoinPools/releases#latest";
+
     public static final class LOG {
         public static final String UNCAUGHT_ERROR = "Uncaught error on: ";
 
@@ -59,7 +61,6 @@ public class Constants {
         public static final String CREATING_CHART = "Creating application chart";
         public static final String INIT_VALUES = "Initialising application values";
         public static final String LISTENING = "Listening to buttons";
-        public static final String CHECKING_PERMISSIONS = "Checking for required permissions";
         public static final String LOADING_MPU = "Loading MPU in a new thread...";
         public static final String LOADING_RD = "Loading data in a new thread...";
         public static final String LOADING_CHART = "Loading PieChart in a new thread...";

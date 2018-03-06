@@ -3,6 +3,7 @@ package javinator9889.bitcoinpools.FragmentViews;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,27 +46,31 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
         this.btcData = btcData;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.bitcoin_card, parent, false);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.bitcoin_card,
+                parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder,
+                                 @SuppressLint("RecyclerView") final int position) {
         final CardsContent content = btcData.get(position);
         holder.title.setText(content.getTitle());
         holder.body.setText(content.getBody());
-        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+        DecimalFormat decimalFormat = new DecimalFormat("#.##",
+                new DecimalFormatSymbols(Locale.US));
         if (content.getOldData() == null)
             holder.oldData.setText("");
         else {
-            //holder.oldData.setText(content.getOldData());
             switch (position) {
                 case 0:
-                    float newPrice = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldPrice = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
-                    System.out.println("Comparing: " + newPrice + " | " + oldPrice);
+                    float newPrice = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldPrice = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(content.getOldData())));
                     float pricePercentage = percentageCalculator(newPrice, oldPrice);
                     switch (Float.compare(pricePercentage, 0f)) {
                         case 0:
@@ -75,20 +80,23 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(pricePercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(pricePercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
                 case 1:
-                    float newPower = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldPower = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
-                    System.out.println("Comparing: " + newPower + " | " + oldPower);
+                    float newPower = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldPower = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(content.getOldData())));
                     float powerPercentage = percentageCalculator(newPower, oldPower);
                     switch (Float.compare(powerPercentage, 0f)) {
                         case 0:
@@ -98,20 +106,23 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(powerPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(powerPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
                 case 2:
-                    float newDifficulty = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldDifficulty = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
-                    System.out.println("Comparing: " + newDifficulty + " | " + oldDifficulty);
+                    float newDifficulty = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldDifficulty = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(content.getOldData())));
                     float difficultyPercentage;
                     float result = percentageCalculator(newDifficulty, oldDifficulty);
                     if (result == 0)
@@ -123,23 +134,29 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             holder.oldData.setText("0%");
                             break;
                         case 1:
-                            String positiveText = "+" + decimalFormat.format(difficultyPercentage) + "%";
+                            String positiveText = "+" + decimalFormat
+                                    .format(difficultyPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
-                            String negativeText = decimalFormat.format(- difficultyPercentage) + "%";
+                            String negativeText = decimalFormat
+                                    .format(- difficultyPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
                 case 3:
-                    float newBlock = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldBlock = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData()) / 10));
-                    System.out.println("Comparing: " + newBlock + " | " + oldBlock);
+                    float newBlock = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldBlock = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(
+                                    content.getOldData()) / 10));
                     float blockPercentage = percentageCalculator(newBlock, oldBlock);
                     switch (Float.compare(blockPercentage, 0f)) {
                         case 0:
@@ -149,20 +166,23 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(blockPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(blockPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
                 case 4:
-                    float newMinutes = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldMinutes = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
-                    System.out.println("Comparing: " + newMinutes + " | " + oldMinutes);
+                    float newMinutes = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldMinutes = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(content.getOldData())));
                     float minutesPercentage;
                     float resultMinutes = percentageCalculator(newMinutes, oldMinutes);
                     if (resultMinutes == 0)
@@ -174,23 +194,28 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             holder.oldData.setText("0%");
                             break;
                         case 1:
-                            String positiveText = "+" + decimalFormat.format(minutesPercentage) + "%";
+                            String positiveText = "+" + decimalFormat
+                                    .format(minutesPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(minutesPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
                 case 5:
-                    float newBtcFees = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldBtcFees = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData()) / 10000000));
-                    System.out.println("Comparing: " + newBtcFees + " | " + oldBtcFees);
+                    float newBtcFees = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldBtcFees = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(
+                                    content.getOldData()) / 10000000));
                     float feePercentage;
                     float resultFees = percentageCalculator(newBtcFees, oldBtcFees);
                     if (resultFees == 0)
@@ -205,20 +230,23 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(feePercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(feePercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
                 case 6:
-                    float newTrans = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldTrans = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData())));
-                    System.out.println("Comparing: " + newTrans + " | " + oldTrans);
+                    float newTrans = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldTrans = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(content.getOldData())));
                     float transPercentage = percentageCalculator(newTrans, oldTrans);
                     switch (Float.compare(transPercentage, 0f)) {
                         case 0:
@@ -228,36 +256,43 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             String positiveText = "+" + decimalFormat.format(transPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(transPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;
                 case 7:
-                    float newBenefit = Float.parseFloat(content.getBody().replaceAll("[^\\d.]", ""));
-                    float oldBenefit = Float.parseFloat(decimalFormat.format(Float.parseFloat(content.getOldData()) / 100));
-                    System.out.println("Comparing: " + newBenefit + " | " + oldBenefit);
+                    float newBenefit = Float.parseFloat(
+                            content.getBody().replaceAll("[^\\d.]", ""));
+                    float oldBenefit = Float.parseFloat(
+                            decimalFormat.format(Float.parseFloat(
+                                    content.getOldData()) / 100));
                     float benefitPercentage = percentageCalculator(newBenefit, oldBenefit);
                     switch (Float.compare(benefitPercentage, 0f)) {
                         case 0:
                             holder.oldData.setText("0%");
                             break;
                         case 1:
-                            String positiveText = "+" + decimalFormat.format(benefitPercentage) + "%";
+                            String positiveText = "+" + decimalFormat
+                                    .format(benefitPercentage) + "%";
                             holder.oldData.setText(positiveText);
                             holder.oldData.setTextColor(Color.GREEN);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_green_arrow_up_darker, 0, 0, 0);
                             break;
                         case -1:
                             String negativeText = decimalFormat.format(benefitPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
-                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_red_arrow_down, 0, 0, 0);
+                            holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
+                                    R.drawable.ic_red_arrow_down, 0, 0, 0);
                             break;
                     }
                     break;

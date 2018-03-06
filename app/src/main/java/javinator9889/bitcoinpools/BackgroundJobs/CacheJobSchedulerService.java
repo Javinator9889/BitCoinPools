@@ -6,19 +6,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.CacheManaging;
@@ -39,12 +31,9 @@ public class CacheJobSchedulerService extends JobService {
     private Handler jobHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            System.out.println("Handling message");
             if (!jobCancelled) {
                 try {
-                    System.out.println("Updating cache");
                     updateCache();
-                    System.out.println("Cache updated");
                     jobWorking = false;
                     jobFinished((JobParameters) msg.obj, false);
                     return false;
@@ -78,7 +67,8 @@ public class CacheJobSchedulerService extends JobService {
     }
 
     private void updateCache() {
-        String date = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US).format(Calendar.getInstance().getTime());
+        String date = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US)
+                .format(Calendar.getInstance().getTime());
         CacheManaging cache = CacheManaging.newInstance(BitCoinApp.getAppContext());
         try {
             cache.setupFile();
@@ -89,7 +79,6 @@ public class CacheJobSchedulerService extends JobService {
             newValuesToSave.put("date", date);
             for (String key : valuesObtained.keySet()) {
                 newValuesToSave.put(key, String.valueOf(valuesObtained.get(key)));
-                System.out.println(key + " | " + valuesObtained.get(key));
             }
             cache.writeCache(newValuesToSave);
         } catch (Exception e) {
@@ -97,24 +86,4 @@ public class CacheJobSchedulerService extends JobService {
             throw new NullPointerException("Impossible to obtain values");
         }
     }
-
-    /*private JSONObject getHTTPSRequest(String requestUrl) throws Exception {
-        Thread httpsRequestThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                StringBuilder response = new StringBuilder();
-                URL urlObject = new URL(requestUrl);
-                HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
-                connection.setRequestMethod("GET");
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    response.append(line);
-                }
-                bufferedReader.close();
-                return new JSONObject(response.toString());
-            }
-        })
-    }*/
 }
