@@ -34,7 +34,7 @@ public class DonationsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.donations_activity);
 
-        if (isGooglePlayServicesAvaiable(this)) {
+        if (isGooglePlayServicesAvailable(this)) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             DonationsFragment donationsFragment;
 
@@ -68,7 +68,7 @@ public class DonationsActivity extends FragmentActivity {
         }
     }
 
-    public boolean isGooglePlayServicesAvaiable(Activity activity) {
+    public boolean isGooglePlayServicesAvailable(Activity activity) {
         GoogleApiAvailability googleApiAvailabilityForPlayServices = GoogleApiAvailability.getInstance();
         int status = googleApiAvailabilityForPlayServices.isGooglePlayServicesAvailable(activity);
         if (status != ConnectionResult.SUCCESS) {

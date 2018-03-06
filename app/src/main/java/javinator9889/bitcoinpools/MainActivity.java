@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 5);
         //Toast.makeText(this, "Hi, the activity is fully loaded", Toast.LENGTH_LONG).show();
         DataLoaderScreen.dataLoaderScreenActivity.finish();
-        DataLoaderScreen.progressDialog.dismiss();
+        //DataLoaderScreen.progressDialog.dismiss();
     }
 
 
