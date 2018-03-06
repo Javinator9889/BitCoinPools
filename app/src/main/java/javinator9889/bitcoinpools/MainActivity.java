@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.util.Rational;
 import android.view.Menu;
@@ -184,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //DataLoaderScreen.progressDialog.setProgress(DataLoaderScreen.progressDialog.getCurrentProgress() + 5);
-        DataLoaderScreen.progressDialog.dismiss();
         //Toast.makeText(this, "Hi, the activity is fully loaded", Toast.LENGTH_LONG).show();
         DataLoaderScreen.dataLoaderScreenActivity.finish();
+        DataLoaderScreen.progressDialog.dismiss();
     }
 
 
@@ -244,11 +245,17 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
                 break;
             case R.id.share:
-                Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                /*Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
                         .setMessage(getString(R.string.inv_message))
                         .setDeepLink(Uri.parse(Constants.GITHUB_URL))
                         .build();
-                startActivityForResult(intent, Constants.REQUEST_CODE);
+                startActivityForResult(intent, Constants.REQUEST_CODE);*/
+                Intent shareAppIntent = new Intent(Intent.ACTION_SEND);
+                shareAppIntent.setType("text/plain");
+                shareAppIntent.putExtra(Intent.EXTRA_SUBJECT, "BitCoin Pools");
+                final Uri googlePlayLink = Uri.parse("https://play.google.com/store/apps/details?id=com.fastaccess.github");
+                shareAppIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.inv_message) + " - Google Play Store: " + googlePlayLink.toString());
+                startActivity(Intent.createChooser(shareAppIntent, getString(R.string.invitation_title)));
                 break;
             case R.id.donate:
                 Intent donateIntent = new Intent(MainActivity.this, DonationsActivity.class);
