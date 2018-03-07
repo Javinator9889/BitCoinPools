@@ -71,6 +71,16 @@ public class DataLoaderScreen extends AppCompatActivity {
         private Thread poolsDataThread;
         private Thread cardsDataThread;
         private Thread btcPriceThread;
+        private Thread.UncaughtExceptionHandler threadExceptions = new Thread
+                .UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                isAnyExceptionThrown = true;
+                Log.e("DataLoaderScreen", "Exception on thread: " + t.getName()
+                        + " | Message: " + e.getMessage());
+            }
+        };
+        private boolean isAnyExceptionThrown = false;
 
         @Override
         protected void onPreExecute() {
@@ -78,7 +88,7 @@ public class DataLoaderScreen extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if (result) {
+            if (result && !isAnyExceptionThrown) {
                 Intent activityMainIntent = new Intent(DataLoaderScreen.this,
                         MainActivity.class);
                 activityMainIntent.putExtra("MPU", mpu);
@@ -139,7 +149,7 @@ public class DataLoaderScreen extends AppCompatActivity {
             return new JSONObject(response.toString());
         }
 
-        private void getBitCoinMarketPrice() {
+        private void getBitCoinMarketPrice() throws DataLoaderException {
             marketPriceThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -156,6 +166,8 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }
                 }
             });
+            marketPriceThread.setUncaughtExceptionHandler(threadExceptions);
+            marketPriceThread.setName("MarketPriceThread");
             marketPriceThread.start();
         }
 
@@ -176,6 +188,8 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }
                 }
             });
+            poolsDataThread.setUncaughtExceptionHandler(threadExceptions);
+            poolsDataThread.setName("PoolsDataThread");
             poolsDataThread.start();
         }
 
@@ -193,6 +207,8 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }
                 }
             });
+            cardsDataThread.setUncaughtExceptionHandler(threadExceptions);
+            cardsDataThread.setName("CardsDataThread");
             cardsDataThread.start();
         }
 
@@ -211,6 +227,8 @@ public class DataLoaderScreen extends AppCompatActivity {
                     }
                 }
             });
+            btcPriceThread.setUncaughtExceptionHandler(threadExceptions);
+            btcPriceThread.setName("BtcPriceThread");
             btcPriceThread.start();
         }
     }
