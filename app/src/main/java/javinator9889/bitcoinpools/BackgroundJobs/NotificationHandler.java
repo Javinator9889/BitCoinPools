@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
+import javinator9889.bitcoinpools.DataLoaderScreen;
 import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.NetTools.net;
 import javinator9889.bitcoinpools.R;
@@ -60,7 +61,7 @@ class NotificationHandler {
         PendingIntent clickIntent = PendingIntent.getActivity(
                 BitCoinApp.getAppContext(),
                 Constants.REQUEST_CODE,
-                new Intent(BitCoinApp.getAppContext(), MainActivity.class),
+                new Intent(BitCoinApp.getAppContext(), DataLoaderScreen.class),
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
 
