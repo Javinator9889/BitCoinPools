@@ -1,8 +1,10 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +18,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.sufficientlysecure.donations.BuildConfig;
 import org.sufficientlysecure.donations.DonationsFragment;
+import org.sufficientlysecure.donations.google.util.IabHelper;
 
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.R;
@@ -34,7 +37,7 @@ public class DonationsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.donations_activity);
 
-        if (isGooglePlayServicesAvailable(this)) {
+        if ((isGooglePlayServicesAvailable(this)) && (Build.VERSION.SDK_INT > 22)) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                     .beginTransaction();
             DonationsFragment donationsFragment;
