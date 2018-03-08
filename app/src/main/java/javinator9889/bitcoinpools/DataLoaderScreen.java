@@ -43,9 +43,9 @@ public class DataLoaderScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataLoaderScreenActivity = this;
+        setContentView(R.layout.activity_loading);
         if (BitCoinApp.isOnline()) {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
-            setContentView(R.layout.activity_loading);
             new DataLoader().execute();
         } else {
             new MaterialDialog.Builder(this)
