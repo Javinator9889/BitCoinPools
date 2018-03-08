@@ -295,7 +295,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     @NonNull
     public Dialog createDialog() {
         final Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        calendar.add(Calendar.DAY_OF_MONTH, -2);
         final Calendar limitDate = Calendar.getInstance();
         limitDate.set(2010, 6, 17);
 
