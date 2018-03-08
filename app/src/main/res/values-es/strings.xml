@@ -70,10 +70,17 @@
     <string name="noConnectionTitle">No hay conexión a Internet</string>
     <string name="noConnectionDesc">Esta aplicación necesita conexión a Internet para funcionar. Por favor, activa tu conexión de datos o conéctate a una red WiFi</string>
     <string name="accept">Aceptar</string>
-    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>obtén información sobre las últimas pools de BTC</i> y más<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">Proyecto en GitHub</a>]]></string>
+    <string name="bitcoindesc"><![CDATA[BitCoin Pools: <i>obtén información sobre las últimas pools de BTC</i> y más<br /><b>Copyright © 2017 - Javinator9889</b><br /><a href="https://github.com/Javinator9889/BitCoinPools">Proyecto en GitHub</a><br /><a href="https://github.com/Javinator9889/BitCoinPools/blob/master/LICENSE">Click para los Términos de Servicio completos</a>]]></string>
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Versión 1.18 (06/03/18)</h1><i>
+        - Pantalla de carga: muestra un logotipo y una barra de progreso mientras cargan los datos de la app<br />
+        - Nuevos iconos en las tarjetas: ahora podrás ver la evolución de los distintos valores del BitCoin<br />
+        - Optimización de memoria y mejoras gráficas de la IU<br />
+        - Animaciones en las transiciones entre pantallas<br />
+        - Actualizado el diálogo de actualización: desde ahora se usará el canal oficial de Google Play Store<br />
+        - Mejoras en la velocidad y en la optimización<br /></i>
         <h1>Versión 1.17 (21/02/18)</h1><i>
         - Optimización de la IU y corrección de errores<br />
         - Corregidos los datos del BTC <br />
@@ -84,7 +91,7 @@
         - Incluido Firebase - analíticas y más <br /></i>
         <h1>Versión 1.15 (01/02/18)</h1><i>
         <b> GRAN ACTUALIZACIÓN CON UN MONTÓN DE CAMBIOS: </b><br />
-        - Añadidas nuevas optiones: <b>vista en pestañas</b> en la interfaz principal<br />
+        - Añadidas nuevas opciones: <b>vista en pestañas</b> en la interfaz principal<br />
         - Código optimizado, la aplicación más rápida que nunca<br />
         - Información del BitCoin<b> en tiempo real</b><br />
         - Nuevos gráficos, tarjetas y más<br />
@@ -178,7 +185,15 @@
     <string name="inv_message">Descarga BitCoin Pools, una aplicación para obtener información sobre el BitCoin y más</string>
     <string name="loadingData">Cargando datos…</string>
     <string name="please_wait">Obteniendo la última información… Por favor, espera</string>
-    <string name="donations__description">¿Te ha parecido útil la app? ¡Motívame a seguir trabjando!\nApóyame con una pequeña donación, te lo agradeceré :D</string>
+    <string name="donations__description">¿Te ha parecido útil la app? ¡Motívame a seguir trabajando!\nApóyame con una pequeña donación, te lo agradeceré :D</string>
     <string name="donations__google_android_market_description">Google se queda con un 30% de lo que selecciones</string>
     <string name="support">¡Apóyame!</string>
+    <string name="errorLoading">Se ha producido un error</string>
+    <string name="errorLoadingDescription">
+        <![CDATA[
+        No hemos podido obtener los datos. Por favor, comprueba tu conexión a Internet.<br />
+        Si ocurre esto a menudo, por favor contacta a <a href="mailto:javialonso007@hotmail.es">esta dirección de correo</a>
+        ]]>
+    </string>
+    <string name="comparationDate">Porcentajes comparados con la fecha: </string>
 </resources>
