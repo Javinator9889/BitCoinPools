@@ -1,24 +1,25 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.sufficientlysecure.donations.BuildConfig;
 import org.sufficientlysecure.donations.DonationsFragment;
-import org.sufficientlysecure.donations.google.util.IabHelper;
 
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.R;
@@ -32,6 +33,8 @@ import static javinator9889.bitcoinpools.Constants.PAYMENTS.GOOGLE_PUBKEY;
  */
 
 public class DonationsActivity extends FragmentActivity {
+    private DonationsFragment donationsFragment = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,16 +43,15 @@ public class DonationsActivity extends FragmentActivity {
         if ((isGooglePlayServicesAvailable(this)) && (Build.VERSION.SDK_INT > 22)) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                     .beginTransaction();
-            DonationsFragment donationsFragment;
 
-            donationsFragment = DonationsFragment.newInstance(BuildConfig.DEBUG, true,
+            this.donationsFragment = DonationsFragment.newInstance(BuildConfig.DEBUG, true,
                     GOOGLE_PUBKEY, GOOGLE_CATALOG,
                     getResources().getStringArray(R.array.donation_google_catalog_values),
                     false, null, null,
                     null, false, null,
                     null, false, null);
 
-            fragmentTransaction.replace(R.id.donations_activity_container, donationsFragment,
+            fragmentTransaction.replace(R.id.donations_activity_container, this.donationsFragment,
                     "donationsFragment");
             fragmentTransaction.commit();
         }
@@ -63,6 +65,34 @@ public class DonationsActivity extends FragmentActivity {
                 startActivity(browserIntent);
             }
         });
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        try {
+            Button googleDonationsButton = donationsFragment.getActivity()
+                    .findViewById(R.id.donations__google_android_market_donate_button);
+            googleDonationsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        donationsFragment.donateGoogleOnClick(v);
+                    } catch (IllegalStateException e) {
+                        new MaterialDialog.Builder(DonationsActivity.this)
+                                .title(R.string.donations__google_android_market_not_supported_title)
+                                .content(R.string.donations__google_android_market_not_supported)
+                                .cancelable(true)
+                                .positiveText(R.string.accept)
+                                .build().show();
+
+                    }
+                }
+            });
+        } catch (NullPointerException e) {
+            Log.e("DonationsActivity", "Unable to get button-fragment. Full trace: "
+            + e.getMessage());
+        }
     }
 
     @Override
