@@ -251,6 +251,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar actualDate = Calendar.getInstance();
         if (year <= 2010) {
             this.year = 2010;
             if ((month <= 6) && (dayOfMonth < 17)) {
@@ -268,10 +269,22 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
                 this.year = year;
             }
         } else {
-            this.day = dayOfMonth;
-            this.month = month;
-            this.writable_month = ++month;
-            this.year = year;
+            if (dayOfMonth >= actualDate.get(Calendar.DAY_OF_MONTH)) {
+                if (month >= actualDate.get(Calendar.MONTH)) {
+                    if (year >= actualDate.get(Calendar.YEAR)) {
+                        actualDate.add(Calendar.DAY_OF_MONTH, -2);
+                        this.day = actualDate.get(Calendar.DAY_OF_MONTH);
+                        this.month = actualDate.get(Calendar.MONTH);
+                        this.writable_month = ++month;
+                        this.year = actualDate.get(Calendar.YEAR);
+                    }
+                }
+            } else {
+                this.day = dayOfMonth;
+                this.month = month;
+                this.writable_month = ++month;
+                this.year = year;
+            }
         }
         this.date_set = true;
         String buttonText = getString(R.string.since) + " " + parseDate();
