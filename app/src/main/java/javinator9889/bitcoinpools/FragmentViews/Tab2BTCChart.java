@@ -295,6 +295,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     @NonNull
     public Dialog createDialog() {
         final Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
         final Calendar limitDate = Calendar.getInstance();
         limitDate.set(2010, 6, 17);
 
@@ -304,7 +305,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             this.day = calendar.get(Calendar.DAY_OF_MONTH);
             this.date_set = true;
         }
-        System.out.println(this.year + " " + this.month + " " + this.day);
 
         DatePickerDialog dialog = new DatePickerDialog(
                 getActivity(),
@@ -321,7 +321,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         return dialog;
     }
 
-    //@SuppressLint("SimpleDateFormat")
     public void forceReload() {
         String dateParsed = parseDate();
         REQUEST_URL = API_URL + "?start=" + dateParsed + "&end=" +
