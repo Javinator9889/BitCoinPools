@@ -138,12 +138,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void refresh() {
         Tab2BTCChart.setLineChartCreated();
-        Intent intentMain = new Intent(MainActivity.this, MainActivity.class);
+        Intent intentMain = new Intent(MainActivity.this, DataLoaderScreen.class);
         intentMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intentMain.putExtra("MPU", mpu);
+        /*intentMain.putExtra("MPU", mpu);
         intentMain.putExtra("RD", retrievedData);
         intentMain.putExtra("CARDS", cardsData);
-        intentMain.putExtra("BTCPRICE", btcPrice);
+        intentMain.putExtra("BTCPRICE", btcPrice);*/
         startActivity(intentMain);
         MainActivity.this.finish();
     }
