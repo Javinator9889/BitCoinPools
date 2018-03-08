@@ -36,8 +36,9 @@
         <item name="android:textColor">#FAFAFA</item>
     </style>
 
-    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
-
+    <style name="AppTheme.Launcher" parent="CustomTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+<!--        <item name="colorBackground">@color/colorPrimaryDark</item>-->
     </style>
 
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
