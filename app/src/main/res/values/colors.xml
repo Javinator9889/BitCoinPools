@@ -9,4 +9,6 @@
     <color name="navigationBarColor">#000000</color>
     <color name="border_color">#000000</color>
     <color name="background_color">#000030</color>
+    <color name="positiveTextPercentageColor">#00FF00</color>
+    <color name="negativeTextPercentageColor">#FF0000</color>
 </resources>

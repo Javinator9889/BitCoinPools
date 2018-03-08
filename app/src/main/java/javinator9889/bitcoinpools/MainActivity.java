@@ -1,16 +1,11 @@
 package javinator9889.bitcoinpools;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,56 +17,56 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.gms.appinvite.AppInviteInvitation;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 import javinator9889.bitcoinpools.AppUpdaterManager.CheckUpdates;
 import javinator9889.bitcoinpools.FragmentViews.DonationsActivity;
 import javinator9889.bitcoinpools.FragmentViews.Tab1PoolsChart;
 import javinator9889.bitcoinpools.FragmentViews.Tab2BTCChart;
+import javinator9889.bitcoinpools.JSONTools.JSONTools;
 
 
+@SuppressLint("StaticFieldLeak")
 public class MainActivity extends AppCompatActivity {
-    @SuppressLint("StaticFieldLeak")
     public static Toolbar MAINACTIVITY_TOOLBAR;
-    private FirebaseAnalytics mFirebaseAnalytics;
+    public static AppCompatActivity mainActivity;
+
+    private float mpu;
+    private HashMap<String, Float> retrievedData;
+    private HashMap<String, Float> cardsData;
+    private HashMap<Date, Float> btcPrice;
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (BitCoinApp.isOnline()) {
-            Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
-            setContentView(R.layout.activity_main);
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            Bundle appOpen = new Bundle();
-            appOpen.putString("Date", Calendar.getInstance().getTime().toString());
-            appOpen.putString("DeviceBrand", Build.BRAND);
-            appOpen.putString("DeviceID", Build.ID);
-            appOpen.putString("DeviceName", Build.PRODUCT);
-            appOpen.putString("AndroidVersion", Build.VERSION.RELEASE);
-            mFirebaseAnalytics.logEvent("main_activity", appOpen);
-
-            if (BitCoinApp.getSharedPreferences().contains(Constants.SHARED_PREFERENCES.APP_VERSION)) {
-                if (!BitCoinApp.getSharedPreferences().getString(Constants.SHARED_PREFERENCES.APP_VERSION, "1.0").equals(BitCoinApp.appVersion())) {
-                    new MaterialDialog.Builder(this)
-                            .title("Changelog")
-                            .content(R.string.changelog, true)
-                            .cancelable(true)
-                            .positiveText(R.string.accept)
-                            .build().show();
-                    SharedPreferences.Editor editor = BitCoinApp.getSharedPreferences().edit();
-                    editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion());
-                    editor.apply();
-                }
-            } else {
+        mainActivity = this;
+        Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
+        setContentView(R.layout.activity_main);
+        Intent dataFromDataLoaderClass = getIntent();
+        this.mpu = dataFromDataLoaderClass.getFloatExtra("MPU", 0);
+        this.retrievedData = JSONTools.sortByValue
+                ((HashMap<String, Float>) dataFromDataLoaderClass
+                        .getSerializableExtra("RD"));
+        this.cardsData = JSONTools.sortByValue
+                ((HashMap<String, Float>) dataFromDataLoaderClass
+                        .getSerializableExtra("CARDS"));
+        this.btcPrice = JSONTools.sortDateByValue
+                ((HashMap<Date, Float>) dataFromDataLoaderClass
+                        .getSerializableExtra("BTCPRICE"));
+        if (BitCoinApp.getSharedPreferences().contains(Constants.SHARED_PREFERENCES.APP_VERSION)) {
+            if (!BitCoinApp.getSharedPreferences()
+                    .getString(Constants.SHARED_PREFERENCES.APP_VERSION, "1.0")
+                    .equals(BitCoinApp.appVersion()))
+            {
                 new MaterialDialog.Builder(this)
                         .title("Changelog")
-                        .content(R.string.changelog, true)
+                        .content(R.string.changelog,
+                                true)
                         .cancelable(true)
                         .positiveText(R.string.accept)
                         .build().show();
@@ -79,42 +74,60 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion());
                 editor.apply();
             }
-
-            Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
-            checkPermissions();
-            CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
-
-            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-            MAINACTIVITY_TOOLBAR = findViewById(R.id.toolbar);
-            setSupportActionBar(MAINACTIVITY_TOOLBAR);
-
-            ViewPager viewPager = findViewById(R.id.viewContainer);
-            viewPager.setAdapter(mSectionsPagerAdapter);
-
-            TabLayout tabLayout = findViewById(R.id.tabs);
-            setupTabs(tabLayout);
-            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-            tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
-            Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
-
-            Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
-            ck.checkForUpdates(this, getString(R.string.updateAvailable), getString(R.string.updateDescrip), getString(R.string.updateNow), getString(R.string.updateLater), getString(R.string.updatePage));
         } else {
             new MaterialDialog.Builder(this)
-                    .title(R.string.noConnectionTitle)
-                    .content(R.string.noConnectionDesc)
-                    .cancelable(false)
+                    .title("Changelog")
+                    .content(R.string.changelog,
+                            true)
+                    .cancelable(true)
                     .positiveText(R.string.accept)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            closeApp();
-                        }
-                    })
-                    .build()
-                    .show();
+                    .build().show();
+            SharedPreferences.Editor editor = BitCoinApp.getSharedPreferences().edit();
+            editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion());
+            editor.apply();
         }
+
+        Log.d(Constants.LOG.MATAG, Constants.LOG.INIT_VALUES);
+
+        CheckUpdates ck = new CheckUpdates(Constants.GITHUB_USER, Constants.GITHUB_REPO);
+
+        SectionsPagerAdapter mSectionsPagerAdapter =
+                new SectionsPagerAdapter(getSupportFragmentManager());
+        MAINACTIVITY_TOOLBAR = findViewById(R.id.toolbar);
+        setSupportActionBar(MAINACTIVITY_TOOLBAR);
+
+        ViewPager viewPager = findViewById(R.id.viewContainer);
+        viewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        setupTabs(tabLayout);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+
+        Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
+        Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
+        try {
+            ck.checkForUpdates(this,
+                    getString(R.string.updateAvailable),
+                    getString(R.string.updateDescrip),
+                    getString(R.string.updateNow),
+                    getString(R.string.updateLater),
+                    getString(R.string.updatePage));
+        } catch (NullPointerException e) {
+            Log.e(Constants.LOG.MATAG, "Unable to get updates");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DataLoaderScreen.dataLoaderScreenActivity.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
     @Override
@@ -125,8 +138,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void refresh() {
         Tab2BTCChart.setLineChartCreated();
-        Intent intentMain = new Intent(MainActivity.this, MainActivity.class);
+        Intent intentMain = new Intent(MainActivity.this, DataLoaderScreen.class);
         intentMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        /*intentMain.putExtra("MPU", mpu);
+        intentMain.putExtra("RD", retrievedData);
+        intentMain.putExtra("CARDS", cardsData);
+        intentMain.putExtra("BTCPRICE", btcPrice);*/
         startActivity(intentMain);
         MainActivity.this.finish();
     }
@@ -144,9 +161,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 Thread settingsThread = new Thread() {
                     public void run() {
-                        Intent intentSettings = new Intent(MainActivity.this, SpinnerActivity.class);
+                        Intent intentSettings = new Intent(MainActivity.this,
+                                SpinnerActivity.class);
                         startActivity(intentSettings);
-                        MainActivity.this.finish();
+                        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     }
                 };
                 settingsThread.setName("settings_thread");
@@ -155,8 +173,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.license:
                 Thread licenseThread = new Thread() {
                     public void run() {
-                        Intent intentLicense = new Intent(MainActivity.this, License.class);
+                        Intent intentLicense = new Intent(MainActivity.this,
+                                License.class);
                         startActivity(intentLicense);
+                        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     }
                 };
                 licenseThread.setName("license_thread");
@@ -167,36 +187,31 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
                 break;
             case R.id.share:
-                Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
-                        .setMessage(getString(R.string.inv_message))
-                        .setDeepLink(Uri.parse(Constants.GITHUB_URL))
-                        .build();
-                startActivityForResult(intent, Constants.REQUEST_CODE);
+                Intent shareAppIntent = new Intent(Intent.ACTION_SEND);
+                shareAppIntent.setType("text/plain");
+                shareAppIntent.putExtra(Intent.EXTRA_SUBJECT, "BitCoin Pools");
+                final Uri googlePlayLink = Uri.parse(Constants.GOOGLE_PLAY_URL);
+                shareAppIntent.putExtra(Intent.EXTRA_TEXT,
+                        getString(R.string.inv_message) +
+                                " - Google Play Store: " +
+                                googlePlayLink.toString());
+                startActivity(Intent.createChooser(shareAppIntent, getString(R.string.invitation_title)));
                 break;
             case R.id.donate:
-                Intent donateIntent = new Intent(MainActivity.this, DonationsActivity.class);
+                Intent donateIntent = new Intent(MainActivity.this,
+                        DonationsActivity.class);
                 startActivity(donateIntent);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 break;
         }
         return true;
     }
 
-    private void checkPermissions() {
-        Log.d(Constants.LOG.MATAG, Constants.LOG.CHECKING_PERMISSIONS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        }
-    }
-
-    private void closeApp() {
-        this.onBackPressed();
-    }
-
     private void setupTabs(TabLayout destinationTab) {
-        destinationTab.addTab(destinationTab.newTab().setText(R.string.poolsChart).setIcon(R.drawable.ic_poll_white_24dp));
-        destinationTab.addTab(destinationTab.newTab().setText(R.string.bitcoinChart).setIcon(R.drawable.ic_attach_money_white_24dp));
+        destinationTab.addTab(destinationTab.newTab().
+                setText(R.string.poolsChart).setIcon(R.drawable.ic_poll_white_24dp));
+        destinationTab.addTab(destinationTab.newTab().
+                setText(R.string.bitcoinChart).setIcon(R.drawable.ic_attach_money_white_24dp));
     }
 
     /**
@@ -211,14 +226,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    return new Tab1PoolsChart();
+                    return Tab1PoolsChart.newInstance(mpu, retrievedData);
                 case 1:
-                    return new Tab2BTCChart();
+                    return Tab2BTCChart.newInstance(cardsData, btcPrice);
                 default:
                     return null;
             }
@@ -226,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
