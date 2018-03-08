@@ -29,7 +29,8 @@ The purpose of this application is *getting information about mining pools* avai
 
 Here you have to download the newest version available, on *Aptoide* or directly from *GitHub*:
 
-[![BitCoinApp - Aptiode](https://img.shields.io/badge/Download%20-Aptoide-green.svg)](https://goo.gl/5sqsNP)
+<a href='https://play.google.com/store/apps/details?id=javinator9889.bitcoinpools&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=323 height=125/></a>
+
 [![BitCoinApp - Releases](https://img.shields.io/badge/Download%20-GitHub%20APK-green.svg)](https://goo.gl/qeaU85)
 
 ## I have used it and I love it. What can I do?
