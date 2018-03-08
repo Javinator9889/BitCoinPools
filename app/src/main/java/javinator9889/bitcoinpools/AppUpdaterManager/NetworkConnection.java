@@ -1,6 +1,7 @@
 package javinator9889.bitcoinpools.AppUpdaterManager;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ public class NetworkConnection extends AsyncTask <String, Void, JSONArray> {
         return null;
     }
 
+    @NonNull
     private String readAll(Reader httpsReader) throws IOException {
         StringBuilder response = new StringBuilder();
         int valueRead;
@@ -43,9 +45,11 @@ public class NetworkConnection extends AsyncTask <String, Void, JSONArray> {
         return response.toString();
     }
 
+    @NonNull
     private JSONArray readJSONFromURL(String url) throws IOException, JSONException {
         try (InputStream JSONStream = new URL(url).openStream()) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(JSONStream, Charset.forName("UTF-8")));
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(JSONStream, Charset.forName("UTF-8")));
             String JSONText = readAll(br);
             return new JSONArray(JSONText);
         }

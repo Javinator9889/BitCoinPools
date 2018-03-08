@@ -1,15 +1,16 @@
 package javinator9889.bitcoinpools.NetTools;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Javinator9889 on 20/12/2017.
@@ -27,12 +28,14 @@ public class net extends AsyncTask<String, Void, JSONObject> {
         }
     }
 
+    @NonNull
     public static JSONObject getHttpRequest(String url) throws Exception {
         StringBuilder response = new StringBuilder();
         URL urlObject = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(connection.getInputStream()));
 
         String line;
         while ((line = bufferedReader.readLine()) != null) {
@@ -42,12 +45,14 @@ public class net extends AsyncTask<String, Void, JSONObject> {
         return new JSONObject(response.toString());
     }
 
+    @NonNull
     public static JSONObject getHttpsRequest(String url) throws Exception {
         StringBuilder response = new StringBuilder();
         URL urlObject = new URL(url);
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(connection.getInputStream()));
 
         String line;
         while ((line = bufferedReader.readLine()) != null) {
@@ -55,6 +60,5 @@ public class net extends AsyncTask<String, Void, JSONObject> {
         }
         bufferedReader.close();
         return new JSONObject(response.toString());
-        //return response.toString();
     }
 }
