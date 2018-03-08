@@ -65,9 +65,6 @@
                     android:id="@+id/longPressInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
                     android:alpha=".7"
                     android:drawablePadding="8dp"
                     android:drawableStart="@drawable/ic_info_outline_black_18dp"
@@ -76,7 +73,8 @@
                     android:textStyle="italic"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
