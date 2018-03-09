@@ -17,10 +17,12 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.sufficientlysecure.donations.BuildConfig;
 import org.sufficientlysecure.donations.DonationsFragment;
 
+import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.R;
 
 import static javinator9889.bitcoinpools.Constants.PAYMENTS.GOOGLE_CATALOG;
@@ -58,16 +60,6 @@ public class DonationsActivity extends FragmentActivity {
             noDonationsAvailableText.setTextColor(Color.RED);
             noDonationsAvailableText.setText(R.string.noDonationsAvailable);
         }
-
-        /*Button payPalButton = findViewById(R.id.donations__paypal_modified_donate_button);
-        payPalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse(Constants.PAYMENTS.PAYPALME);
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(browserIntent);
-            }
-        });*/
     }
 
     @Override
@@ -107,12 +99,15 @@ public class DonationsActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag("donationsFragment");
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID, String.valueOf(resultCode));
+        bundle.putBundle(FirebaseAnalytics.Param.VALUE, data.getExtras());
+        BitCoinApp.getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle);
     }
 
     public boolean isGooglePlayServicesAvailable(Activity activity) {
