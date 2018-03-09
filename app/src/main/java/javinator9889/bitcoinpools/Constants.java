@@ -17,9 +17,10 @@ public class Constants {
 
     public static class PAYMENTS {
         public static final String GOOGLE_PUBKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgt71diQE3dVAJ/KEJSpt+ZIEeeKDOWl5cBdwRirkjiVPtzwbOlOyJsf+tJzQrYvxJejmkfdwR5TlG4Z+NAZDtcS4mq63JVoPyEbmx0wvVYC3+zav2MbJO9P/gSmwTK0KGwVSyItcH5sqXjK9Mv280uj2jM0IMW0UpM91vzeitCGCbJRwMe1CnzLzFPFI01YJ/QjG+1KY7MzIhn3P2ZbS9C7fhP0BwJIBPoZJkp64pKhXf7iI5qsbZGby4V+iQiU5ONiS+ggy8X076IAB1DijL90BUnbTXCwa1WufChb3da7xV/AiPEHl9UJ2J70I3+/1Dx9MXOrYkBmOKAYFLJlcQwIDAQAB";
-        public static final String[] GOOGLE_CATALOG = new String[]{"ntpsync.donation.1",
-                "ntpsync.donation.2", "ntpsync.donation.3", "ntpsync.donation.5", "ntpsync.donation.8",
-                "ntpsync.donation.13"};
+        public static final String[] GOOGLE_CATALOG = new String[]{"in_app_purchases_donations",
+                "in_app_purchases_donations_2", "in_app_purchases_donations_3",
+                "in_app_purchases_donations_5", "in_app_purchases_donations_8",
+                "in_app_purchases_donations_13"};
         public static final String PAYPALME = "https://paypal.me/Javinator9889";
     }
     public static final String GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=javinator9889.bitcoinpools";
