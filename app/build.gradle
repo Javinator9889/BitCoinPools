@@ -7,8 +7,8 @@ android {
         applicationId "javinator9889.bitcoinpools"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 60
-        versionName "1.18"
+        versionCode 61
+        versionName "1.18.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

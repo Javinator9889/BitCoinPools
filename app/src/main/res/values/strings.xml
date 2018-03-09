@@ -97,6 +97,9 @@ SOFTWARE.<br />
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Version 1.18.1 (09/03/18)</h1><i>
+        - In-app donations removed (for PayPal donations)<br />
+        - Boost app start time<br /></i>
         <h1>Version 1.18 (06/03/18)</h1><i>
         - Load screen: now the logo is shown and also a progress bar while the app requests information<br />
         - New icons in cards: you will be able to see the evolution of the different BitCoin values<br />
@@ -230,4 +233,5 @@ SOFTWARE.<br />
     <string name="comparationDate">Percentages compared with the date: </string>
     <string name="donations__description">Have you found this app useful? Support me and my work!\nDonate me what you want, I will be thankful :D</string>
     <string name="donations__google_android_market_description">Google charges a fee of 30%</string>
+    <string name="noDonationsAvailable">In-App donations is not available on this device. For more information, go here: https://github.com/Javinator9889/BitCoinPools</string>
 </resources>

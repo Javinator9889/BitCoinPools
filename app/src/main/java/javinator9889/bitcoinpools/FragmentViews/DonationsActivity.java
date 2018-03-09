@@ -2,6 +2,7 @@ package javinator9889.bitcoinpools.FragmentViews;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
@@ -40,7 +42,7 @@ public class DonationsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.donations_activity);
 
-        if ((isGooglePlayServicesAvailable(this)) && (Build.VERSION.SDK_INT > 22)) {
+        if ((isGooglePlayServicesAvailable(this))) { // && (Build.VERSION.SDK_INT > 22)) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                     .beginTransaction();
 
@@ -54,9 +56,13 @@ public class DonationsActivity extends FragmentActivity {
             fragmentTransaction.replace(R.id.donations_activity_container, this.donationsFragment,
                     "donationsFragment");
             fragmentTransaction.commit();
+        } else {
+            TextView noDonationsAvailableText = findViewById(R.id.no_donations_available);
+            noDonationsAvailableText.setTextColor(Color.RED);
+            noDonationsAvailableText.setText(R.string.noDonationsAvailable);
         }
 
-        Button payPalButton = findViewById(R.id.donations__paypal_modified_donate_button);
+        /*Button payPalButton = findViewById(R.id.donations__paypal_modified_donate_button);
         payPalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +70,7 @@ public class DonationsActivity extends FragmentActivity {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(browserIntent);
             }
-        });
+        });*/
     }
 
     @Override
