@@ -6,6 +6,9 @@
 
 [![BitCoinApp - Releases](https://img.shields.io/badge/Download%20-GitHub%20APK-green.svg)](https://goo.gl/qeaU85)
 
+## Support me and donate :D
+<a href='https://paypal.me/Javinator9889'><img src='http://www.pngall.com/wp-content/uploads/2016/05/PayPal-Donate-Button-High-Quality-PNG.png' width=200 height=114></a>
+
 ## Read the docs
 
 Here you have the link where you will be able to *read the docs* for this app: https://javinator9889.github.io/BitCoinPools/
