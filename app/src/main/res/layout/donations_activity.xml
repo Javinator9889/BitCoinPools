@@ -13,7 +13,7 @@
 
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -51,28 +51,10 @@
             android:layout_marginStart="8dp"
             android:text="@string/donations__google_android_market_donate_button" />
 
-    </LinearLayout>
-
-    <!--<TextView
+    </LinearLayout>-->
+    <TextView
+        android:id="@+id/no_donations_available"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/card_margin"
-        android:text="Si lo prefieres, puedes donarme vía PayPal" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/card_margin"
-        android:paddingRight="@dimen/card_margin"
-        android:text="Button" />-->
-    <!--<?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">-->
-
-
-
-
+        android:layout_margin="16dp" />
 </LinearLayout>

@@ -74,6 +74,9 @@
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Versión 1.18.1 (09/03/18)</h1><i>
+        - Quitadas las donaciones dentro de la app (para PayPal)<br />
+        - Mejorado el tiempo de encendido de la app<br /></i>
         <h1>Versión 1.18 (06/03/18)</h1><i>
         - Pantalla de carga: muestra un logotipo y una barra de progreso mientras cargan los datos de la app<br />
         - Nuevos iconos en las tarjetas: ahora podrás ver la evolución de los distintos valores del BitCoin<br />
@@ -196,4 +199,5 @@
         ]]>
     </string>
     <string name="comparationDate">Porcentajes comparados con la fecha: </string>
+    <string name="noDonationsAvailable">Las donaciones dentro de la app no están disponibles. Para más información, visite: https://github.com/Javinator9889/BitCoinPools</string>
 </resources>
