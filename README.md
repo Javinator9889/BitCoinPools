@@ -42,4 +42,5 @@ You can do:
 + **Fork** these project and *develop* your custom version: I will like to see it
 + **Rate**, giving me a star ⭐️
 + **See my other projects** in which I spent so much time working on them 💻
++ **Donate me** and I will work even harder :D [(donate here)](https://github.com/Javinator9889/BitCoinPools#support-me-and-donate-d)
 + **And watch 👁** if you would like to recieve new upgardes
