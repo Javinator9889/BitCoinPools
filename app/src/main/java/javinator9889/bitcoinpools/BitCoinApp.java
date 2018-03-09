@@ -11,9 +11,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.perf.metrics.AddTrace;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -40,6 +43,7 @@ public class BitCoinApp extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context APPLICATION_CONTEXT;
     private static SharedPreferences SHARED_PREFERENCES;
+    private static FirebaseAnalytics firebaseAnalytics;
 
     public static Context getAppContext() {
         return APPLICATION_CONTEXT;
@@ -49,8 +53,14 @@ public class BitCoinApp extends Application {
         return SHARED_PREFERENCES;
     }
 
+    public static FirebaseAnalytics getFirebaseAnalytics() {
+        return firebaseAnalytics;
+    }
+
     @Override
+    @AddTrace(name = "onCreateApplication")
     public void onCreate() {
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         APPLICATION_CONTEXT = getApplicationContext();
         SHARED_PREFERENCES = getSharedPreferences(
                 Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_KEY,
@@ -62,6 +72,10 @@ public class BitCoinApp extends Application {
         startBackgroundJobs();
         super.onCreate();
         Log.d(Constants.LOG.BCTAG, Constants.LOG.CREATED_APP);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.START_DATE, Calendar.getInstance()
+                .getTime().toString());
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
     }
 
     private static void startBackgroundJobs() {

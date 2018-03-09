@@ -2,6 +2,7 @@ package javinator9889.bitcoinpools;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.perf.metrics.AddTrace;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     @SuppressWarnings("unchecked")
+    @AddTrace(name = "onCreateMainActivity")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainActivity = this;
@@ -106,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
         Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.VALUE, "MainActivity created");
+        BitCoinApp.getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         try {
             ck.checkForUpdates(this,
                     getString(R.string.updateAvailable),
@@ -195,7 +202,8 @@ public class MainActivity extends AppCompatActivity {
                         getString(R.string.inv_message) +
                                 " - Google Play Store: " +
                                 googlePlayLink.toString());
-                startActivity(Intent.createChooser(shareAppIntent, getString(R.string.invitation_title)));
+                startActivity(Intent.createChooser(shareAppIntent,
+                        getString(R.string.invitation_title)));
                 break;
             case R.id.donate:
                 Intent donateIntent = new Intent(MainActivity.this,

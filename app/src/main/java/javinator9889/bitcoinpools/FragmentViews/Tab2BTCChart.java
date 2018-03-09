@@ -34,6 +34,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.perf.metrics.AddTrace;
 
 import org.json.JSONException;
 
@@ -97,6 +98,7 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
 
     @SuppressWarnings("unchecked")
     @Override
+    @AddTrace(name = "onCreateViewForTab2")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         DisplayMetrics dp = this.getResources().getDisplayMetrics();

@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.perf.metrics.AddTrace;
 
 import org.json.JSONObject;
 
@@ -40,6 +41,7 @@ public class DataLoaderScreen extends AppCompatActivity {
     private HashMap<Date, Float> btcPrice;
 
     @Override
+    @AddTrace(name = "getApplicationValues")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataLoaderScreenActivity = this;
