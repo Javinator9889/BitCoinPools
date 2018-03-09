@@ -3,8 +3,6 @@ package javinator9889.bitcoinpools.FragmentViews;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,7 +21,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import org.sufficientlysecure.donations.BuildConfig;
 import org.sufficientlysecure.donations.DonationsFragment;
 
-import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.R;
 
 import static javinator9889.bitcoinpools.Constants.PAYMENTS.GOOGLE_CATALOG;
