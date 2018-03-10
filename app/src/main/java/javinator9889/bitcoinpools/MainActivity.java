@@ -2,7 +2,6 @@ package javinator9889.bitcoinpools;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,8 +24,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.perf.metrics.AddTrace;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javinator9889.bitcoinpools.AppUpdaterManager.CheckUpdates;
 import javinator9889.bitcoinpools.FragmentViews.DonationsActivity;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String, Float> retrievedData;
     private HashMap<String, Float> cardsData;
     private HashMap<Date, Float> btcPrice;
+    private EasterEgg easterEgg;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -107,6 +111,20 @@ public class MainActivity extends AppCompatActivity {
         setupTabs(tabLayout);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+
+        this.easterEgg = EasterEgg.newInstance(getResources());
+        MAINACTIVITY_TOOLBAR.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (easterEgg.addStep(MainActivity.this)) {
+                    Intent easterEggIntent = new Intent(MainActivity.this, EasterEgg.class);
+                    startActivity(easterEggIntent);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                    easterEgg.resetSteps();
+                }
+                return false;
+            }
+        });
 
         Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_CHART);
         Log.d(Constants.LOG.MATAG, Constants.LOG.LISTENING);

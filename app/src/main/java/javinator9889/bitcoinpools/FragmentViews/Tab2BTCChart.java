@@ -254,39 +254,34 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar actualDate = Calendar.getInstance();
-        if (year <= 2010) {
-            this.year = 2010;
-            if ((month <= 6) && (dayOfMonth < 17)) {
-                this.month = 6;
-                this.writable_month = 7;
-                this.day = 17;
-            } else if ((month < 6) && (dayOfMonth > 17)) {
-                this.month = 6;
-                this.writable_month = 7;
-                this.day = 17;
-            } else {
-                this.day = dayOfMonth;
-                this.month = month;
-                this.writable_month = ++month;
-                this.year = year;
-            }
-        } else {
-            if (dayOfMonth >= actualDate.get(Calendar.DAY_OF_MONTH)) {
-                if (month >= actualDate.get(Calendar.MONTH)) {
-                    if (year >= actualDate.get(Calendar.YEAR)) {
-                        actualDate.add(Calendar.DAY_OF_MONTH, -2);
-                        this.day = actualDate.get(Calendar.DAY_OF_MONTH);
-                        this.month = actualDate.get(Calendar.MONTH);
+        actualDate.add(Calendar.DAY_OF_MONTH, -2);
+        Calendar dateSet = Calendar.getInstance();
+        Calendar dateLimit = Calendar.getInstance();
+        dateSet.set(year, month, dayOfMonth);
+        dateLimit.set(2010, 6, 17);
+        switch (dateSet.compareTo(dateLimit)) {
+            case 1:
+                switch (dateSet.compareTo(actualDate)) {
+                    case -1:
+                        this.month = month;
                         this.writable_month = ++month;
+                        this.year = year;
+                        this.day = dayOfMonth;
+                        break;
+                    default:
+                        this.month = actualDate.get(Calendar.MONTH);
+                        this.writable_month = actualDate.get(Calendar.MONTH) + 1;
                         this.year = actualDate.get(Calendar.YEAR);
-                    }
+                        this.day = actualDate.get(Calendar.DAY_OF_MONTH);
+                        break;
                 }
-            } else {
-                this.day = dayOfMonth;
-                this.month = month;
-                this.writable_month = ++month;
-                this.year = year;
-            }
+                break;
+            default:
+                this.month = 6;
+                this.writable_month = 7;
+                this.year = 2010;
+                this.day = 17;
+                break;
         }
         this.date_set = true;
         String buttonText = getString(R.string.since) + " " + parseDate();
@@ -327,8 +322,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
                 this.year,
                 this.month,
                 this.day);
-
-        calendar.add(Calendar.DATE, -1);
 
         dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
         dialog.getDatePicker().setMinDate(limitDate.getTimeInMillis());
@@ -389,7 +382,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             total_fees = cachedMap.get("total_fees_btc");
             tx = cachedMap.get("n_tx");
             miners_revenue = cachedMap.get("miners_revenue_usd");
-            System.out.println(cachedMap.toString());
         }
         DecimalFormat df = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
         cardsContents.add(new CardsContent(getString(R.string.market_price),
@@ -432,7 +424,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         try {
             return cache.readCache();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error while reading cache. Full trace: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
