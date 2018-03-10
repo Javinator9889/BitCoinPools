@@ -44,6 +44,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".FragmentViews.DonationsActivity"
             tools:ignore="InnerclassSeparator" />
+        <activity android:name=".EasterEgg" />
 
         <service
             android:name=".BackgroundJobs.JobSchedulerService"

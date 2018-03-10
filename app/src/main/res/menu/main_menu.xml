@@ -4,28 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="javinator9889.bitcoinpools.MainActivity">
 
-    <item android:id="@+id/settings"
+    <item
+        android:id="@+id/settings"
         android:orderInCategory="100"
         android:title="@string/settings"
         app:showAsAction="never" />
 
-    <item android:id="@+id/license"
+    <item
+        android:id="@+id/license"
         android:orderInCategory="100"
         android:title="@string/tos"
         app:showAsAction="never" />
 
-    <item android:id="@+id/update"
+    <item
+        android:id="@+id/update"
+        android:orderInCategory="100"
         android:title="@string/update"
-        app:showAsAction="never"
-        android:orderInCategory="100"/>
+        app:showAsAction="never" />
 
-    <item android:id="@+id/share"
+    <item
+        android:id="@+id/share"
+        android:orderInCategory="100"
         android:title="@string/shareApp"
-        app:showAsAction="never"
-        android:orderInCategory="100" />
+        app:showAsAction="never" />
 
-    <item android:id="@+id/donate"
+    <item
+        android:id="@+id/donate"
+        android:orderInCategory="100"
         android:title="@string/support"
-        app:showAsAction="never"
-        android:orderInCategory="100" />
+        app:showAsAction="never" />
 </menu>
