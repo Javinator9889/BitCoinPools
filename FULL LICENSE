@@ -1,0 +1,369 @@
+MIT License
+
+Copyright (c) 2017 Javinator9889
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Firebase Terms of Service AND Conditions
+
+FIREBASE ANALYTICS
+
+These Google Analytics for Firebase Terms of Service, the Google Analytics for Firebase Policies and the Google API Terms of Service (this "Agreement") are entered into by Google and the entity or individual using the Service ("You"). This Agreement governs Your use of Google Analytics for Firebase (the "Service"). BY CLICKING THE "I ACCEPT" BUTTON, COMPLETING THE REGISTRATION PROCESS, OR USING THE SERVICE, YOU ACKNOWLEDGE THAT YOU HAVE REVIEWED AND ACCEPT THIS AGREEMENT AND ARE AUTHORIZED TO ACT ON BEHALF OF, AND BIND TO THIS AGREEMENT, THE OWNER OF THIS ACCOUNT. In consideration of the foregoing, the parties agree as follows:
+1. Definitions.
+
+"Account" refers to the account for the Service.
+
+"Affiliate(s)" means in relation to each of the parties: (a) any parent company of that party; and (b) any corporate body of which that party directly or indirectly has control or which is directly or indirectly controlled by the same person or group of persons as that party.
+
+"Confidential Information" includes any proprietary data and any other information disclosed by one party to the other in writing and marked "confidential" or disclosed orally and, within five business days, reduced to writing and marked "confidential". However, Confidential Information will not include any information that is or becomes known to the general public, which is already in the receiving party's possession prior to disclosure by a party or which is independently developed by the receiving party without the use of Confidential Information.
+
+"Customer Data" means the data You collect, process or store using the Service concerning the characteristics and activities of Users.
+
+"Documentation" means any accompanying documentation made available to You by Google for use with the Processing Software, including any documentation available online.
+
+"Google" means either (i) Google Ireland Limited, with offices at Gordon House, Barrow Street, Dublin 4, Ireland, if Your principal place of business (for entities) or place of residence (for individuals) is in any country within Europe, the Middle East, or Africa ("EMEA"), (ii) Google Asia Pacific Pte. Ltd., with offices at 70 Pasir Panjang Road, #03-01, Mapletree Business City II, Singapore 117371, if Your principal place of business (for entities) or place of residence (for individuals) is in any country within the Asia Pacific region ("APAC"), or (iii) Google LLC, with offices at 1600 Amphitheatre Parkway, Mountain View, California 94043, if Your principal place of business (for entities) or place of residence (for individuals) is in any country in the world other than those in EMEA and APAC.
+
+"SDK" means the Firebase Software Development Kit, which is used or incorporated in an App for the purpose of collecting Customer Data, together with any fixes, updates and upgrades provided to You.
+
+"Processing Software" means the Google server-side software and any upgrades, which analyzes the Customer Data and generates the Reports.
+
+"App" means any app or other resource that sends data to the Service. Each App must be under Your control.
+
+"Privacy Policy" means the privacy policy on an App.
+
+"Report" means the resulting analysis made available to You.
+
+"Servers" means the servers controlled by Google or its Affiliates on which the Processing Software and Customer Data are stored.
+
+"Software" means the SDK and the Processing Software.
+
+"Third Party" means any third party (i) to which You provide access to Your Account or (i) for which You use the Service to collect information on the third party's behalf.
+
+"Users" means users of Your Apps.
+
+The words "include" and "including" mean "including but not limited to."
+2. Fees and Service.
+
+Google and its Affiliates may change its fees and payment policies for the Service from time to time. The changes to the fees or payment policies are effective upon Your acceptance of those changes which will be posted at firebase.google.com/terms/analytics. Unless otherwise stated, all fees are quoted in U.S. Dollars. Any outstanding balance becomes immediately due and payable upon termination of this Agreement and any collection expenses (including attorneys' fees) incurred by Google and its Affiliates will be included in the amount owed, and may be charged to the credit card or other billing mechanism associated with Your AdWords account.
+3. Member Account, Password, and Security.
+
+To register for the Service, You must be acting in the course of business, complete the registration process by providing Google with current, complete and accurate information as prompted by the registration form, including Your e-mail address (username) and password. You will protect Your passwords and take full responsibility for Your own, and third party, use of Your accounts. You are solely responsible for any and all activities that occur under Your Account. You will notify Google immediately upon learning of any unauthorized use of Your Account or any other breach of security. Google or its Affiliates’ support staff may, from time to time, log in to the Service under Your Account in order to maintain or improve service, including to provide You assistance with technical or billing issues. By creating Your Account you agree to receive electronic statements from Google and its Affiliates.
+4. Nonexclusive License.
+
+Subject to the terms and conditions of this Agreement, (a) Google grants You a limited, revocable, non-exclusive, non-sublicensable license to install, copy and use the SDK solely as necessary for You to use the Service on Your Apps or Third Parties Apps; and (b) You may remotely access, view and download Your Reports. You will not (and You will not allow any third party to) use data labeled as belonging to a third party in the Service for purposes other than generating, viewing, and downloading Reports. You will comply with all applicable laws and regulations and Your agreements with third parties in Your use of and access to the Documentation, Software, Service and Reports.
+5. Confidentiality.
+
+Neither party will use or disclose the other party's Confidential Information without the other's prior written consent except for the purpose of performing its obligations under this Agreement or if required by law, regulation or court order; in which case, the party being compelled to disclose Confidential Information will give the other party as much notice as is reasonably practicable prior to disclosing the Confidential Information if permitted by law.
+6. Information Rights and Publicity.
+
+Google and its Affiliates may retain and use, subject to the terms of its privacy policy (located at www.google.com/privacy.html), information collected in Your use of the Service. Google will not share Your Customer Data or any Third Party's Customer Data with any third parties unless Google (i) has Your consent for any Customer Data or any Third Party's consent for the Third Party's Customer Data; (ii) concludes that it is required by law or has a good faith belief that access, preservation or disclosure of Customer Data is reasonably necessary to protect the rights, property or safety of Google, its users or the public; or (iii) provides Customer Data in certain limited circumstances to third parties to carry out tasks on Google's behalf (e.g., billing or data storage) with strict restrictions that prevent the data from being used or shared except as directed by Google. When this is done, it is subject to agreements that oblige those parties to process Customer Data only on Google's instructions and in compliance with this Agreement and appropriate confidentiality and security measures.
+7. Privacy.
+
+You will not, and will not assist or permit any third party to, pass information to Google that Google could use or recognize as personally identifiable information. You will have and abide by an appropriate Privacy Policy and will comply with all applicable laws, policies, and regulations relating to the collection, usage and sharing of information from Users. You must post a Privacy Policy and that Privacy Policy must provide notice of Your use of cookies, identifiers for mobile devices (e.g., Android Advertising Identifier or Advertising Identifier for iOS) or similar technology that are used to collect data. You must disclose the use of the Service, and how it collects and processes data. This can be done by displaying a prominent link to the site "How Google uses data when you use our partners' sites or apps", (located at www.google.com/policies/privacy/partners/, or any other URL Google may provide from time to time). You will use commercially reasonable efforts to ensure that a User is provided with clear and comprehensive information about, and consents to, the storing and accessing of cookies or other information on the User’s device where such activity occurs in connection with the Service and where providing such information and obtaining such consent is required by law.
+
+You must not circumvent any privacy features that are part of the Service.
+
+Your access to and use of any other DoubleClick or Google service is subject to the applicable terms between You and Google regarding that service.
+8. Indemnification.
+
+To the maximum extent permitted by applicable law, You will indemnify, hold harmless and defend Google and its Affiliates, at Your expense, from any and all third-party claims, actions, proceedings, and suits brought against Google or any of its officers, directors, employees, agents or Affiliates, and all related liabilities, damages, settlements, penalties, fines, costs or expenses (including, reasonable attorneys' fees and other litigation expenses) incurred by Google or any of its officers, directors, employees, agents or Affiliates, arising out of or relating to (i) Your breach of any term or condition of this Agreement, (ii) Your use of the Service, (iii) Your violations of applicable laws, rules or regulations in connection with the Service, (iv) any representations and warranties made by You concerning any aspect of the Service, the Software or Reports to any Third Party; (v) any claims made by or on behalf of any Third Party pertaining directly or indirectly to Your use of the Service, the Software or Reports; (vi) violations of Your obligations of privacy to any Third Party; and (vii) any claims with respect to acts or omissions of any Third Party in connection with the Service, the Software or Reports. Google will provide You with written notice of any claim, suit or action from which You must indemnify Google and its Affiliates. You will cooperate as fully as reasonably required in the defense of any claim. Google and its Affiliates reserve the right, at their own expense, to assume the exclusive defense and control of any matter subject to indemnification by You.
+9. Third Parties.
+
+If You use the Service on behalf of a Third Party or a Third Party otherwise uses the Service through Your Account, whether or not You are authorized by Google to do so, then You represent and warrant that (a) You are authorized to act on behalf of, and bind to this Agreement, the Third Party to all obligations that You have under this Agreement, (b) Google and its Affiliates may share with the Third Party any Customer Data that is specific to the Third Party's Apps, and (c) You will not disclose Third Party's Customer Data to any other party without the Third Party's consent.
+10. DISCLAIMER OF WARRANTIES.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, EXCEPT AS EXPRESSLY PROVIDED FOR IN THIS AGREEMENT, GOOGLE MAKES NO OTHER WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY OR OTHERWISE, INCLUDING WITHOUT LIMITATION WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR USE AND NON-INFRINGEMENT. THE SERVICE IS PROVIDED "AS IS".
+11. LIMITATION OF LIABILITY.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, GOOGLE WILL NOT BE LIABLE FOR YOUR LOST PROFITS (WHETHER DIRECT OR INDIRECT) OR INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE LOSSES OR DAMAGES (WHETHER OR NOT FORESEEABLE OR CONTEMPLATED BY THE PARTIES), EVEN IF GOOGLE OR ITS AFFILIATES HAVE BEEN ADVISED OF, KNEW OR SHOULD HAVE KNOWN THAT SUCH DAMAGES WERE POSSIBLE AND EVEN IF DIRECT DAMAGES DO NOT SATISFY A REMEDY. GOOGLE AND ITS AFFILIATES’ TOTAL CUMULATIVE LIABILITY TO YOU OR ANY OTHER PARTY FOR ANY LOSS OR DAMAGES RESULTING FROM CLAIMS, DEMANDS, OR ACTIONS ARISING OUT OF OR RELATING TO THIS AGREEMENT WILL NOT EXCEED $500 (USD).
+12. Proprietary Rights Notice.
+
+The Service, which includes the Software and all intellectual property rights therein are, and will remain, the property of Google and its Affiliates. All rights in and to the Software not expressly granted to You in this Agreement are reserved and retained by Google, its Affiliates, and its licensors without restriction, including, Google's (and its Affiliates') right to sole ownership of the Software and Documentation. Without limiting the generality of the foregoing, You agree, to the maximum extent permitted by applicable law, not to (and not to allow any third party to): (a) sublicense, distribute, or use the Service or Software outside of the scope of the license granted in this Agreement; (b) copy, modify, adapt, translate, prepare derivative works from, reverse engineer, disassemble, or decompile the Software or Documentation or otherwise attempt to discover any source code or trade secrets related to the Service; (c) rent, lease, sell, assign or otherwise transfer rights in or to the Software, the Documentation or the Service; (d) use, post, transmit or introduce any device, software or routine which interferes or attempts to interfere with the operation of the Service or the Software; (e) use the trademarks, trade names, service marks, logos, domain names and other distinctive brand features or any copyright or other proprietary rights associated with the Service for any purpose without the express written consent of Google and its Affiliates ; (f) register, attempt to register, or assist anyone else to register any trademark, trade name, serve marks, logos, domain names and other distinctive brand features, copyright or other proprietary rights associated with Google or its Affiliates other than in the name of Google (or its Affiliates as the case may be); (g) remove, obscure, or alter any notice of copyright, trademark, or other proprietary right appearing in or on any item included with the Service or Software or (h) seek, in a proceeding filed during the term of this Agreement or for one year after such term, an injunction of any portion of the Service based on patent infringement.
+13. U.S. Government Rights.
+
+If the use of the Service is being acquired by or on behalf of the U.S. Government or by a U.S. Government prime contractor or subcontractor (at any tier), in accordance with 48 C.F.R. 227.7202-4 (for Department of Defense (DOD) acquisitions) and 48 C.F.R. 2.101 and 12.212 (for non-DOD acquisitions), the Government's rights in the Software, including its rights to use, modify, reproduce, release, perform, display or disclose the Software or Documentation, will be subject in all respects to the commercial license rights and restrictions provided in this Agreement.
+14. Term and Termination.
+
+Either party may terminate this Agreement at any time with notice. Upon any termination of this Agreement, Google will stop providing, and You will stop using the Service. In the event of any termination (a) You will not be entitled to any refunds of any usage fees or any other fees, and (b) any outstanding balance for Service rendered through the date of termination will be immediately due and payable in full and (c) all of Your historical Report data will no longer be available to You.
+15. Modifications to Terms of Service and Other Policies.
+
+Google may modify these terms or any additional terms that apply to the Service to, for example, reflect changes to the law or changes to the Service. You should look at the terms regularly. Google will post notice of modifications to these terms at firebase.google.com/terms/analytics, the Google Analytics for Firebase Policies at firebase.google.com/policies/analytics, or other policies referenced in these terms at the applicable URL for such policies. Changes will not apply retroactively and will become effective no sooner than 14 days after they are posted. If You do not agree to the modified terms for the Service, You should discontinue Your use of the Service. No amendment to or modification of this Agreement will be binding unless (i) in writing and signed by a duly authorized representative of Google, (ii) You accept updated terms online, or (iii) You continue to use the Service after Google has posted updates to the Agreement or to any policy governing the Service.
+16. Applicable Law and Venue.
+
+(a) Except as set forth in Sections 16(b) and (c) below, all claims arising out of or relating to this Agreement or the Services ("Disputes") will be governed by California law, excluding California’s conflict of laws rules, and all Disputes will be litigated exclusively in the federal or state courts of Santa Clara County, California, USA, and You and Google consent to personal jurisdiction in those courts.
+
+(b) If Your principal place of business (for entities) or place of residence (for individuals) is in any country within APAC (other than Australia, Japan, New Zealand or Singapore) or Latin America, this Section 16(b) will apply instead of Section 16(a) above. ALL DISPUTES (AS DEFINED ABOVE) WILL BE GOVERNED BY CALIFORNIA LAW, EXCLUDING CALIFORNIA’S CONFLICT OF LAWS RULES. The parties will try in good faith to settle any Dispute within 30 days after the Dispute arises. If the Dispute is not resolved within 30 days, it must be resolved by arbitration by the American Arbitration Association’s International Centre for Dispute Resolution in accordance with its Expedited Commercial Rules in force as of the date of this Agreement ("Rules"). The parties will mutually select one arbitrator. The arbitration will be conducted in English in Santa Clara County, California, USA. Either party may apply to any competent court for injunctive relief necessary to protect its rights pending resolution of the arbitration. The arbitrator may order equitable or injunctive relief consistent with the remedies and limitations in this Agreement. Subject to the confidentiality requirements in Section 5, either party may petition any competent court to issue any order necessary to protect that party's rights or property; this petition will not be considered a violation or waiver of this governing law and arbitration section and will not affect the arbitrator’s powers, including the power to review the judicial decision. The parties stipulate that the courts of Santa Clara County, California, USA, are competent to grant any order under this subsection. The arbitral award will be final and binding on the parties and its execution may be presented in any competent court, including any court with jurisdiction over either party or any of its property. Any arbitration proceeding conducted in accordance with this section will be considered Confidential Information under this Agreement's confidentiality section, including (i) the existence of, (ii) any information disclosed during, and (iii) any oral communications or documents related to the arbitration proceedings. The parties may also disclose the information described in this section to a competent court as may be necessary to file any order under this section or execute any arbitral decision, but the parties must request that those judicial proceedings be conducted in camera (in private). The parties will pay the arbitrator’s fees, the arbitrator's appointed experts' fees and expenses, and the arbitration center's administrative expenses in accordance with the Rules. In its final decision, the arbitrator will determine the non-prevailing party's obligation to reimburse the amount paid in advance by the prevailing party for these fees. Each party will bear its own lawyers’ and experts’ fees and expenses, regardless of the arbitrator’s final decision.
+
+(c) If Your principal place of business (for entities) or place of residence (for individuals) is in Greece, all Disputes (as defined above) will be governed by Greek law and the parties submit to the exclusive jurisdiction of the courts of Athens in relation to any Dispute.
+17. Miscellaneous
+
+Google and its Affiliates will be excused from performance in this Agreement to the extent that performance is prevented, delayed or obstructed by causes beyond its reasonable control. This Agreement (including any amendment agreed upon by the parties in writing) represents the complete agreement between You and Google concerning its subject matter, and supersedes all prior agreements and representations between the parties. If any provision of this Agreement is held to be unenforceable for any reason, such provision will be reformed to the extent necessary to make it enforceable to the maximum extent permissible so as to effect the intent of the parties, and the remainder of this Agreement will continue in full force and effect. Certain laws of the jurisdiction in which you reside may confer rights and remedies and imply terms into this Agreement that cannot be excluded. Those rights, remedies, and implied terms are not excluded by this Agreement. To the extent that the relevant laws permit Google to limit their operation, Google’s liability under those laws will be limited at its option, to the supply of the services again, or payment of the cost of having the services supplied again. The United Nations Convention on Contracts for the International Sale of Goods and the Uniform Computer Information Transactions Act do not apply to this Agreement. The Software is controlled by U.S. Export Regulations, and it may be not be exported to or used by embargoed countries or individuals. Any notices to Google must be sent to: Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, with a copy to Legal Department, via first class or air mail or overnight courier, and are deemed given upon receipt. A waiver of any default is not a waiver of any subsequent default. You may not assign or otherwise transfer any of Your rights in this Agreement without Google's prior written consent, and any such attempt is void. Google may assign or otherwise transfer this Agreement to any of its Affiliates. The relationship between Google and You is not one of a legal partnership relationship, but is one of independent contractors. This Agreement will be binding upon and inure to the benefit of the respective successors and assigns of the parties hereto. The following sections of this Agreement will survive any termination thereof: 1, 4, 5, 6 , 7, 8, 9, 10, 11, 12, 14, 16 and 17.
+
+Last Updated: 2017/05/17
+
+
+FIREBASE CRASH REPORTING TERMS OF SERVICE
+
+Thank you for using Google's APIs, other developer services, and associated software (collectively, "APIs"). By accessing or using our APIs, you are agreeing to the terms below. If there is a conflict between these terms and additional terms applicable to a given API, the additional terms will control for that conflict. Collectively, we refer to the terms below, any additional terms, terms within the accompanying API documentation, and any applicable policies and guidelines as the "Terms." You agree to comply with the Terms and that the Terms control your relationship with us. So please read all the Terms carefully. If you use the APIs as an interface to, or in conjunction with other Google products or services, then the terms for those other products or services also apply.
+
+Under the Terms, "Google" means Google Inc., with offices at 1600 Amphitheatre Parkway, Mountain View, California 94043, United States, unless set forth otherwise in additional terms applicable for a given API. We may refer to "Google" as "we", "our", or "us" in the Terms.
+Section 1: Account and Registration
+a. Accepting the Terms
+
+You may not use the APIs and may not accept the Terms if (a) you are not of legal age to form a binding contract with Google, or (b) you are a person barred from using or receiving the APIs under the applicable laws of the United States or other countries including the country in which you are resident or from which you use the APIs.
+b. Entity Level Acceptance
+
+If you are using the APIs on behalf of an entity, you represent and warrant that you have authority to bind that entity to the Terms and by accepting the Terms, you are doing so on behalf of that entity (and all references to "you" in the Terms refer to that entity).
+c. Registration
+
+In order to access certain APIs you may be required to provide certain information (such as identification or contact details) as part of the registration process for the APIs, or as part of your continued use of the APIs. Any registration information you give to Google will always be accurate and up to date and you'll inform us promptly of any updates.
+d. Subsidiaries and Affiliates
+
+Google has subsidiaries and affiliated legal entities around the world. These companies may provide the APIs to you on behalf of Google and the Terms will also govern your relationship with these companies.
+Section 2: Using Our APIs
+a. Your End Users
+
+You will require your end users to comply with (and not knowingly enable them to violate) applicable law, regulation, and the Terms.
+b. Compliance with Law, Third Party Rights, and Other Google Terms of Service
+
+You will comply with all applicable law, regulation, and third party rights (including without limitation laws regarding the import or export of data or software, privacy, and local laws). You will not use the APIs to encourage or promote illegal activity or violation of third party rights. You will not violate any other terms of service with Google (or its affiliates).
+c. Permitted Access
+
+You will only access (or attempt to access) an API by the means described in the documentation of that API. If Google assigns you developer credentials (e.g. client IDs), you must use them with the applicable APIs. You will not misrepresent or mask either your identity or your API Client's identity when using the APIs or developer accounts.
+d. API Limitations
+
+Google sets and enforces limits on your use of the APIs (e.g. limiting the number of API requests that you may make or the number of users you may serve), in our sole discretion. You agree to, and will not attempt to circumvent, such limitations documented with each API. If you would like to use any API beyond these limits, you must obtain Google's express consent (and Google may decline such request or condition acceptance on your agreement to additional terms and/or charges for that use). To seek such approval, contact the relevant Google API team for information (e.g. by using the Google developers console).
+e. Open Source Software
+
+Some of the software required by or included in our APIs may be offered under an open source license. Open source software licenses constitute separate written agreements. For certain APIs, open source software is listed in the documentation. To the limited extent the open source software license expressly supersedes the Terms, the open source license instead sets forth your agreement with Google for the applicable open source software.
+f. Communication with Google
+
+We may send you certain communications in connection with your use of the APIs. Please review the applicable API documentation for information about opting out of certain types of communication.
+g. Feedback
+
+If you provide feedback or suggestions about our APIs, then we (and those we allow) may use such information without obligation to you.
+h. Non-Exclusivity
+
+The Terms are non-exclusive. You acknowledge that Google may develop products or services that may compete with the API Clients or any other products or services.
+Section 3: Your API Clients
+a. API Clients and Monitoring
+
+The APIs are designed to help you enhance your websites and applications ("API Client(s)"). YOU AGREE THAT GOOGLE MAY MONITOR USE OF THE APIS TO ENSURE QUALITY, IMPROVE GOOGLE PRODUCTS AND SERVICES, AND VERIFY YOUR COMPLIANCE WITH THE TERMS. This monitoring may include Google accessing and using your API Client, for example to identify security issues that could affect Google or its users. You will not interfere with this monitoring. Google may use any technical means to overcome such interference. Google may suspend access to the APIs by you or your API Client without notice if we reasonably believe that you are in violation of the Terms.
+b. Security
+
+You will use commercially reasonable efforts to protect user information collected by your API Client, including personally identifiable information ("PII"), from unauthorized access or use and will promptly report to your users any unauthorized access or use of such information to the extent required by applicable law.
+c. Ownership
+
+Google does not acquire ownership in your API Clients, and by using our APIs, you do not acquire ownership of any rights in our APIs or the content that is accessed through our APIs.
+d. User Privacy and API Clients
+
+You will comply with all applicable privacy laws and regulations including those applying to PII. You will provide and adhere to a privacy policy for your API Client that clearly and accurately describes to users of your API Client what user information you collect and how you use and share such information (including for advertising) with Google and third parties.
+Section 4: Prohibitions and Confidentiality
+a. API Prohibitions
+
+When using the APIs, you may not (or allow those acting on your behalf to):
+
+    Sublicense an API for use by a third party. Consequently, you will not create an API Client that functions substantially the same as the APIs and offer it for use by third parties.
+    Perform an action with the intent of introducing to Google products and services any viruses, worms, defects, Trojan horses, malware, or any items of a destructive nature.
+    Defame, abuse, harass, stalk, or threaten others.
+    Interfere with or disrupt the APIs or the servers or networks providing the APIs.
+    Promote or facilitate unlawful online gambling or disruptive commercial messages or advertisements.
+    Reverse engineer or attempt to extract the source code from any API or any related software, except to the extent that this restriction is expressly prohibited by applicable law.
+    Use the APIs for any activities where the use or failure of the APIs could lead to death, personal injury, or environmental damage (such as the operation of nuclear facilities, air traffic control, or life support systems).
+    Use the APIs to process or store any data that is subject to the International Traffic in Arms Regulations maintained by the U.S. Department of State.
+    Remove, obscure, or alter any Google terms of service or any links to or notices of those terms.
+
+Unless otherwise specified in writing by Google, Google does not intend use of the APIs to create obligations under the Health Insurance Portability and Accountability Act, as amended ("HIPAA"), and makes no representations that the APIs satisfy HIPAA requirements. If you are (or become) a "covered entity" or "business associate" as defined in HIPAA, you will not use the APIs for any purpose or in any manner involving transmitting protected health information to Google unless you have received prior written consent to such use from Google.
+b. Confidential Matters
+
+    Developer credentials (such as passwords, keys, and client IDs) are intended to be used by you and identify your API Client. You will keep your credentials confidential and make reasonable efforts to prevent and discourage other API Clients from using your credentials. Developer credentials may not be embedded in open source projects.
+    Our communications to you and our APIs may contain Google confidential information. Google confidential information includes any materials, communications, and information that are marked confidential or that would normally be considered confidential under the circumstances. If you receive any such information, then you will not disclose it to any third party without Google's prior written consent. Google confidential information does not include information that you independently developed, that was rightfully given to you by a third party without confidentiality obligation, or that becomes public through no fault of your own. You may disclose Google confidential information when compelled to do so by law if you provide us reasonable prior notice, unless a court orders that we not receive notice.
+
+Section 5: Content
+a. Content Accessible Through our APIs
+
+Our APIs contain some third party content (such as text, images, videos, audio, or software). This content is the sole responsibility of the person that makes it available. We may sometimes review content to determine whether it is illegal or violates our policies or the Terms, and we may remove or refuse to display content. Finally, content accessible through our APIs may be subject to intellectual property rights, and, if so, you may not use it unless you are licensed to do so by the owner of that content or are otherwise permitted by law. Your access to the content provided by the API may be restricted, limited, or filtered in accordance with applicable law, regulation, and policy.
+b. Submission of Content
+
+Some of our APIs allow the submission of content. Google does not acquire any ownership of any intellectual property rights in the content that you submit to our APIs through your API Client, except as expressly provided in the Terms. For the sole purpose of enabling Google to provide, secure, and improve the APIs (and the related service(s)) and only in accordance with the applicable Google privacy policies, you give Google a perpetual, irrevocable, worldwide, sublicensable, royalty-free, and non-exclusive license to Use content submitted, posted, or displayed to or from the APIs through your API Client. "Use" means use, host, store, modify, communicate, and publish. Before you submit content to our APIs through your API Client, you will ensure that you have the necessary rights (including the necessary rights from your end users) to grant us the license.
+c. Retrieval of content
+
+When a user's non-public content is obtained through the APIs, you may not expose that content to other users or to third parties without explicit opt-in consent from that user.
+d. Data Portability
+
+Google supports data portability. For as long as you use or store any user data that you obtained through the APIs, you agree to enable your users to export their equivalent data to other services or applications of their choice in a way that's substantially as fast and easy as exporting such data from Google products and services, subject to applicable laws, and you agree that you will not make that data available to third parties who do not also abide by this obligation.
+e. Prohibitions on Content
+
+Unless expressly permitted by the content owner or by applicable law, you will not, and will not permit your end users or others acting on your behalf to, do the following with content returned from the APIs:
+
+    Scrape, build databases, or otherwise create permanent copies of such content, or keep cached copies longer than permitted by the cache header;
+    Copy, translate, modify, create a derivative work of, sell, lease, lend, convey, distribute, publicly display, or sublicense to any third party;
+    Misrepresent the source or ownership; or
+    Remove, obscure, or alter any copyright, trademark, or other proprietary rights notices; or falsify or delete any author attributions, legal notices, or other labels of the origin or source of material.
+
+Section 6: Brand Features; Attribution
+a. Brand Features
+
+"Brand Features" is defined as the trade names, trademarks, service marks, logos, domain names, and other distinctive brand features of each party. Except where expressly stated, the Terms do not grant either party any right, title, or interest in or to the other party's Brand Features. All use by you of Google's Brand Features (including any goodwill associated therewith) will inure to the benefit of Google.
+b. Attribution
+
+You agree to display any attribution(s) required by Google as described in the documentation for the API. Google hereby grants to you a nontransferable, nonsublicenseable, nonexclusive license while the Terms are in effect to display Google's Brand Features for the purpose of promoting or advertising that you use the APIs. You must only use the Google Brand Features in accordance with the Terms and for the purpose of fulfilling your obligations under this Section. In using Google's Brand Features, you must follow the Google Brand Features Use Guidelines. You understand and agree that Google has the sole discretion to determine whether your attribution(s) and use of Google's Brand Features are in accordance with the above requirements and guidelines.
+c. Publicity
+
+You will not make any statement regarding your use of an API which suggests partnership with, sponsorship by, or endorsement by Google without Google's prior written approval.
+d. Promotional and Marketing Use
+
+In the course of promoting, marketing, or demonstrating the APIs you are using and the associated Google products, Google may produce and distribute incidental depictions, including screenshots, video, or other content from your API Client, and may use your company or product name. You grant us all necessary rights for the above purposes.
+Section 7: Privacy and Copyright Protection
+a. Google Privacy Policies
+
+By using our APIs, Google may use submitted information in accordance with our privacy policies.
+b. Google DMCA Policy
+
+We provide information to help copyright holders manage their intellectual property online, but we can't determine whether something is being used legally or not without their input. We respond to notices of alleged copyright infringement and terminate accounts of repeat infringers according to the process set out in the U.S. Digital Millennium Copyright Act. If you think somebody is violating your copyrights and want to notify us, you can find information about submitting notices and Google's policy about responding to notices in our Help Center.
+Section 8: Termination
+a. Termination
+
+You may stop using our APIs at any time with or without notice. Further, if you want to terminate the Terms, you must provide Google with prior written notice and upon termination, cease your use of the applicable APIs. Google reserves the right to terminate the Terms with you or discontinue the APIs or any portion or feature or your access thereto for any reason and at any time without liability or other obligation to you.
+b. Your Obligations Post-Termination
+
+Upon any termination of the Terms or discontinuation of your access to an API, you will immediately stop using the API, cease all use of the Google Brand Features, and delete any cached or stored content that was permitted by the cache header under Section 5. Google may independently communicate with any account owner whose account(s) are associated with your API Client and developer credentials to provide notice of the termination of your right to use an API.
+c. Surviving Provisions
+
+When the Terms come to an end, those terms that by their nature are intended to continue indefinitely will continue to apply, including but not limited to: Sections 4b, 5, 8, 9, and 10.
+Section 9: Liability for our APIs
+a. WARRANTIES
+
+EXCEPT AS EXPRESSLY SET OUT IN THE TERMS, NEITHER GOOGLE NOR ITS SUPPLIERS OR DISTRIBUTORS MAKE ANY SPECIFIC PROMISES ABOUT THE APIS. FOR EXAMPLE, WE DON'T MAKE ANY COMMITMENTS ABOUT THE CONTENT ACCESSED THROUGH THE APIS, THE SPECIFIC FUNCTIONS OF THE APIS, OR THEIR RELIABILITY, AVAILABILITY, OR ABILITY TO MEET YOUR NEEDS. WE PROVIDE THE APIS "AS IS".
+
+SOME JURISDICTIONS PROVIDE FOR CERTAIN WARRANTIES, LIKE THE IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. EXCEPT AS EXPRESSLY PROVIDED FOR IN THE TERMS, TO THE EXTENT PERMITTED BY LAW, WE EXCLUDE ALL WARRANTIES, GUARANTEES, CONDITIONS, REPRESENTATIONS, AND UNDERTAKINGS.
+b. LIMITATION OF LIABILITY
+
+WHEN PERMITTED BY LAW, GOOGLE, AND GOOGLE'S SUPPLIERS AND DISTRIBUTORS, WILL NOT BE RESPONSIBLE FOR LOST PROFITS, REVENUES, OR DATA; FINANCIAL LOSSES; OR INDIRECT, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES.
+
+TO THE EXTENT PERMITTED BY LAW, THE TOTAL LIABILITY OF GOOGLE, AND ITS SUPPLIERS AND DISTRIBUTORS, FOR ANY CLAIM UNDER THE TERMS, INCLUDING FOR ANY IMPLIED WARRANTIES, IS LIMITED TO THE AMOUNT YOU PAID US TO USE THE APPLICABLE APIS (OR, IF WE CHOOSE, TO SUPPLYING YOU THE APIS AGAIN) DURING THE SIX MONTHS PRIOR TO THE EVENT GIVING RISE TO THE LIABILITY.
+
+IN ALL CASES, GOOGLE, AND ITS SUPPLIERS AND DISTRIBUTORS, WILL NOT BE LIABLE FOR ANY EXPENSE, LOSS, OR DAMAGE THAT IS NOT REASONABLY FORESEEABLE.
+c. Indemnification
+
+Unless prohibited by applicable law, if you are a business, you will defend and indemnify Google, and its affiliates, directors, officers, employees, and users, against all liabilities, damages, losses, costs, fees (including legal fees), and expenses relating to any allegation or third-party legal proceeding to the extent arising from:
+
+    your misuse or your end user's misuse of the APIs;
+    your violation or your end user's violation of the Terms; or
+    any content or data routed into or used with the APIs by you, those acting on your behalf, or your end users.
+
+Section 10: General Provisions
+a. Modification
+
+We may modify the Terms or any portion to, for example, reflect changes to the law or changes to our APIs. You should look at the Terms regularly. We'll post notice of modifications to the Terms within the documentation of each applicable API, to this website, and/or in the Google developers console. Changes will not apply retroactively and will become effective no sooner than 30 days after they are posted. But changes addressing new functions for an API or changes made for legal reasons will be effective immediately. If you do not agree to the modified Terms for an API, you should discontinue your use of that API. Your continued use of the API constitutes your acceptance of the modified Terms.
+b. U.S. Federal Agency Entities
+
+The APIs were developed solely at private expense and are commercial computer software and related documentation within the meaning of the applicable U.S. Federal Acquisition Regulation and agency supplements thereto.
+c. General Legal Terms
+
+We each agree to contract in the English language. If we provide a translation of the Terms, we do so for your convenience only and the English Terms will solely govern our relationship. The Terms do not create any third party beneficiary rights or any agency, partnership, or joint venture. Nothing in the Terms will limit either party's ability to seek injunctive relief. We are not liable for failure or delay in performance to the extent caused by circumstances beyond our reasonable control. If you do not comply with the Terms, and Google does not take action right away, this does not mean that Google is giving up any rights that it may have (such as taking action in the future). If it turns out that a particular term is not enforceable, this will not affect any other terms. The Terms are the entire agreement between you and Google relating to its subject and supersede any prior or contemporaneous agreements on that subject. For information about how to contact Google, please visit our contact page.
+
+Except as set forth below: (i) the laws of California, U.S.A., excluding California's conflict of laws rules, will apply to any disputes arising out of or related to the Terms or the APIs and (ii) ALL CLAIMS ARISING OUT OF OR RELATING TO THE TERMS OR THE APIS WILL BE LITIGATED EXCLUSIVELY IN THE FEDERAL OR STATE COURTS OF SANTA CLARA COUNTY, CALIFORNIA, USA, AND YOU AND GOOGLE CONSENT TO PERSONAL JURISDICTION IN THOSE COURTS.
+
+If you are accepting the Terms on behalf of a United States federal government entity, then the following applies instead of the paragraph above: the laws of the United States of America, excluding its conflict of laws rules, will apply to any disputes arising out of or related to the Terms or the APIs. Solely to the extent permitted by United States Federal law: (i) the laws of the State of California (excluding California's conflict of laws rules) will apply in the absence of applicable federal law; and (ii) FOR ALL CLAIMS ARISING OUT OF OR RELATING TO THE TERMS OR THE APIS, THE PARTIES CONSENT TO PERSONAL JURISDICTION IN, AND THE EXCLUSIVE VENUE OF, THE COURTS IN SANTA CLARA COUNTY, CALIFORNIA.
+
+If you are accepting the Terms on behalf of a United States city, county, or state government entity, then the following applies instead of the paragraph above: the parties agree to remain silent regarding governing law and venue.
+
+
+USER-DATA POLICY
+
+Google API Services, including Google Sign-In, are part of an authentication and authorization framework that gives you, the developer, the ability to connect directly with Google users when you would like to request access to Google user data. The policy below, as well as the Google APIs Terms of Service, govern the use of Google API Services when you request access to Google user data. Please check back from time to time as these policies are occasionally updated.
+Accurately represent your identity and intent
+
+If you wish to access Google user data you must provide Google users and Google with clear and accurate information regarding your use of Google API Services. This includes, without limitation, requirements to accurately represent:
+
+    Who is requesting Google user data? All permission requests must accurately represent the identity of the application that seeks access to user data. If you have obtained authorized client credentials to access Google API Services, keep these credentials confidential.
+    What data are you requesting? You must provide clear and accurate information explaining the types of data being requested. In addition, if you plan to access or use a type of user data that was not originally disclosed in your privacy policy when a Google user initially authorized access, you must update your privacy policy and prompt the user to consent to any changes before you may access that data.
+    Why are you requesting Google user data? Be honest and transparent with users when you explain the purpose for which your application requests user data. If your application requests data for one reason but the data will also be utilized for a secondary purpose, you must notify Google users of both use cases. As a general matter, users should be able to readily understand the value of providing the data that your application requests, as well as the consequences of sharing that data with your application.
+
+Be transparent about the data you access with clear and prominent privacy disclosures
+
+You must publish a privacy policy that fully documents how your application interacts with user data. You must list the privacy policy URL in your OAuth client configuration when your application is made available to the public.
+
+Your Privacy Policy and all in-product privacy notifications should be accurate, comprehensive, and easily accessible. Your privacy policy and in-product privacy notifications must thoroughly disclose the manner in which your application accesses, uses, stores, or shares Google user data. Your use of Google user data must be limited to the practices explicitly disclosed in your published privacy policy, but you should consider the use of additional in-product notifications to ensure that users understand how your application will handle user data. If you change the way your application uses Google user data, you must notify users and prompt them to consent to an updated privacy policy before you make use of Google user data in a new way or for a different purpose that originally disclosed.
+
+Disclosures about data use should be prominent and timely. Your privacy policy and any in-product notifications regarding data use should be prominently displayed in your application interface so that users can find this information easily. Where possible, disclosures about data use should be timely and shown in context.
+Request relevant permissions
+
+Permission requests should make sense to users, and should be limited to the critical information necessary to implement your application.
+
+Don't request access to information that you don't need. You may only request access to the Google user data that is necessary to implement existing features or services in your application. Don't attempt to "future proof" your access to user data by requesting access to information that might benefit services or features that have not yet been implemented.
+
+Request permissions in context where possible. Request access to user data in context (via incremental auth) whenever you can, so that users understand why you need the data.
+Deceptive or unauthorized use of Google API Services is prohibited
+
+You are strictly prohibited from engaging in any activity that may deceive users or Google about your use of Google API Services. This includes without limitation the following requirements:
+
+Do not misrepresent what data is collected or what you do with Google user data. Be up front with users so that they can make an informed decision to grant authorization. You must disclose all user data that you access, use, store, delete, or share, as well as any actions you take on a user's behalf.
+
+You are not permitted to access, aggregate, or analyze Google user data if the data will be displayed, sold, or otherwise distributed to a third party conducting surveillance.
+
+Overall there should be no surprises for Google users: hidden features, services, or actions that are inconsistent with the marketed purpose of your application may lead Google to suspend your ability to access Google API Services.
+
+Do not mislead Google about an application's operating environment. You must accurately represent the environment in which the authentication page appears. For example, don't claim to be an Android application in the user agent header if your application is running on iOS, or represent that your application's authentication page is rendered in a desktop browser if instead the authentication page is rendered in an embedded web view.
+
+Do not use undocumented APIs without express permission. Don't reverse engineer undocumented Google API Services or otherwise attempt to derive or use the underlying source code of undocumented Google API Services. You may only access data from Google API Services according to the means stipulated in the official documentation of that API Service, as provided on Google's developer site.
+
+Do not make false or misleading statements about any entities that have allegedly authorized or managed your application. You must accurately represent the company, organization, or other authority that manages your application. Making false representations about client credentials to Google or Google users is grounds for suspension.
+Child-directed apps
+
+The Children's Online Privacy Protection Act, or COPPA, applies to websites, apps, and services directed to children under the age of 13 and general audience apps, websites, or services with users known to be under the age of 13. While child-directed apps may use some Google services, developers are responsible for using these services according to their obligations under the law. Please review the FTC's guidance on COPPA (including information about the differences between mixed audience apps and apps directed primarily to children from the FTC's website) and consult with your own legal counsel.
+
+Child-directed apps: If your application is directed primarily at children, it should not use Google Sign-In or any other Google API Service that accesses data associated with a Google Account. This restriction includes Google Play Games Services and any other Google API Service using the OAuth technology for authentication and authorization.
+
+Mixed audience apps: Applications that are mixed audience shouldn't require users to sign in to a Google Account, but can offer, for example, Google Sign-In or Google Play Games Services as an optional feature. In these cases, users must be able to access the application in its entirety without signing into a Google Account.
+Maintain a secure operating environment
+
+You must take reasonable and appropriate steps to protect all applications or systems that make use of Google API Services against unauthorized or unlawful access, use, destruction, loss, alteration, or disclosure.
+Enforcement
+
+You must access Google API Services in accordance with the Google APIs Terms of Service. If you are found to be out of compliance with the Google APIs Terms of Service, this Google API Services: User Data Policy, or any Google product policies that are applicable to the Google API Service you are using, Google may revoke or suspend your access to Google API Services and other Google products and services. Your access to Google API Services may also be revoked if your application enables end-users or other parties to violate the Google APIs Terms of Service and/or Google policies.
+
+
+FIREBASE ANALYTICS POLICY
+
+
+By enabling Google Analytics for Firebase you enable the collection of data about App Users, including via identifiers for mobile devices (including Android Advertising ID and Advertising Identifier for iOS), cookies and similar technologies.
+
+You will not facilitate the merging of personally-identifiable information with non-personally identifiable information unless you have robust notice of, and the user's prior affirmative (i.e., opt-in) consent to, that merger.
+
+You are required to notify your App Users by disclosing the following information:
+
+    The Google Analytics for Firebase features you have implemented.
+    How you and third-party vendors use first-party cookies, or other first-party identifiers, and third-party cookies and similar technologies, such as identifiers for mobile devices (including Android Advertising ID and Advertising Identifier for iOS), or other third-party identifiers, together.
+    How App Users can opt-out of the Google Analytics for Firebase features you use, including through applicable device settings, such as the device advertising settings for mobile apps, or any other available means.
+
+European Union User Consent Policy
+
+You must comply with the European Union User Consent Policy.
+Interest-based advertising
+
+If you use Google Analytics for Firebase to collect sensitive information about your visitors, including information described in the Google AdWords sensitive category restrictions, you may not use Google Analytics for Firebase to collect data for the purpose of interest based advertising.
+
+Because laws across countries and territories vary, and because Google Analytics for Firebase can be used in many ways, Google is unable to provide the exact language you need to include in your privacy policy. Only you understand the unique aspects and special considerations of your business, and your privacy policy should account for this information that only you can provide.
+
+Last Updated: 2017/05/17
+
+
+END OF FULL TERMS OF SERVICE
