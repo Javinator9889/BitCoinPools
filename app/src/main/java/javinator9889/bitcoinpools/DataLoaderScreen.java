@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.perf.metrics.AddTrace;
 
 import org.json.JSONObject;
@@ -80,6 +81,8 @@ public class DataLoaderScreen extends AppCompatActivity {
                 isAnyExceptionThrown = true;
                 Log.e("DataLoaderScreen", "Exception on thread: " + t.getName()
                         + " | Message: " + e.getMessage());
+                FirebaseCrash.log("DataLoaderScreen. Exception on thread: " + t.getName()
+                        + " | Message: " + e.getMessage());
             }
         };
         private boolean isAnyExceptionThrown = false;
@@ -100,20 +103,27 @@ public class DataLoaderScreen extends AppCompatActivity {
                 startActivity(activityMainIntent);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             } else {
-                new MaterialDialog.Builder(DataLoaderScreen.this)
-                        .positiveText(R.string.accept)
-                        .cancelable(false)
-                        .title(R.string.errorLoading)
-                        .content(R.string.errorLoadingDescription,
-                                true)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog,
-                                                @NonNull DialogAction which) {
-                                DataLoaderScreen.this.onBackPressed();
-                            }
-                        })
-                        .build().show();
+                if (BitCoinApp.isOnline()) {
+                    Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
+                    new DataLoader().execute();
+                } else {
+                    new MaterialDialog.Builder(DataLoaderScreen.this)
+                            .title(R.string.noConnectionTitle)
+                            .content(R.string.noConnectionDesc)
+                            .cancelable(false)
+                            .positiveText(R.string.accept)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog,
+                                                    @NonNull DialogAction which) {
+                                    onBackPressed();
+                                }
+                            })
+                            .build()
+                            .show();
+                }
+                Log.e("DataLoaderScreen", "An exception was thrown. Trying to obtain " +
+                        "data again");
             }
         }
 

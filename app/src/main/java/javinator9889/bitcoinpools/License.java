@@ -25,6 +25,15 @@ public class License extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.license);
         setTitle(R.string.licenseTitle);
+        String[] libs = new String[] {
+                getString(R.string.library_donations_libraryName),
+                getString(R.string.library_appcompat_v7_libraryName),
+                getString(R.string.library_constraint_layout_libraryName),
+                getString(R.string.library_design_libraryName),
+                getString(R.string.library_recyclerview_v7_libraryName),
+                getString(R.string.library_support_annotations_libraryName),
+                getString(R.string.library_support_cardview_libraryName),
+        };
         LibsSupportFragment fragment = new LibsBuilder()
                 .withVersionShown(true)
                 .withLicenseShown(true)
@@ -38,7 +47,7 @@ public class License extends AppCompatActivity {
                 .withAutoDetect(true)
                 .withAboutDescription(getString(R.string.bitcoindesc))
                 .withLicenseDialog(true)
-                .withLibraries(getString(R.string.library_donations_libraryName))
+                .withLibraries(libs)
                 .supportFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
