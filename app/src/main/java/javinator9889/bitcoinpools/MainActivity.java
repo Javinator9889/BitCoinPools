@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -24,10 +23,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.perf.metrics.AddTrace;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import javinator9889.bitcoinpools.AppUpdaterManager.CheckUpdates;
 import javinator9889.bitcoinpools.FragmentViews.DonationsActivity;
@@ -117,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 if (easterEgg.addStep(MainActivity.this)) {
-                    Intent easterEggIntent = new Intent(MainActivity.this, EasterEgg.class);
+                    Intent easterEggIntent = new Intent(MainActivity.this,
+                            EasterEgg.class);
                     startActivity(easterEggIntent);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     easterEgg.resetSteps();
@@ -146,7 +144,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        DataLoaderScreen.dataLoaderScreenActivity.finish();
+        try {
+            DataLoaderScreen.dataLoaderScreenActivity.finish();
+        } catch (NullPointerException e) {
+            Log.i(Constants.LOG.MATAG, "DataLoaderScreen already finished");
+        }
     }
 
     @Override
@@ -165,10 +167,6 @@ public class MainActivity extends AppCompatActivity {
         Tab2BTCChart.setLineChartCreated();
         Intent intentMain = new Intent(MainActivity.this, DataLoaderScreen.class);
         intentMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        /*intentMain.putExtra("MPU", mpu);
-        intentMain.putExtra("RD", retrievedData);
-        intentMain.putExtra("CARDS", cardsData);
-        intentMain.putExtra("BTCPRICE", btcPrice);*/
         startActivity(intentMain);
         MainActivity.this.finish();
     }

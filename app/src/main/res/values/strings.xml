@@ -97,6 +97,11 @@ SOFTWARE.<br />
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Version 1.18.3 (28/04/18)</h1><i>
+        - Solved little errors in the app<br />
+        - App size reduced<br />
+        - New libs<br />
+        - Maintenance<br /></i>
         <h1>Version 1.18.2 (10/03/18)</h1><i>
         - Solved UI errors<br />
         - Solved issues with calendar on Huawei devices<br />
