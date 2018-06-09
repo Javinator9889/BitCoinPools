@@ -97,6 +97,8 @@ SOFTWARE.<br />
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Version 1.18.4 (09/06/18)</h1><i>
+        - Minor bugs and issues corrections<br /></i>
         <h1>Version 1.18.3 (28/04/18)</h1><i>
         - Solved little errors in the app<br />
         - App size reduced<br />
