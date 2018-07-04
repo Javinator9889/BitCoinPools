@@ -125,20 +125,43 @@ public class DataLoaderScreen extends AppCompatActivity {
                     Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
                     new DataLoader().execute();
                 } else {
-                    new MaterialDialog.Builder(DataLoaderScreen.this)
-                            .title(R.string.noConnectionTitle)
-                            .content(R.string.noConnectionDesc)
-                            .cancelable(false)
-                            .positiveText(R.string.accept)
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog,
-                                                    @NonNull DialogAction which) {
-                                    onBackPressed();
-                                }
-                            })
-                            .build()
-                            .show();
+                    try {
+                        new MaterialDialog.Builder(DataLoaderScreen.this)
+                                .title(R.string.noConnectionTitle)
+                                .content(R.string.noConnectionDesc)
+                                .cancelable(false)
+                                .positiveText(R.string.accept)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog,
+                                                        @NonNull DialogAction which) {
+                                        onBackPressed();
+                                    }
+                                })
+                                .build()
+                                .show();
+                    } catch (Exception e) {
+                        // MaterialDialog lib doesn't provide functionality to catch its own
+                        // exception
+                        // "DialogException" so we need to catch a global generally exception and
+                        // cancel
+                        // app execution. This happens because the application is trying to show
+                        // a dialog
+                        // after the app has been closed (there is no activity).
+                        Log.e("MaterialDialog",
+                                "Not possible to show dialog - maybe the app is" +
+                                " closed. Full trace: " + e.getMessage());
+                        try {
+                            DataLoaderScreen.this.finish();
+                        } catch (Exception activityFinishException) {
+                            // Maybe closing the activity when execution failed throws an exception
+                            // if there is no possibility to close it
+                            Log.e("FinishException",
+                                    "Impossible to finish the activity. Maybe it is finished" +
+                                            " yet. More info: "
+                                    + activityFinishException.getMessage());
+                        }
+                    }
                 }
                 Log.e("DataLoaderScreen", "An exception was thrown. Trying to obtain " +
                         "data again");

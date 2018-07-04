@@ -9,3 +9,4 @@
 .externalNativeBuild
 OLD_LICENSE.txt
 *.jks
+google-services.json
