@@ -24,3 +24,6 @@
 -keep class **.R$* {
     <fields>;
 }
+-keep public class com.github.mikephil.charting.animation.* {
+    public protected *;
+}

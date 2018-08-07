@@ -118,16 +118,20 @@ public class Tab1PoolsChart extends Fragment {
                 data.setColors(ColorTemplate.MATERIAL_COLORS);
                 data.setValueTextSize(10f);
 
-                destinationChart.setData(new PieData(data));
-                destinationChart.setUsePercentValues(true);
-                destinationChart.setEntryLabelColor(ColorTemplate.rgb("#000000"));
-                Description description = new Description();
-                description.setText(getString(R.string.porcent));
-                destinationChart.setDescription(description);
-                destinationChart.getLegend().setEnabled(false);
-                destinationChart.setDragDecelerationFrictionCoef(0.95f);
-                destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                destinationChart.invalidate();
+                try {
+                    destinationChart.setData(new PieData(data));
+                    destinationChart.setUsePercentValues(true);
+                    destinationChart.setEntryLabelColor(ColorTemplate.rgb("#000000"));
+                    Description description = new Description();
+                    description.setText(getString(R.string.porcent));
+                    destinationChart.setDescription(description);
+                    destinationChart.getLegend().setEnabled(false);
+                    destinationChart.setDragDecelerationFrictionCoef(0.95f);
+                    destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+                    destinationChart.invalidate();
+                } catch (Exception e) {
+                    Log.e("PieChart", "Error loading PieChart: " + e.getMessage());
+                }
             }
         }, 100);
     }
