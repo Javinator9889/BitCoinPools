@@ -1,12 +1,13 @@
 package javinator9889.bitcoinpools;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.ui.LibsSupportFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * Created by Javinator9889 on 22/12/2017.
@@ -44,10 +45,10 @@ public class License extends AppCompatActivity {
                 .withAboutSpecial1Description(getString(R.string.ftos))
                 .withAboutSpecial2("Changelog")
                 .withAboutSpecial2Description(getString(R.string.changelog))
-                .withAutoDetect(true)
                 .withAboutDescription(getString(R.string.bitcoindesc))
                 .withLicenseDialog(true)
                 .withLibraries(libs)
+                .withAutoDetect(true)
                 .supportFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();

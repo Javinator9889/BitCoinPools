@@ -1,7 +1,6 @@
 package javinator9889.bitcoinpools;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by Javinator9889 on 02/03/2018.
@@ -42,7 +43,7 @@ public class CacheManaging {
     }
 
     @SuppressWarnings("unchecked")
-    public HashMap<String, String> readCache() throws IOException, ClassNotFoundException {
+    public HashMap<String, String> readCache() {
         try {
             File cacheDir = new File(filename);
             ObjectInputStream inputFile = new ObjectInputStream(new FileInputStream(cacheDir));

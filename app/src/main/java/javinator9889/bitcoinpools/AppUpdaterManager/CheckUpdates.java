@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -17,6 +16,7 @@ import org.json.JSONException;
 
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.NonNull;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 

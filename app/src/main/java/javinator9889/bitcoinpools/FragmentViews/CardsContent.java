@@ -1,6 +1,6 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Created by Javinator9889 on 31/01/2018.

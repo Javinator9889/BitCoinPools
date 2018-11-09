@@ -1,7 +1,5 @@
 package javinator9889.bitcoinpools.JSONTools;
 
-import android.support.annotation.Nullable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +16,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by Javinator9889 on 20/12/2017.

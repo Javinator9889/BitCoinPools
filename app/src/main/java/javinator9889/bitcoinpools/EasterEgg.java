@@ -6,11 +6,12 @@ import android.content.res.Resources;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by Javinator9889 on 10/03/2018.
@@ -20,13 +21,11 @@ import android.widget.VideoView;
 public class EasterEgg extends Activity {
     private String[] positivePhrases;
     private VideoView easterEggVideo;
-    private String[] negativePhrases;
     private boolean isEasterEggCompleted = false;
     private int actualStepCount = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        System.out.println("Creating activity");
         setContentView(R.layout.easter_egg);
         easterEggVideo = findViewById(R.id.easteregg_video);
         super.onCreate(savedInstanceState);
@@ -34,8 +33,6 @@ public class EasterEgg extends Activity {
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        System.out.println("Activity created");
-
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.easteregg;
         Uri videoUri = Uri.parse(videoPath);
         int videoMetadata[] = getVideoMeasurements(videoUri);
@@ -70,7 +67,6 @@ public class EasterEgg extends Activity {
 
     private EasterEgg(Resources stringArrayResources) {
         this.positivePhrases = stringArrayResources.getStringArray(R.array.positivePhrases);
-        //this.negativePhrases = stringArrayResources.getStringArray(R.array.negativePhrases);
     }
 
     public static EasterEgg newInstance(Resources applicationResources) {
