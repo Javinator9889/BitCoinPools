@@ -36,6 +36,17 @@ android {
             resValue "string", "app_version",
                     "${defaultConfig.versionName}${versionNameSuffix}"
         }
+        dev {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_version",
+                    "${defaultConfig.versionName}"
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            pseudoLocalesEnabled false
+            zipAlignEnabled true
+        }
     }
     dexOptions {
         preDexLibraries = false
