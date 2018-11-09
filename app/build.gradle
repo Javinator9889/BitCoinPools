@@ -54,15 +54,6 @@ android {
     buildToolsVersion '28.0.3'
 }
 
-productFlavors {
-
-        full {
-        }
-
-        dev {
-        }
-}
-
 def configSign() {
     if (project.hasProperty("sign.properties") && new File(project.property("sign.properties"))
             .exists()) {
@@ -83,17 +74,11 @@ if (build_param != "dev") {
         if (variant.buildType.name.equals('dev')) {
             variant.setIgnore(true);
         }
-        if (variant.getFlavors().get(0).name.equals('dev')) {
-            variant.setIgnore(true);
-        }
     }
 } else {
     //exclude all except production build
     android.variantFilter { variant ->
         if (!variant.buildType.name.equals('dev')) {
-            variant.setIgnore(true);
-        }
-        if (!variant.getFlavors().get(0).name.equals('dev')) {
             variant.setIgnore(true);
         }
     }
