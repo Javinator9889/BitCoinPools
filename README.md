@@ -22,12 +22,12 @@ With the latest update, we have just integrated the option to *recieve notificat
 
 The purpose of this application is *getting information about mining pools* avaiable on Internet [(click here for getting more information)](https://en.wikipedia.org/wiki/Mining_pool), and also giving the user **more information** for the BitCoin (as its current price)
 
-![Interface](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/englishinterface.jpg)
-![Buttons](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/buttons.jpg)
+![Interface](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/en/2018-03-06%20(2).png)
+![Buttons](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/en/2018-03-06%20(4).png)
 
 **Now, in the latest version** I have included a notifcation system that can be *enabled or disabled* by the user in order to know when the BitCoin **reaches or not** a specific price.
 
-![Settings](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/choosingdays.jpg)
+![Settings](https://github.com/Javinator9889/BitCoinPools/blob/master/screenshots/en/2018-03-06%20(5).png)
 
 ## Downloading different versions
 
