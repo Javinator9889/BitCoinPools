@@ -5,6 +5,7 @@
 <a href='https://play.google.com/store/apps/details?id=javinator9889.bitcoinpools&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=323 height=125/></a>
 
 [![BitCoinApp - Releases](https://img.shields.io/badge/Download%20-GitHub%20APK-green.svg)](https://goo.gl/qeaU85)
+[![Build Status](https://travis-ci.org/Javinator9889/BitCoinPools.svg?branch=master)](https://travis-ci.org/Javinator9889/BitCoinPools)
 
 ## Support me and donate :D
 <a href='https://paypal.me/Javinator9889'><img src='http://www.pngall.com/wp-content/uploads/2016/05/PayPal-Donate-Button-High-Quality-PNG.png' width=200 height=114></a>
