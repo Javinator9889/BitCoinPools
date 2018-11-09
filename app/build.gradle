@@ -51,6 +51,14 @@ android {
     dexOptions {
         preDexLibraries = false
     }
+    productFlavors {
+
+        full {
+        }
+
+        dev {
+        }
+    }
     buildToolsVersion '28.0.3'
 }
 
@@ -74,11 +82,17 @@ if (build_param != "dev") {
         if (variant.buildType.name.equals('dev')) {
             variant.setIgnore(true);
         }
+        if (variant.getFlavors().get(0).name.equals('dev')) {
+            variant.setIgnore(true);
+        }
     }
 } else {
     //exclude all except production build
     android.variantFilter { variant ->
         if (!variant.buildType.name.equals('dev')) {
+            variant.setIgnore(true);
+        }
+        if (!variant.getFlavors().get(0).name.equals('dev')) {
             variant.setIgnore(true);
         }
     }
