@@ -51,15 +51,16 @@ android {
     dexOptions {
         preDexLibraries = false
     }
-    productFlavors {
+    buildToolsVersion '28.0.3'
+}
+
+productFlavors {
 
         full {
         }
 
         dev {
         }
-    }
-    buildToolsVersion '28.0.3'
 }
 
 def configSign() {
