@@ -8,13 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONException;
 
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.NonNull;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.DataLoaderScreen;

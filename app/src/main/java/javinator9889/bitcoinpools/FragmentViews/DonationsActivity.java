@@ -4,11 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +17,11 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import org.sufficientlysecure.donations.BuildConfig;
 import org.sufficientlysecure.donations.DonationsFragment;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.R;
 

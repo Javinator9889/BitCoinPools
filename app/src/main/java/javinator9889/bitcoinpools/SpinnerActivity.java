@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
@@ -13,8 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+
+import static javinator9889.bitcoinpools.Constants.SHARED_PREFERENCES.CACHE_JOB_PERIOD;
 
 /**
  * Created by Javinator9889 on 22/12/2017.
@@ -28,6 +30,8 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
     private static int NEW_VALUE_PRICE = 0;
     private static boolean ACTUAL_ENABLED = false;
     private static boolean NEW_VALUE_ENABLED = false;
+    private static int ACTUAL_PERIOD = 1;
+    private static int NEW_PERIOD = 0;
     private static final SparseIntArray PRICES_VALUES = new SparseIntArray();
 
     @Override
@@ -44,9 +48,11 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
                 .getInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
         ACTUAL_ENABLED = BitCoinApp.getSharedPreferences()
                 .getBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, false);
+        ACTUAL_PERIOD = BitCoinApp.getSharedPreferences()
+                .getInt(CACHE_JOB_PERIOD, 1);
         NEW_VALUE_ENABLED = ACTUAL_ENABLED;
 
-        TextView tv = findViewById(R.id.daysTitle);
+//        TextView tv = findViewById(R.id.daysTitle);
         final Spinner spinner = findViewById(R.id.spinner2);
 
         Log.d(Constants.LOG.STAG, Constants.LOG.INIT_SPINNER);
@@ -57,8 +63,8 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(ACTUAL_DAYS - 1);
-        String output = getString(R.string.cDays);
-        tv.setText(output);
+//        String output = getString(R.string.cDays);
+//        tv.setText(output);
 
         final Spinner spinner1 = findViewById(R.id.spinner3);
         spinner1.setOnItemSelectedListener(this);
@@ -69,6 +75,15 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
         spinner1.setAdapter(adapter1);
         spinner1.setSelection(PRICES_VALUES.get(ACTUAL_PRICE));
         spinner1.setEnabled(ACTUAL_ENABLED);
+
+        final Spinner cacheDaysSpinner = findViewById(R.id.cacheSpinner2);
+        cacheDaysSpinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> cacheDays = ArrayAdapter
+                .createFromResource(this, R.array.cache_periods,
+                        android.R.layout.simple_spinner_item);
+        cacheDays.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cacheDaysSpinner.setAdapter(cacheDays);
+        cacheDaysSpinner.setSelection(getCacheSpinnerPositionByDay(ACTUAL_PERIOD));
 
         Log.d(Constants.LOG.STAG, Constants.LOG.INIT_SWITCH + ACTUAL_ENABLED);
         final Switch settingsSwitch = findViewById(R.id.switch1);
@@ -123,6 +138,14 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
                         NEW_VALUE_PRICE);
                 sharedPreferencesEditor2.apply();
                 break;
+            case R.id.cacheSpinner2:
+                Log.d(Constants.LOG.STAG, Constants.LOG.CHANGE_PREFERENCES
+                        + "spinner4 (cache period)");
+                NEW_PERIOD = getDaysByItemPosition(position);
+                SharedPreferences.Editor editor = BitCoinApp.getSharedPreferences().edit();
+                editor.putInt(CACHE_JOB_PERIOD, NEW_PERIOD);
+                editor.apply();
+                break;
             default:
                 Log.e(Constants.LOG.STAG, Constants.LOG.UNCAUGHT_ERROR
                         + "SpinnerActivity.onItemSelected(AdapterView<?> parent, View view, int position, long id)",
@@ -138,10 +161,10 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
     public void onBackPressed() {
         Log.d(Constants.LOG.STAG, Constants.LOG.BACK_TO_MC);
         if ((NEW_VALUE_DAYS != ACTUAL_DAYS) || (NEW_VALUE_PRICE != ACTUAL_PRICE)
-                || (NEW_VALUE_ENABLED != ACTUAL_ENABLED))
+                || (NEW_VALUE_ENABLED != ACTUAL_ENABLED) || (ACTUAL_PERIOD != NEW_PERIOD))
         {
             Toast.makeText(this, R.string.prefUpdated, Toast.LENGTH_LONG).show();
-            if (NEW_VALUE_ENABLED && !ACTUAL_ENABLED)
+            if ((NEW_VALUE_ENABLED && !ACTUAL_ENABLED) || (ACTUAL_PERIOD != NEW_PERIOD))
                 BitCoinApp.forceRestartBackgroundJobs();
             refresh();
         }
@@ -177,5 +200,47 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
         PRICES_VALUES.append(20000, 16);
         PRICES_VALUES.append(25000, 17);
         PRICES_VALUES.append(30000, 18);
+    }
+
+    private int getCacheSpinnerPositionByDay(int days) {
+        switch (days) {
+            case 1:
+                return 0;
+            case 3:
+                return 1;
+            case 7:
+                return 2;
+            case 14:
+                return 3;
+            case 30:
+                return 4;
+            case 90:
+                return 5;
+            case 365:
+                return 6;
+            default:
+                return 0;
+        }
+    }
+
+    private int getDaysByItemPosition(int position) {
+        switch (position) {
+            case 0:
+                return 1;
+            case 1:
+                return 3;
+            case 2:
+                return 7;
+            case 3:
+                return 14;
+            case 4:
+                return 30;
+            case 5:
+                return 90;
+            case 6:
+                return 365;
+            default:
+                return 1;
+        }
     }
 }

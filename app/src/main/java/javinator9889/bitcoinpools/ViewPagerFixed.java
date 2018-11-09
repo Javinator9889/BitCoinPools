@@ -5,11 +5,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import androidx.viewpager.widget.ViewPager;
+
 /**
  * Created by Javinator9889 on 07/08/2018.
  * Based on: https://github.com/chrisbanes/PhotoView/issues/31
  */
-public class ViewPagerFixed extends android.support.v4.view.ViewPager {
+public class ViewPagerFixed extends ViewPager {
     public ViewPagerFixed(Context context) {
         super(context);
     }

@@ -3,9 +3,7 @@ package javinator9889.bitcoinpools.FragmentViews;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +27,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.R;
@@ -42,6 +44,7 @@ public class Tab1PoolsChart extends Fragment {
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
     private static ViewGroup.LayoutParams TABLE_PARAMS;
     private static float MARKET_PRICE_USD;
+    private PieChart destinationChart;
     private Thread tableThread;
 
     public Tab1PoolsChart() {
@@ -64,13 +67,13 @@ public class Tab1PoolsChart extends Fragment {
                              Bundle savedInstanceState) {
         View createdView = inflater.inflate(R.layout.poolschart, container, false);
 
-        final PieChart chart = createdView.findViewById(R.id.chart);
+        destinationChart = createdView.findViewById(R.id.chart);
         final TableLayout tableLayout = createdView.findViewById(R.id.poolstable);
         MARKET_PRICE_USD = getArguments().getFloat("MPU");
         RETRIEVED_DATA = (HashMap<String, Float>) getArguments().getSerializable("RD");
 
         initT(createdView);
-        createPieChart(chart);
+        createPieChart();
         createTable(tableLayout, createdView);
         try {
             tableThread.join();
@@ -80,6 +83,41 @@ public class Tab1PoolsChart extends Fragment {
             return null;
         }
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        createPieChart();
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int dpHeight = metrics.heightPixels;
+        int finalDp = (int) (dpHeight * 0.5);
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) destinationChart
+                .getLayoutParams();
+        params.height = finalDp;
+        params.matchConstraintMaxHeight = dpHeight;
+        destinationChart.setLayoutParams(params);
+        destinationChart.invalidate();
+    }
+
+    /*@SuppressWarnings("unchecked")
+    @Override
+    @AddTrace(name = "onCreateViewForTab1")
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        final PieChart chart = view.findViewById(R.id.chart);
+        final TableLayout tableLayout = view.findViewById(R.id.poolstable);
+        MARKET_PRICE_USD = getArguments().getFloat("MPU");
+        RETRIEVED_DATA = (HashMap<String, Float>) getArguments().getSerializable("RD");
+
+        initT(view);
+        createPieChart(chart);
+        createTable(tableLayout, view);
+        try {
+            tableThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        super.onViewCreated(view, savedInstanceState);
+    }*/
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -97,7 +135,7 @@ public class Tab1PoolsChart extends Fragment {
         }
     }
 
-    private void createPieChart(final PieChart destinationChart) {
+    private void createPieChart() {
         new Handler().postDelayed(new Runnable() {  // Required for animation
             @Override
             public void run() {
@@ -127,13 +165,17 @@ public class Tab1PoolsChart extends Fragment {
                     destinationChart.setDescription(description);
                     destinationChart.getLegend().setEnabled(false);
                     destinationChart.setDragDecelerationFrictionCoef(0.95f);
-                    destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                    destinationChart.invalidate();
+                    destinationChart.setHardwareAccelerationEnabled(true);
+                    destinationChart.setMinimumWidth(10);
+//                    destinationChart.setDrawCenterText(false);
+                    destinationChart.animateY(1400, Easing.EaseInOutQuad);
+//                    destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                 } catch (Exception e) {
                     Log.e("PieChart", "Error loading PieChart: " + e.getMessage());
                 }
             }
         }, 100);
+//        destinationChart.invalidate();
     }
 
     private void createTable(final TableLayout destinationTable, final View view) {

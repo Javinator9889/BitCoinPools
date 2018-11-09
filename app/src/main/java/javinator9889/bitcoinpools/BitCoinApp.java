@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 import javinator9889.bitcoinpools.BackgroundJobs.CacheJobSchedulerService;
 import javinator9889.bitcoinpools.BackgroundJobs.JobSchedulerService;
 
-import static javinator9889.bitcoinpools.Constants.MILLIS_A_DAY;
+import static javinator9889.bitcoinpools.Constants.SHARED_PREFERENCES.CACHE_JOB_PERIOD;
 
 /**
  * Created by Javinator9889 on 22/01/2018.
@@ -107,8 +107,8 @@ public class BitCoinApp extends Application {
                             2,
                             new ComponentName(APPLICATION_CONTEXT.getPackageName(),
                                     CacheJobSchedulerService.class.getName()));
-
-                    cacheBuilder.setPeriodic(TimeUnit.DAYS.toMillis(1));
+                    int period = SHARED_PREFERENCES.getInt(CACHE_JOB_PERIOD, 1);
+                    cacheBuilder.setPeriodic(TimeUnit.DAYS.toMillis(period));
                     cacheBuilder.setPersisted(Constants.PERSISTED);
                     cacheBuilder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
                     cacheBuilder.setBackoffCriteria(Constants.BACKOFF_CRITERIA,
@@ -200,7 +200,8 @@ public class BitCoinApp extends Application {
                 equals = pending.toString().equals(Constants.JOBINFO);
             }
             long timeDiff = timeDifference();
-            return timeDiff >= MILLIS_A_DAY && !equals;
+            int period = SHARED_PREFERENCES.getInt(CACHE_JOB_PERIOD, 1);
+            return timeDiff >= TimeUnit.DAYS.toMillis(period) && !equals;
         } else {
             SharedPreferences.Editor newEntry = SHARED_PREFERENCES.edit();
             newEntry.putBoolean(Constants.SHARED_PREFERENCES.CACHE_JOB, false);

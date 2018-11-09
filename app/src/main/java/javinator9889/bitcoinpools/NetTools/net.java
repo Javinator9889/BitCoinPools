@@ -1,7 +1,6 @@
 package javinator9889.bitcoinpools.NetTools;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
 import org.json.JSONObject;
 
@@ -11,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by Javinator9889 on 20/12/2017.

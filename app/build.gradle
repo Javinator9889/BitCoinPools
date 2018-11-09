@@ -4,21 +4,18 @@ apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'key0'
-            keyPassword 'dhc9Xe7XoidlRo77hohh'
-            storeFile file('E:/Nextcloud/AndroidApps/BitCoinPools/keyfile.jks')
-            storePassword 'dhc9Xe7XoidlRo77hohh'
+        release {
+            configSign()
         }
     }
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "javinator9889.bitcoinpools"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 75
-        versionName "1.18.6"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        targetSdkVersion 28
+        versionCode 92
+        versionName "1.19"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -31,10 +28,11 @@ android {
             renderscriptDebuggable false
             pseudoLocalesEnabled false
             zipAlignEnabled true
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
+            debuggable true
             resValue "string", "app_version",
                     "${defaultConfig.versionName}${versionNameSuffix}"
         }
@@ -42,36 +40,49 @@ android {
     dexOptions {
         preDexLibraries = false
     }
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
+}
+
+def configSign() {
+    if (project.hasProperty("sign.properties") && new File(project.property("sign.properties"))
+            .exists()) {
+        Properties props = new Properties()
+        props.load(new FileInputStream(file(project.property("sign.properties"))))
+        keyAlias props['alias']
+        keyPassword props['key.password']
+        storeFile file(props['keystore'])
+        storePassword props['keystore.password']
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-crash:16.0.1'
-    implementation 'com.google.firebase:firebase-invites:16.0.1'
-    implementation 'com.google.firebase:firebase-appindexing:16.0.1'
-    implementation 'com.google.firebase:firebase-perf:16.0.0'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
+    implementation 'androidx.media:media:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout-solver:1.1.3'
+    implementation 'com.google.firebase:firebase-core:16.0.5'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
+    implementation 'com.google.firebase:firebase-invites:16.0.5'
+    implementation 'com.google.firebase:firebase-appindexing:16.0.2'
+    implementation 'com.google.firebase:firebase-perf:16.2.0'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
         transitive = true
     }
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    implementation 'com.android.support:preference-v14:27.1.0'
-    implementation 'com.android.support:preference-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation 'androidx.preference:preference:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha01'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation('com.mikepenz:aboutlibraries:6.0.2@aar') {
-        transitive = true
-    }
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
-    implementation 'com.android.support:support-annotations:27.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.0'
-    implementation 'com.jpardogo.materialtabstrip:library:1.1.1'
-    implementation 'org.sufficientlysecure:donations:2.5'
+    implementation "com.mikepenz:aboutlibraries:6.2.0"
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'org.sufficientlysecure:donations:2.6'
 }
 apply plugin: 'com.google.gms.google-services'

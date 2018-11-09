@@ -97,6 +97,11 @@ SOFTWARE.<br />
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Version 1.19 (09/11/18)</h1><i>
+        - App optimization - <b>reduced size</b><br />
+        - New options: now you can setup <b>an interval</b> for comparing data at BitCoin cards<br />
+        - Migration to <b>Android X</b>: app faster and highly optimized<br />
+        - Maintenance and bugs solved<br /></i>
         <h1>Version 1.18.6 (07/08/18)</h1><i>
         - Maintenance and bugs solved<br /></i>
         <h1>Version 1.18.5 (04/07/18)</h1><i>
@@ -256,5 +261,19 @@ SOFTWARE.<br />
         <item name="pos3">An EasterEgg?</item>
         <item name="pos4">Keep doing this…</item>
         <item name="pos5">So curious…</item>
+    </string-array>
+    <string name="cache_days_title">Time for comparing data</string>
+    <string name="cache_description">At the main view, there are some cards with useful
+        information about BitCoin, including a little section with arrows displaying
+        whether that field has changed its value, being increased or decreased. Setup a
+        custom period for updating that comparison.</string>
+    <string-array name="cache_periods">
+        <item>1 day</item>
+        <item>3 days</item>
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>1 month</item>
+        <item>3 months</item>
+        <item>1 year</item>
     </string-array>
 </resources>

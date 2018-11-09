@@ -4,9 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -24,6 +21,9 @@ import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 
 import static javinator9889.bitcoinpools.MainActivity.round;
