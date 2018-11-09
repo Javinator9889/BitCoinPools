@@ -36,6 +36,17 @@ android {
             resValue "string", "app_version",
                     "${defaultConfig.versionName}${versionNameSuffix}"
         }
+        dev {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_version",
+                    "${defaultConfig.versionName}"
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            pseudoLocalesEnabled false
+            zipAlignEnabled true
+        }
     }
     dexOptions {
         preDexLibraries = false
@@ -52,6 +63,24 @@ def configSign() {
         keyPassword props['key.password']
         storeFile file(props['keystore'])
         storePassword props['keystore.password']
+    }
+}
+
+def build_param = "${build}";
+
+if (build_param != "dev") {
+    //exclude production build
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('dev')) {
+            variant.setIgnore(true);
+        }
+    }
+} else {
+    //exclude all except production build
+    android.variantFilter { variant ->
+        if (!variant.buildType.name.equals('dev')) {
+            variant.setIgnore(true);
+        }
     }
 }
 

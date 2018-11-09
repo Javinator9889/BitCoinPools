@@ -22,4 +22,4 @@ android:
     - extra-google-m2repository
 
 script:
-   - ./gradlew build --stacktrace
+   - ./gradlew clean build -Pbuild=dev --stacktrace
