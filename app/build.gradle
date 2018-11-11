@@ -13,7 +13,7 @@ android {
         applicationId "javinator9889.bitcoinpools"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 92
+        versionCode 93
         versionName "1.19"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -66,20 +66,20 @@ def configSign() {
     }
 }
 
-def build_param = "${build}";
+def build_param = "${build}"
 
 if (build_param != "dev") {
     //exclude production build
     android.variantFilter { variant ->
         if (variant.buildType.name.equals('dev')) {
-            variant.setIgnore(true);
+            variant.setIgnore(true)
         }
     }
 } else {
     //exclude all except production build
     android.variantFilter { variant ->
         if (!variant.buildType.name.equals('dev')) {
-            variant.setIgnore(true);
+            variant.setIgnore(true)
         }
     }
 }

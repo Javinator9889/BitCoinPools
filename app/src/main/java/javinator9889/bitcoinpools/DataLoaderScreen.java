@@ -182,6 +182,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                 return true;
             } catch (InterruptedException | DataLoaderException e) {
                 Log.e(Constants.LOG.MATAG, Constants.LOG.JOIN_ERROR + e.getMessage());
+                isAnyExceptionThrown = true;
                 return false;
             }
         }
