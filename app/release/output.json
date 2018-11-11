@@ -6,7 +6,7 @@
     "apkInfo": {
       "type": "MAIN",
       "splits": [],
-      "versionCode": 92,
+      "versionCode": 93,
       "versionName": "1.19",
       "enabled": true,
       "outputFile": "app-release.apk",
