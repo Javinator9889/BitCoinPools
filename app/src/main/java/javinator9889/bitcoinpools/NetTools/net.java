@@ -1,5 +1,8 @@
 package javinator9889.bitcoinpools.NetTools;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import org.json.JSONObject;
@@ -61,5 +64,26 @@ public class net extends AsyncTask<String, Void, JSONObject> {
         }
         bufferedReader.close();
         return new JSONObject(response.toString());
+    }
+
+    public static boolean isHostReachable(@NonNull String host, @NonNull Context context) {
+        int TIMEOUT_IN_MS = 2000;
+        int RESPONSE_CODE_OK = 200;
+        if (host.equals("")) return false;
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        if (info != null && info.isConnected()) {
+            try {
+                URL url = new URL(host);
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                urlConnection.setConnectTimeout(TIMEOUT_IN_MS);
+                urlConnection.connect();
+                return urlConnection.getResponseCode() == RESPONSE_CODE_OK;
+            } catch (Exception ignored) {
+                return false;
+            }
+        }
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package javinator9889.bitcoinpools;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
+import javinator9889.bitcoinpools.NetTools.net;
 
 import static javinator9889.bitcoinpools.MainActivity.round;
 
@@ -40,6 +42,7 @@ public class DataLoaderScreen extends AppCompatActivity {
     private HashMap<String, Float> retrievedData;
     private HashMap<String, Float> cardsData;
     private HashMap<Date, Float> btcPrice;
+    private Context mContext;
 
     @Override
     @AddTrace(name = "getApplicationValues")
@@ -47,6 +50,7 @@ public class DataLoaderScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dataLoaderScreenActivity = this;
         setContentView(R.layout.activity_loading);
+        mContext = getApplicationContext();
         if (BitCoinApp.isOnline()) {
             Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
             new DataLoader().execute();
@@ -101,9 +105,13 @@ public class DataLoaderScreen extends AppCompatActivity {
                         + " | Message: " + e.getMessage());
                 FirebaseCrash.log("DataLoaderScreen. Exception on thread: " + t.getName()
                         + " | Message: " + e.getMessage());
+                if (e instanceof HostNonReachableException) {
+                    areHostsReachable = false;
+                }
             }
         };
         private boolean isAnyExceptionThrown = false;
+        private boolean areHostsReachable = true;
 
         @Override
         protected void onPreExecute() {
@@ -120,6 +128,27 @@ public class DataLoaderScreen extends AppCompatActivity {
                 activityMainIntent.putExtra("BTCPRICE", btcPrice);
                 startActivity(activityMainIntent);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+            } else if (!areHostsReachable) {
+                try {
+                    new MaterialDialog.Builder(mContext)
+                            .title(R.string.host_not_available_title)
+                            .content(R.string.host_not_available_desc)
+                            .cancelable(false)
+                            .positiveText(R.string.accept)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    onBackPressed();
+                                }
+                            })
+                            .build()
+                            .show();
+                } catch (Exception e) {
+                    try {
+                        finish();
+                    } catch (Exception ignored) {
+                    }
+                }
             } else {
                 if (BitCoinApp.isOnline()) {
                     Log.d(Constants.LOG.MATAG, Constants.LOG.CREATING_MAINVIEW);
@@ -150,7 +179,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                         // after the app has been closed (there is no activity).
                         Log.e("MaterialDialog",
                                 "Not possible to show dialog - maybe the app is" +
-                                " closed. Full trace: " + e.getMessage());
+                                        " closed. Full trace: " + e.getMessage());
                         try {
                             DataLoaderScreen.this.finish();
                         } catch (Exception activityFinishException) {
@@ -159,7 +188,7 @@ public class DataLoaderScreen extends AppCompatActivity {
                             Log.e("FinishException",
                                     "Impossible to finish the activity. Maybe it is finished" +
                                             " yet. More info: "
-                                    + activityFinishException.getMessage());
+                                            + activityFinishException.getMessage());
                         }
                     }
                 }
@@ -208,6 +237,9 @@ public class DataLoaderScreen extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_MPU);
+                    if (!net.isHostReachable(Constants.STATS_URL, mContext))
+                        throw new HostNonReachableException(String.format("The URL \"%s\" is not " +
+                                "reachable", Constants.STATS_URL));
                     try {
                         mpu = round((float) getHTTPSRequest(Constants.STATS_URL)
                                 .getDouble(Constants.MARKET_NAME), 2);
@@ -233,6 +265,9 @@ public class DataLoaderScreen extends AppCompatActivity {
                             .getInt(Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
                     Log.d(Constants.LOG.MATAG, Constants.LOG.LOADING_RD);
                     String url = Constants.POOLS_URL + days + "days";
+                    if (!net.isHostReachable(url, mContext))
+                        throw new HostNonReachableException(String.format("The URL \"%s\" is not " +
+                                "reachable", url));
                     try {
                         retrievedData = JSONTools.convert2HashMap(getHTTPSRequest(url));
                     } catch (Exception e) {
@@ -251,6 +286,9 @@ public class DataLoaderScreen extends AppCompatActivity {
             cardsDataThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    if (!net.isHostReachable(Constants.STATS_URL, mContext))
+                        throw new HostNonReachableException(String.format("The URL \"%s\" is not " +
+                                "reachable", Constants.STATS_URL));
                     try {
                         cardsData = JSONTools.convert2HashMap(getHTTPSRequest(Constants.STATS_URL));
                     } catch (Exception e) {
@@ -270,6 +308,9 @@ public class DataLoaderScreen extends AppCompatActivity {
             btcPriceThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    if (!net.isHostReachable(Constants.API_URL, mContext))
+                        throw new HostNonReachableException(String.format("The URL \"%s\" is not " +
+                                "reachable", Constants.API_URL));
                     try {
                         btcPrice = JSONTools.convert2DateHashMap(getHTTPSRequest(Constants.API_URL)
                                 .getJSONObject("bpi"));
@@ -291,5 +332,9 @@ public class DataLoaderScreen extends AppCompatActivity {
         DataLoaderException(@NonNull String message) {
             super(message);
         }
+    }
+
+    class HostNonReachableException extends RuntimeException {
+        HostNonReachableException(String message) {super(message);}
     }
 }

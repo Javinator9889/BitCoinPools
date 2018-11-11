@@ -276,4 +276,9 @@ SOFTWARE.<br />
         <item>3 months</item>
         <item>1 year</item>
     </string-array>
+    <string name="host_not_available_title">Data not available</string>
+    <string name="host_not_available_desc">It looks like it is not possible to establish
+        connection to one or more servers in order to obtain the latest BitCoin data.
+
+        Please, try again later.</string>
 </resources>

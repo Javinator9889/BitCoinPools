@@ -242,4 +242,9 @@
         <item>3 meses</item>
         <item>1 año</item>
     </string-array>
+    <string name="host_not_available_title">Datos no disponibles</string>
+    <string name="host_not_available_desc">Parece que no es posible establecer la conexión con
+        uno o más servidores para así obtener los últimos datos sobre el BitCoin.
+
+        Por favor, inténtalo más tarde.</string>
 </resources>
