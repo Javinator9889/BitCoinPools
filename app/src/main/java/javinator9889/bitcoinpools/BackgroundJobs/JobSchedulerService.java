@@ -38,7 +38,7 @@ public class JobSchedulerService extends JobService {
     public boolean onStartJob(JobParameters params) {
         Log.d(Constants.LOG.JTAG, Constants.LOG.STARTING_JOB + Constants.JOB_ID);
         jobWorking = true;
-        notificationHandler = NotificationHandler.newInstance();
+        notificationHandler = NotificationHandler.newInstance(this);
         jobHandler.sendMessage(Message.obtain(jobHandler, Constants.JOB_ID, params));
         return jobWorking;
     }

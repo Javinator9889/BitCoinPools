@@ -247,4 +247,5 @@
         uno o más servidores para así obtener los últimos datos sobre el BitCoin.
 
         Por favor, inténtalo más tarde.</string>
+    <string name="latest_7_days">Evolución en los últimos 7 días</string>
 </resources>

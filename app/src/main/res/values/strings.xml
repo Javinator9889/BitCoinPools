@@ -281,4 +281,5 @@ SOFTWARE.<br />
         connection to one or more servers in order to obtain the latest BitCoin data.
 
         Please, try again later.</string>
+    <string name="latest_7_days">BitCoin evolution latest 7 days</string>
 </resources>
