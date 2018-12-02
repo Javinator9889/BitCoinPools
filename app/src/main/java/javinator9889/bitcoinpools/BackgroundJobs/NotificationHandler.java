@@ -7,7 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Build;
@@ -31,6 +33,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
@@ -152,8 +155,12 @@ class NotificationHandler {
                             .setStyle(new Notification.BigTextStyle()
                                     .bigText(notificationTextLong));
                 }
-                if (chartBitmap != null)
+                if (chartBitmap != null) {
                     notification.setLargeIcon(chartBitmap);
+                    notification.setStyle(new Notification.BigPictureStyle()
+                            .bigPicture(chartBitmap)
+                            .bigLargeIcon((Bitmap) null));
+                }
                 notification.setContentIntent(clickIntent);
                 assert notificationManager != null;
                 notificationManager.notify(Constants.NOTIFICATION_ID, notification.build());
@@ -175,6 +182,7 @@ class NotificationHandler {
         pricesMap = getValuesByDatedURL(url);
         if (pricesMap == null)
             return null;
+//        lineChart.setDrawingCacheEnabled(true);
         lineChart.setDrawGridBackground(false);
         lineChart.getDescription().setEnabled(false);
         CustomMarkerView markerView = new CustomMarkerView(mContext, R.layout.marker_view);
@@ -199,8 +207,7 @@ class NotificationHandler {
         lineDataSet.setValueTextSize(9f);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFormLineWidth(1f);
-        lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f},
-                0f));
+        lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
         lineDataSet.setFormSize(15.f);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         lineDataSet.setFillDrawable(ContextCompat.getDrawable(mContext, R.drawable.fade_red));
@@ -210,8 +217,7 @@ class NotificationHandler {
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
         lineChart.getAxisLeft().setValueFormatter(new LargeValueFormatter());
-        lineChart.invalidate();
-        return lineChart.getChartBitmap();
+        return setLayoutParams(lineChart);
     }
 
     private Map<Date, Float> getValuesByDatedURL(@NonNull String url) {
@@ -224,6 +230,37 @@ class NotificationHandler {
                 JSONException | NullPointerException ignored) {
             return null;
         }
+    }
+
+    private Bitmap setLayoutParams(@NonNull final LineChart lineChart) {
+        float dpHeight = mContext.getResources().getDisplayMetrics().heightPixels;
+        float dpWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+
+        int[] attrs = new int[]{R.attr.actionBarSize};
+        TypedArray array = mContext.obtainStyledAttributes(attrs);
+        int size = array.getDimensionPixelSize(0, 0);
+        array.recycle();
+
+        int finalHeightDp = (int) ((dpHeight - size) * 0.5);
+        int finalWidthDp = (int) ((dpWidth - size) * 0.9);
+
+        System.out.println("Height: " + finalHeightDp);
+        System.out.println("Width: " + finalWidthDp);
+
+        Bitmap bitmap = Bitmap.createBitmap(finalWidthDp, finalHeightDp, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        ConstraintLayout.LayoutParams layoutParams =
+                new ConstraintLayout.LayoutParams(finalWidthDp, finalHeightDp);
+        layoutParams.matchConstraintMaxHeight = (int) dpHeight;
+        layoutParams.matchConstraintMaxWidth = (int) dpWidth;
+        layoutParams.orientation = ConstraintLayout.LayoutParams.HORIZONTAL;
+        layoutParams.validate();
+
+        lineChart.setLayoutParams(layoutParams);
+        lineChart.invalidate();
+        lineChart.draw(canvas);
+        return bitmap;
     }
 
     @NonNull
