@@ -7,38 +7,45 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.googlecode.charts4j.AxisLabels;
+import com.googlecode.charts4j.AxisLabelsFactory;
+import com.googlecode.charts4j.AxisStyle;
+import com.googlecode.charts4j.AxisTextAlignment;
+import com.googlecode.charts4j.Color;
+import com.googlecode.charts4j.Data;
+import com.googlecode.charts4j.Fills;
+import com.googlecode.charts4j.GCharts;
+import com.googlecode.charts4j.Line;
+import com.googlecode.charts4j.LineChart;
+import com.googlecode.charts4j.LineStyle;
+import com.googlecode.charts4j.Plots;
+import com.googlecode.charts4j.Shape;
 
 import org.json.JSONException;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.DataLoaderScreen;
-import javinator9889.bitcoinpools.FragmentViews.CustomMarkerView;
 import javinator9889.bitcoinpools.JSONTools.JSONTools;
 import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.NetTools.net;
@@ -47,8 +54,7 @@ import javinator9889.bitcoinpools.R;
 import static javinator9889.bitcoinpools.Constants.API_URL;
 
 /**
- * Created by Javinator9889 on 23/01/2018.
- * Based on: https://stackoverflow.com/a/46991229
+ * Created by Javinator9889 on 23/01/2018. Based on: https://stackoverflow.com/a/46991229
  */
 
 class NotificationHandler {
@@ -57,11 +63,9 @@ class NotificationHandler {
     private static boolean NOTIFIED_LOW = false;
     private static int SPECIFIC_VALUE = 0;
     private static float MPU;
-    private Context mContext;
 
-    private NotificationHandler(@NonNull Context context) {
+    private NotificationHandler() {
         final SharedPreferences sp = BitCoinApp.getSharedPreferences();
-        mContext = context;
         Log.d(Constants.LOG.NTAG, Constants.LOG.CREATING_NOTIFICATION);
         NOTIFICATIONS_ENABLED = sp.getBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED,
                 false);
@@ -70,11 +74,11 @@ class NotificationHandler {
         SPECIFIC_VALUE = sp.getInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
         MPU = initMPU();
         Log.d(Constants.LOG.NTAG, Constants.LOG.CURRRENT_NOT_SETTINGS
-        + NOTIFICATIONS_ENABLED + "\n"
-        + NOTIFIED_HIGH + "\n"
-        + NOTIFIED_LOW + "\n"
-        + SPECIFIC_VALUE + "\n"
-        + MPU);
+                + NOTIFICATIONS_ENABLED + "\n"
+                + NOTIFIED_HIGH + "\n"
+                + NOTIFIED_LOW + "\n"
+                + SPECIFIC_VALUE + "\n"
+                + MPU);
     }
 
     void putNotification() {
@@ -106,17 +110,20 @@ class NotificationHandler {
                 notificationTitle = BitCoinApp.getAppContext().getString(R.string.morePrice);
                 notificationTextLong = BitCoinApp.getAppContext().getString(R.string.morePriceX)
                         + SPECIFIC_VALUE + ". " + BitCoinApp.getAppContext().getString(R.string.actualCost) + MPU;
+
                 notificationText = BitCoinApp.getAppContext().getString(R.string.morePriceX)
                         + SPECIFIC_VALUE;
                 NOTIFIED_HIGH = true;
                 NOTIFIED_LOW = false;
                 notify = (MPU != -1);
             }
+            String notificationTitleLong = BitCoinApp
+                    .getAppContext()
+                    .getString(R.string.actualCost) + MPU;
             if (notify) {
                 Log.d(Constants.LOG.NTAG, Constants.LOG.NOTIFYING);
                 updatePreferences();
-                final LineChart chart = new LineChart(mContext);
-                Bitmap chartBitmap = generateLineChart(chart);
+                AsyncTask<String, Void, Bitmap> lineChartTask = generateLineChart();
                 String name = BitCoinApp.getAppContext().getString(R.string.alerts);
                 String description = BitCoinApp.getAppContext().getString(R.string.description);
                 Notification.Builder notification;
@@ -155,69 +162,110 @@ class NotificationHandler {
                             .setStyle(new Notification.BigTextStyle()
                                     .bigText(notificationTextLong));
                 }
-                if (chartBitmap != null) {
-                    notification.setLargeIcon(chartBitmap);
-                    notification.setStyle(new Notification.BigPictureStyle()
-                            .bigPicture(chartBitmap)
-                            .bigLargeIcon((Bitmap) null));
+                try {
+                    if (lineChartTask != null) {
+                        Bitmap lineChart = lineChartTask.get();
+                        if (lineChart != null)
+                            notification.setStyle(new Notification.BigPictureStyle()
+                                    .bigPicture(lineChart)
+                                    .setBigContentTitle(notificationTitleLong));
+                    }
+                } catch (ExecutionException | InterruptedException ignored) {
+
+                } finally {
+                    notification.setContentIntent(clickIntent);
+                    assert notificationManager != null;
+                    notificationManager.notify(Constants.NOTIFICATION_ID, notification.build());
                 }
-                notification.setContentIntent(clickIntent);
-                assert notificationManager != null;
-                notificationManager.notify(Constants.NOTIFICATION_ID, notification.build());
-            } else
-                Log.d(Constants.LOG.NTAG, Constants.LOG.NNOTIFYING);
-        }
+            }
+        } else
+            Log.d(Constants.LOG.NTAG, Constants.LOG.NNOTIFYING);
     }
 
-    private Bitmap generateLineChart(@NonNull final LineChart lineChart) {
+    private AsyncTask<String, Void, Bitmap> generateLineChart() {
         Map<Date, Float> pricesMap;
         Calendar start = Calendar.getInstance();
         start.add(Calendar.DAY_OF_MONTH, -7);
         String startDate = String.format(Locale.US, "%d-%02d-%02d",
                 start.get(Calendar.YEAR),
-                start.get(Calendar.MONTH),
+                (start.get(Calendar.MONTH) + 1),
                 start.get(Calendar.DAY_OF_MONTH));
         String url = API_URL + "?start=" + startDate + "&end=" +
                 new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Calendar.getInstance().getTime());
         pricesMap = getValuesByDatedURL(url);
         if (pricesMap == null)
             return null;
-//        lineChart.setDrawingCacheEnabled(true);
-        lineChart.setDrawGridBackground(false);
-        lineChart.getDescription().setEnabled(false);
-        CustomMarkerView markerView = new CustomMarkerView(mContext, R.layout.marker_view);
-        markerView.setChartView(lineChart);
-        lineChart.setMarker(markerView);
-        ArrayList<Entry> values = new ArrayList<>(pricesMap.size());
+
+        int divider = getDivider(pricesMap);
+        Line bitcoinPricesLine = Plots.newLine(getNormalizedData(pricesMap), Color.DARKBLUE);
+        bitcoinPricesLine.setLineStyle(LineStyle.MEDIUM_DOTTED_LINE);
+        bitcoinPricesLine.addShapeMarkers(Shape.CIRCLE, Color.BLACK, 8);
+        bitcoinPricesLine.setFillAreaColor(Color.CYAN);
+
+        final LineChart bitcoinPricesChart = GCharts.newLineChart(bitcoinPricesLine);
+        bitcoinPricesChart.setSize(760, 380);
+        bitcoinPricesChart.setGrid(25, 25, 3, 2);
+
+        AxisStyle axisStyle = AxisStyle.newAxisStyle(Color.BLACK, 11, AxisTextAlignment.CENTER);
+        AxisLabels xAxis = AxisLabelsFactory.newAxisLabels(getDates(pricesMap));
+        AxisLabels yAxis = AxisLabelsFactory.newAxisLabels(getValues(pricesMap, divider));
+        xAxis.setAxisStyle(axisStyle);
+        yAxis.setAxisStyle(axisStyle);
+
+        bitcoinPricesChart.addXAxisLabels(xAxis);
+        bitcoinPricesChart.addYAxisLabels(yAxis);
+        bitcoinPricesChart.setBackgroundFill(Fills.newSolidFill(Color.WHITE));
+        ImageDownloader downloader = new ImageDownloader();
+        return downloader.execute(bitcoinPricesChart.toURLString());
+    }
+
+    private int getDivider(@NonNull Map<Date, Float> pricesMap) {
+        Float maximum = Collections.max(pricesMap.values());
+        int iterations = 0;
+        while (maximum >= 10) {
+            maximum /= 10;
+            ++iterations;
+        }
+        return (int) Math.pow(10, iterations);
+    }
+
+    private List<String> getDates(@NonNull Map<Date, Float> pricesMap) {
+        List<String> dates = new ArrayList<>(pricesMap.keySet().size());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        for (Date currentDate : pricesMap.keySet())
+            dates.add(formatter.format(currentDate));
+        return dates;
+    }
+
+    private List<String> getValues(@NonNull Map<Date, Float> pricesMap, int divider) {
+        Collection<Float> values = pricesMap.values();
+        List<String> formattedValues = new ArrayList<>(6);
+        float maximum = Collections.max(values);
+        float minimum = Collections.min(values);
+        float difference = maximum - minimum;
+        float amount = difference / 5;
+        formattedValues.add(0, String.format(Locale.US, "%.2fK", (minimum / divider)));
+        float latest = minimum;
+        for (int i = 1; i < 5; ++i) {
+            latest += amount;
+            formattedValues.add(i, String.format(Locale.US, "%.2fK", (latest / divider)));
+        }
+        formattedValues.add(5, String.format(Locale.US, "%.2fK", (maximum / divider)));
+        return formattedValues;
+    }
+
+    private Data getNormalizedData(@NonNull Map<Date, Float> pricesMap) {
+        double[] normalizedValues = new double[pricesMap.values().size()];
+        float maximum = Collections.max(pricesMap.values());
+        float minimum = Collections.min(pricesMap.values());
+        float difference = maximum - minimum;
         int i = 0;
-        for (Date currentDate : pricesMap.keySet()) {
-            values.add(new Entry(i, pricesMap.get(currentDate)));
+        for (Float currentValue : pricesMap.values()) {
+            float actualDifference = currentValue - minimum;
+            normalizedValues[i] = (100 * actualDifference) / difference;
             ++i;
         }
-        LineDataSet lineDataSet = new LineDataSet(values, mContext.getString(R.string
-                .latest_7_days));
-        lineDataSet.setDrawIcons(false);
-        lineDataSet.enableDashedLine(10f, 5f, 0f);
-        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
-        lineDataSet.setColor(Color.BLACK);
-        lineDataSet.setCircleColor(Color.BLACK);
-        lineDataSet.setLineWidth(1f);
-        lineDataSet.setCircleRadius(3f);
-        lineDataSet.setDrawCircleHole(false);
-        lineDataSet.setValueTextSize(9f);
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFormLineWidth(1f);
-        lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-        lineDataSet.setFormSize(15.f);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        lineDataSet.setFillDrawable(ContextCompat.getDrawable(mContext, R.drawable.fade_red));
-        lineDataSet.setDrawCircles(false);
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>(1);
-        dataSets.add(lineDataSet);
-        LineData data = new LineData(dataSets);
-        lineChart.setData(data);
-        lineChart.getAxisLeft().setValueFormatter(new LargeValueFormatter());
-        return setLayoutParams(lineChart);
+        return Data.newData(normalizedValues);
     }
 
     private Map<Date, Float> getValuesByDatedURL(@NonNull String url) {
@@ -232,40 +280,22 @@ class NotificationHandler {
         }
     }
 
-    private Bitmap setLayoutParams(@NonNull final LineChart lineChart) {
-        float dpHeight = mContext.getResources().getDisplayMetrics().heightPixels;
-        float dpWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+    private static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                URL imageUrl = new URL(urls[0]);
+                return BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+            } catch (IOException ignored) {
+                return null;
+            }
+        }
 
-        int[] attrs = new int[]{R.attr.actionBarSize};
-        TypedArray array = mContext.obtainStyledAttributes(attrs);
-        int size = array.getDimensionPixelSize(0, 0);
-        array.recycle();
-
-        int finalHeightDp = (int) ((dpHeight - size) * 0.5);
-        int finalWidthDp = (int) ((dpWidth - size) * 0.9);
-
-        System.out.println("Height: " + finalHeightDp);
-        System.out.println("Width: " + finalWidthDp);
-
-        Bitmap bitmap = Bitmap.createBitmap(finalWidthDp, finalHeightDp, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-
-        ConstraintLayout.LayoutParams layoutParams =
-                new ConstraintLayout.LayoutParams(finalWidthDp, finalHeightDp);
-        layoutParams.matchConstraintMaxHeight = (int) dpHeight;
-        layoutParams.matchConstraintMaxWidth = (int) dpWidth;
-        layoutParams.orientation = ConstraintLayout.LayoutParams.HORIZONTAL;
-        layoutParams.validate();
-
-        lineChart.setLayoutParams(layoutParams);
-        lineChart.invalidate();
-        lineChart.draw(canvas);
-        return bitmap;
     }
 
     @NonNull
-    static NotificationHandler newInstance(@NonNull Context context) {
-        return new NotificationHandler(context);
+    static NotificationHandler newInstance() {
+        return new NotificationHandler();
     }
 
     private static float initMPU() {

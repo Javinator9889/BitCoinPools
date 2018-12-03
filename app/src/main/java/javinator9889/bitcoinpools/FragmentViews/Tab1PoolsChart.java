@@ -87,7 +87,6 @@ public class Tab1PoolsChart extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        createPieChart();
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int dpHeight = metrics.heightPixels;
         int finalDp = (int) (dpHeight * 0.5);
@@ -98,26 +97,6 @@ public class Tab1PoolsChart extends Fragment {
         destinationChart.setLayoutParams(params);
         destinationChart.invalidate();
     }
-
-    /*@SuppressWarnings("unchecked")
-    @Override
-    @AddTrace(name = "onCreateViewForTab1")
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        final PieChart chart = view.findViewById(R.id.chart);
-        final TableLayout tableLayout = view.findViewById(R.id.poolstable);
-        MARKET_PRICE_USD = getArguments().getFloat("MPU");
-        RETRIEVED_DATA = (HashMap<String, Float>) getArguments().getSerializable("RD");
-
-        initT(view);
-        createPieChart(chart);
-        createTable(tableLayout, view);
-        try {
-            tableThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        super.onViewCreated(view, savedInstanceState);
-    }*/
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -145,7 +124,7 @@ public class Tab1PoolsChart extends Fragment {
                         RETRIEVED_DATA.entrySet());
                 Map.Entry<String, Float> getEntry;
                 int count = 0;
-                for (int i = entryList.size() - 1; (i >= 0) && (count < 10); --i) {
+                for (int i = entryList.size() - 1; (i >= 0) && (count <= 10); --i) {
                     getEntry = entryList.get(i);
                     Log.i(Constants.LOG.MATAG, "Accessing at: " + i + " | Key: "
                             + getEntry.getKey() + " | Value: " + getEntry.getValue());
@@ -167,15 +146,12 @@ public class Tab1PoolsChart extends Fragment {
                     destinationChart.setDragDecelerationFrictionCoef(0.95f);
                     destinationChart.setHardwareAccelerationEnabled(true);
                     destinationChart.setMinimumWidth(10);
-//                    destinationChart.setDrawCenterText(false);
                     destinationChart.animateY(1400, Easing.EaseInOutQuad);
-//                    destinationChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                 } catch (Exception e) {
                     Log.e("PieChart", "Error loading PieChart: " + e.getMessage());
                 }
             }
         }, 100);
-//        destinationChart.invalidate();
     }
 
     private void createTable(final TableLayout destinationTable, final View view) {

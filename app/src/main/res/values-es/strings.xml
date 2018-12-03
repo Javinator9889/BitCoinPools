@@ -74,6 +74,9 @@
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Versión 1.19.1 (03/12/18)</h1><i>
+        - Rediseñadas las notificaciones - ahora, una imagen se muestra con la evolución del BitCoin durante los últimos 7 días<br />
+        - Correcciones menores de errores<br /></i>
         <h1>Versión 1.19 (09/11/18)</h1><i>
         - Optimización de la app - <b>reducido el tamaño</b><br />
         - Nuevas opciones: ahora puedes establecer <b>un intervalo</b> para la comparación de datos en las tarjetas que muestran información sobre el BitCoin<br />
