@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/settingsToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_weight="1"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            app:tabSelectedTextColor="#FAFAFAFA"></com.google.android.material.tabs.TabLayout>
+            app:tabSelectedTextColor="#FAFAFAFA" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <javinator9889.bitcoinpools.ViewPagerFixed

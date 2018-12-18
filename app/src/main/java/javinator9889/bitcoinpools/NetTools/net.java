@@ -17,21 +17,11 @@ import javax.net.ssl.HttpsURLConnection;
 import androidx.annotation.NonNull;
 
 /**
- * Created by Javinator9889 on 20/12/2017.
- * Based on: https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
+ * Created by Javinator9889 on 20/12/2017. Based on: https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
  * Based on: https://stackoverflow.com/questions/1359689/how-to-send-http-request-in-java
  */
 
 public class net extends AsyncTask<String, Void, JSONObject> {
-    @Override
-    protected JSONObject doInBackground(String... url) {
-        try {
-            return getHttpsRequest(url[0]);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     @NonNull
     public static JSONObject getHttpRequest(String url) throws Exception {
         StringBuilder response = new StringBuilder();
@@ -85,5 +75,14 @@ public class net extends AsyncTask<String, Void, JSONObject> {
             }
         }
         return false;
+    }
+
+    @Override
+    protected JSONObject doInBackground(String... url) {
+        try {
+            return getHttpsRequest(url[0]);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

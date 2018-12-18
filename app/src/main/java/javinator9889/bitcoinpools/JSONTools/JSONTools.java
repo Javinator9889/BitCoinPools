@@ -20,8 +20,7 @@ import java.util.TreeMap;
 import androidx.annotation.Nullable;
 
 /**
- * Created by Javinator9889 on 20/12/2017.
- * Based on: https://www.mkyong.com/java/how-to-sort-a-map-in-java/
+ * Created by Javinator9889 on 20/12/2017. Based on: https://www.mkyong.com/java/how-to-sort-a-map-in-java/
  */
 
 public class JSONTools {

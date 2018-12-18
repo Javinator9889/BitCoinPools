@@ -14,8 +14,7 @@ import com.github.mikephil.charting.utils.Utils;
 import javinator9889.bitcoinpools.R;
 
 /**
- * Created by Javinator9889 on 29/01/2018.
- * Based on: https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/com/xxmassdeveloper/mpchartexample/custom/MyMarkerView.java
+ * Created by Javinator9889 on 29/01/2018. Based on: https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/com/xxmassdeveloper/mpchartexample/custom/MyMarkerView.java
  */
 
 @SuppressLint("ViewConstructor")

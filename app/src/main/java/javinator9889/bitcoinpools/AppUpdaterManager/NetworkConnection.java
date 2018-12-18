@@ -18,11 +18,10 @@ import androidx.annotation.NonNull;
 import javinator9889.bitcoinpools.Constants;
 
 /**
- * Created by Javinator9889 on 24/01/2018.
- * Get HTTPS response from GitHub releases
+ * Created by Javinator9889 on 24/01/2018. Get HTTPS response from GitHub releases
  */
 
-public class NetworkConnection extends AsyncTask <String, Void, JSONArray> {
+public class NetworkConnection extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected JSONArray doInBackground(String... url) {

@@ -2,6 +2,7 @@ package javinator9889.bitcoinpools.BackgroundJobs;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -20,7 +21,7 @@ import javinator9889.bitcoinpools.NetTools.net;
 
 /**
  * Created by Javinator9889 on 04/03/2018.
- *
+ * <p>
  * Controls cache
  */
 
@@ -85,5 +86,10 @@ public class CacheJobSchedulerService extends JobService {
             e.printStackTrace();
             throw new NullPointerException("Impossible to obtain values");
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(BitCoinApp.localeManager.setLocale(base));
     }
 }

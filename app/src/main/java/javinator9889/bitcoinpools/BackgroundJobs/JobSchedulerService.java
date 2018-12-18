@@ -2,16 +2,17 @@ package javinator9889.bitcoinpools.BackgroundJobs;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 
 
 /**
- * Created by Javinator9889 on 23/01/2018.
- * Based on: https://code.tutsplus.com/tutorials/using-the-jobscheduler-api-on-android-lollipop--cms-23562
+ * Created by Javinator9889 on 23/01/2018. Based on: https://code.tutsplus.com/tutorials/using-the-jobscheduler-api-on-android-lollipop--cms-23562
  */
 
 public class JobSchedulerService extends JobService {
@@ -51,5 +52,10 @@ public class JobSchedulerService extends JobService {
         jobHandler.removeMessages(Constants.JOB_ID);
         jobFinished(params, needsReschedule);
         return needsReschedule;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(BitCoinApp.localeManager.setLocale(base));
     }
 }

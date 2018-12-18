@@ -1,5 +1,6 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -30,22 +33,26 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
+import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 import javinator9889.bitcoinpools.MainActivity;
 import javinator9889.bitcoinpools.R;
 
+import static javinator9889.bitcoinpools.Constants.SHARED_PREFERENCES.CUSTOM_POOLS;
+
 /**
- * Created by Javinator9889 on 28/01/2018.
- * Creates view for main chart (pools chart)
+ * Created by Javinator9889 on 28/01/2018. Creates view for main chart (pools chart)
  */
 
-public class Tab1PoolsChart extends Fragment {
+public class Tab1PoolsChart extends BaseFragment {
     private static Map<String, Float> RETRIEVED_DATA = new LinkedHashMap<>();
     private static ViewGroup.LayoutParams TABLE_PARAMS;
     private static float MARKET_PRICE_USD;
     private PieChart destinationChart;
     private Thread tableThread;
+    private int mMaximumPoolsToShow;
+    private TextView mPoolsText;
+    private MaterialDialog md;
 
     public Tab1PoolsChart() {
     }
@@ -65,10 +72,14 @@ public class Tab1PoolsChart extends Fragment {
     @AddTrace(name = "onCreateViewForTab1")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View createdView = inflater.inflate(R.layout.poolschart, container, false);
+        final View createdView = inflater.inflate(R.layout.poolschart, container, false);
 
         destinationChart = createdView.findViewById(R.id.chart);
+        mPoolsText = createdView.findViewById(R.id.showingNumber);
+
         final TableLayout tableLayout = createdView.findViewById(R.id.poolstable);
+
+        mMaximumPoolsToShow = BitCoinApp.getSharedPreferences().getInt(CUSTOM_POOLS, 10);
         MARKET_PRICE_USD = getArguments().getFloat("MPU");
         RETRIEVED_DATA = (HashMap<String, Float>) getArguments().getSerializable("RD");
 
@@ -85,7 +96,7 @@ public class Tab1PoolsChart extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int dpHeight = metrics.heightPixels;
@@ -96,6 +107,39 @@ public class Tab1PoolsChart extends Fragment {
         params.matchConstraintMaxHeight = dpHeight;
         destinationChart.setLayoutParams(params);
         destinationChart.invalidate();
+
+        View duplicatedView = View.inflate(view.getContext(), R.layout.poolschart, null);
+        final TableLayout tableLayout = duplicatedView.findViewById(R.id.poolstable);
+        createTable(tableLayout, duplicatedView);
+        try {
+            tableThread.join();
+            md = new MaterialDialog.Builder(view.getContext())
+                    .title(R.string.latest_24h_pools_information)
+                    .customView(tableLayout, true)
+                    .positiveText(R.string.accept)
+                    .positiveColor(Color.BLACK)
+                    .cancelable(true)
+                    .build();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ConstraintLayout container = view.findViewById(R.id.constraintLayout);
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), R.string.show_longer_table, Toast
+                        .LENGTH_LONG).show();
+            }
+        });
+        container.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                md.show();
+                return false;
+            }
+        });
+//        md.show();
     }
 
     @Override
@@ -124,7 +168,7 @@ public class Tab1PoolsChart extends Fragment {
                         RETRIEVED_DATA.entrySet());
                 Map.Entry<String, Float> getEntry;
                 int count = 0;
-                for (int i = entryList.size() - 1; (i >= 0) && (count <= 10); --i) {
+                for (int i = entryList.size() - 1; (i >= 0) && (count < mMaximumPoolsToShow); --i) {
                     getEntry = entryList.get(i);
                     Log.i(Constants.LOG.MATAG, "Accessing at: " + i + " | Key: "
                             + getEntry.getKey() + " | Value: " + getEntry.getValue());
@@ -179,7 +223,7 @@ public class Tab1PoolsChart extends Fragment {
 
                 fetchTableRow.addView(firstPool);
                 fetchTableRow.addView(firstBlock);
-                for (int i = entryList.size() - 2; (i >= 0) && (count <= 10); --i) {
+                for (int i = entryList.size() - 2; (i >= 0) && (count < mMaximumPoolsToShow); --i) {
                     TextView poolName = new TextView(view.getContext());
                     TextView poolBlock = new TextView(view.getContext());
                     TableRow tableRow = new TableRow(view.getContext());
@@ -202,6 +246,9 @@ public class Tab1PoolsChart extends Fragment {
                     ++count;
                 }
                 destinationTable.invalidate();
+                mPoolsText.setText(getString(R.string.number_of_pools_displayed,
+                        count,
+                        entryList.size()));
             }
         };
         tableThread.setName("table_thread");

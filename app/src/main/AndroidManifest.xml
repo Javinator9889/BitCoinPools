@@ -18,6 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <provider
+            android:authorities="javinator9889.bitcoinpools.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
         <activity
             android:name=".DataLoaderScreen"
             android:screenOrientation="portrait"

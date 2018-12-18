@@ -34,7 +34,7 @@ import javinator9889.bitcoinpools.JSONTools.JSONTools;
 
 
 @SuppressLint("StaticFieldLeak")
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     public static Toolbar MAINACTIVITY_TOOLBAR;
     public static AppCompatActivity mainActivity;
 
@@ -43,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String, Float> cardsData;
     private HashMap<Date, Float> btcPrice;
     private EasterEgg easterEgg;
+
+    /**
+     * Based on: https://stackoverflow.com/questions/8911356/whats-the-best-practice-to-round-a-float-to-2-decimals
+     */
+    public static float round(float d, int decimalPlace) {
+        return BigDecimal.valueOf(d).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
+    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -66,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
         if (BitCoinApp.getSharedPreferences().contains(Constants.SHARED_PREFERENCES.APP_VERSION)) {
             if (!BitCoinApp.getSharedPreferences()
                     .getString(Constants.SHARED_PREFERENCES.APP_VERSION, "1.0")
-                    .equals(BitCoinApp.appVersion()))
-            {
+                    .equals(BitCoinApp.appVersion(this))) {
                 new MaterialDialog.Builder(this)
                         .title("Changelog")
                         .content(R.string.changelog,
@@ -76,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
                         .positiveText(R.string.accept)
                         .build().show();
                 SharedPreferences.Editor editor = BitCoinApp.getSharedPreferences().edit();
-                editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion());
+                editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion
+                        (this));
                 editor.apply();
             }
         } else {
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     .positiveText(R.string.accept)
                     .build().show();
             SharedPreferences.Editor editor = BitCoinApp.getSharedPreferences().edit();
-            editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion());
+            editor.putString(Constants.SHARED_PREFERENCES.APP_VERSION, BitCoinApp.appVersion(this));
             editor.apply();
         }
 
@@ -98,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         SectionsPagerAdapter mSectionsPagerAdapter =
                 new SectionsPagerAdapter(getSupportFragmentManager());
-        MAINACTIVITY_TOOLBAR = findViewById(R.id.toolbar);
+        MAINACTIVITY_TOOLBAR = findViewById(R.id.settingsToolbar);
         setSupportActionBar(MAINACTIVITY_TOOLBAR);
 
         ViewPager viewPager = findViewById(R.id.viewContainer);
@@ -171,13 +178,6 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.finish();
     }
 
-    /**
-     * Based on: https://stackoverflow.com/questions/8911356/whats-the-best-practice-to-round-a-float-to-2-decimals
-     */
-    public static float round(float d, int decimalPlace) {
-        return BigDecimal.valueOf(d).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -239,8 +239,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the
+     * sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

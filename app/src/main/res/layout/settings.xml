@@ -5,158 +5,312 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settingsToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:theme="@style/CustomTheme"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:title="@string/settings"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:titleTextColor="#FAFAFAFA">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/settingsToolbar">
 
-        <TextView
-            android:id="@+id/daysTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_dashboard_black_18dp"
-            android:text="@string/cDays"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="58dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:id="@+id/daysDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/daysTitle"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_info_outline_black_18dp"
-            android:paddingBottom="8dp"
-            android:text="@string/daysDescrip"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:alpha=".7"
-            tools:layout_editor_absoluteY="24dp" />
-
-        <Spinner
-            android:id="@+id/spinner2"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/daysDesc"
-            android:layout_columnWeight="1"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:theme="@style/CustomTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:id="@+id/firstSeparator"
-            style="@style/Divider"
-            android:layout_below="@+id/spinner2"
-            android:layout_marginTop="8dp"
-            android:alpha=".7"/>
+            <TextView
+                android:id="@+id/daysTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:drawableStart="@drawable/ic_dashboard_black_18dp"
+                android:drawablePadding="8dp"
+                android:text="@string/cDays"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="58dp"
+                tools:layout_editor_absoluteY="0dp" />
 
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spinner2"
-            android:layout_marginTop="16dp"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_trending_up_black_18dp"
-            android:text="@string/notifications"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/daysDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/daysTitle"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:alpha=".7"
+                android:drawableStart="@drawable/ic_info_outline_black_18dp"
+                android:drawablePadding="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/daysDescrip"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                tools:layout_editor_absoluteY="24dp" />
 
-        <Spinner
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_below="@+id/daysDesc"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <View
+                android:id="@+id/firstSeparator"
+                style="@style/Divider"
+                android:layout_below="@+id/spinner2"
+                android:layout_marginTop="8dp"
+                android:alpha=".7" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinner2"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_trending_up_black_18dp"
+                android:drawablePadding="8dp"
+                android:text="@string/notifications"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textSize="18sp" />
+
+            <!--<Spinner
             android:id="@+id/spinner3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/notDesc"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp" />-->
 
-        <TextView
-            android:id="@+id/notDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/switch1"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_info_outline_black_18dp"
-            android:text="@string/notifDesc"
-            android:alpha=".7"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+            <javinator9889.bitcoinpools.PrefixEditText
+                android:id="@+id/customPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/notDesc"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="@string/price_hint"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:tag="$ "
+                android:text="1000.0"
+                tools:ignore="Autofill,HardcodedText" />
 
-        <View
-            android:id="@+id/secSeparator"
-            style="@style/Divider"
-            android:layout_below="@+id/spinner3"
-            android:layout_marginTop="8dp"
-            android:alpha=".7"/>
+            <TextView
+                android:id="@+id/notDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/switch1"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:alpha=".7"
+                android:drawableStart="@drawable/ic_info_outline_black_18dp"
+                android:drawablePadding="8dp"
+                android:text="@string/notifDesc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
-        <TextView
-            android:id="@+id/cacheDaysTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/secSeparator"
-            android:layout_marginTop="16dp"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_baseline_cached_18px"
-            android:text="@string/cache_days_title"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="58dp"
-            tools:layout_editor_absoluteY="0dp" />
+            <View
+                android:id="@+id/secSeparator"
+                style="@style/Divider"
+                android:layout_below="@+id/customPrice"
+                android:layout_marginTop="8dp"
+                android:alpha=".7" />
 
-        <TextView
-            android:id="@+id/cacheDaysDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/cacheDaysTitle"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_info_outline_black_18dp"
-            android:paddingBottom="8dp"
-            android:text="@string/cache_description"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:alpha=".7"
-            tools:layout_editor_absoluteY="24dp" />
+            <TextView
+                android:id="@+id/cacheDaysTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/secSeparator"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_baseline_cached_18px"
+                android:drawablePadding="8dp"
+                android:text="@string/cache_days_title"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="58dp"
+                tools:layout_editor_absoluteY="0dp" />
 
-        <Spinner
-            android:id="@+id/cacheSpinner2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/cacheDaysDesc"
-            android:layout_columnWeight="1"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            <TextView
+                android:id="@+id/cacheDaysDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cacheDaysTitle"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:alpha=".7"
+                android:drawableStart="@drawable/ic_info_outline_black_18dp"
+                android:drawablePadding="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/cache_description"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                tools:layout_editor_absoluteY="24dp" />
 
-        <View
-            android:id="@+id/cacheSeparator"
-            style="@style/Divider"
-            android:layout_below="@+id/cacheSpinner2"
-            android:layout_marginTop="8dp"
-            android:alpha=".7" />
+            <Spinner
+                android:id="@+id/cacheSpinner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_below="@+id/cacheDaysDesc"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
 
-    </RelativeLayout>
+            <View
+                android:id="@+id/cacheSeparator"
+                style="@style/Divider"
+                android:layout_below="@+id/cacheSpinner2"
+                android:layout_marginTop="8dp"
+                android:alpha=".7" />
+
+            <TextView
+                android:id="@+id/poolsNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cacheSeparator"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_baseline_assessment_24px"
+                android:drawablePadding="8dp"
+                android:text="@string/pools_number_title"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="58dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/poolsNumberDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/poolsNumber"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:alpha=".7"
+                android:drawableStart="@drawable/ic_info_outline_black_18dp"
+                android:drawablePadding="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/pools_number_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                tools:layout_editor_absoluteY="24dp" />
+
+            <Spinner
+                android:id="@+id/poolsNumberText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_below="@+id/poolsNumberDesc"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <View
+                android:id="@+id/poolsNumberSeparator"
+                style="@style/Divider"
+                android:layout_below="@+id/poolsNumberText"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:alpha=".7" />
+
+            <TextView
+                android:id="@+id/language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/poolsNumberSeparator"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_baseline_language_24px"
+                android:drawablePadding="8dp"
+                android:text="@string/language"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="58dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/languageDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/language"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:alpha=".7"
+                android:drawableStart="@drawable/ic_info_outline_black_18dp"
+                android:drawablePadding="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/language_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                tools:layout_editor_absoluteY="24dp" />
+
+            <TextView
+                android:id="@+id/languageText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/languageDesc"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:singleLine="true"
+                android:text="@string/system"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"
+                android:textColor="@color/design_default_color_primary_variant"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <View
+                android:id="@+id/languageSeparator"
+                style="@style/Divider"
+                android:layout_below="@+id/languageText"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:alpha=".7" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

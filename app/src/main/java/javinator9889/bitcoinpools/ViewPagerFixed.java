@@ -8,8 +8,7 @@ import android.view.MotionEvent;
 import androidx.viewpager.widget.ViewPager;
 
 /**
- * Created by Javinator9889 on 07/08/2018.
- * Based on: https://github.com/chrisbanes/PhotoView/issues/31
+ * Created by Javinator9889 on 07/08/2018. Based on: https://github.com/chrisbanes/PhotoView/issues/31
  */
 public class ViewPagerFixed extends ViewPager {
     public ViewPagerFixed(Context context) {

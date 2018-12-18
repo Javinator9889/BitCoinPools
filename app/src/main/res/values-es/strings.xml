@@ -74,6 +74,14 @@
     <string name="github"><![CDATA[Accede al proyecto de GitHub justo aquí: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Version 1.19.2 (18/12/18)</h1><i>
+        - Arreglado un error con las imágenes en las notificaciones de Android Pie (9.0)<br />
+        - Nuevo: botón de compartir en las notificaciones - ahora puedes compartir fácilmente la evolución del BitCoin con todo el mundo<br />
+        - Nuevo: personaliza cuántas pools quieres que se muestren en la pantalla del gráfico circular e información<br />
+        - Nuevo: personaliza completamente el precio para el cuál quieres ser notificado cuando el precio del BitCoin esté por encima o por debajo<br />
+        - Nuevo: cambia el idioma de la aplicación a tu preferido<br />
+        - ¿Quieres contribuir con tus propias traducciones? Descubre cómo en los ajustes de la aplicación<br />
+        - Mantenimiento y corrección de errores menores<br /></i>
         <h1>Versión 1.19.1 (03/12/18)</h1><i>
         - Rediseñadas las notificaciones - ahora, una imagen se muestra con la evolución del BitCoin durante los últimos 7 días<br />
         - Correcciones menores de errores<br /></i>
@@ -251,4 +259,58 @@
 
         Por favor, inténtalo más tarde.</string>
     <string name="latest_7_days">Evolución en los últimos 7 días</string>
+    <string name="share_bitcoin_price">%1s. Su precio actual es $%.2f\n\nDescarga BitCoin
+        Pools y también puedes recibir notificaciones! - %3s</string>
+    <string name="share_bitcoin_price_title">Comparte la evolución y el precio del BitCoin</string>
+    <string name="share">Compartir</string>
+    <string name="error_sharing_title">Error al compartir</string>
+    <string name="error_sharing_desc">Parece que algo ha ido mal al compartir la evolución del
+        BitCoin. ¿Has eliminado los datos de la aplicacion y/o la caché?</string>
+    <string name="pools_number_title">Número de pools para mostrar</string>
+    <string name="pools_number_desc">En la vista principal, por defecto se muestran 10 pools.
+        Aquí puedes cambiar y personalizar cuántas quieres que se muestren, entre mínimo 3 y
+        máximo 24.</string>
+    <string name="change_value">Cambiar</string>
+    <string name="input_hint_pools">Pools a mostrar…</string>
+    <string name="cancel">Cancelar</string>
+    <string name="price_hint">Notifícame a los…</string>
+    <string name="pools_hint">Pools a mostrar…</string>
+    <string name="language">Idioma</string>
+    <string name="language_desc">Cambia manualmente el idioma de la aplicación - esto no es
+        recomendable, ya que deberías cambiar el idioma en los ajustes propios de
+        Android\n\nHaz clic en el texto de abajo para cambiar el valor</string>
+    <string name="system">Sistema (predeterminado)</string>
+    <string name="language_dialog_desc">Elige el idioma que quieras usar - "sistema" es el
+        idoma de tu dispositivo Android</string>
+    <string name="contribute_translation">Traduce esta app</string>
+    <string name="language_changed">Idioma cambiado - se aplicarán los cambios cuando
+        salgas de los ajustes</string>
+    <string-array name="pools_numbers">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+    </string-array>
+    <string name="chart_title">Creado con BitCoin Pools</string>
+    <string name="number_of_pools_displayed">Mostrando %1d pools (disponibles: %2d)</string>
+    <string name="show_longer_table">Mantén pulsado encima del título de la tabla para
+        mostrarla al completo</string>
 </resources>

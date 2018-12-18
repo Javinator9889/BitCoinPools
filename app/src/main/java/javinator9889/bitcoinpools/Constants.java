@@ -3,8 +3,7 @@ package javinator9889.bitcoinpools;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Javinator9889 on 23/01/2018.
- * Contains constant values that will be used
+ * Created by Javinator9889 on 23/01/2018. Contains constant values that will be used
  */
 
 public class Constants {
@@ -14,6 +13,17 @@ public class Constants {
     public static final int JOB_ID = 1;
     public static final String JOBINFO = "(job:2/javinator9889.bitcoinpools/.BackgroundJobs.CacheJobSchedulerService)";
     public static final long MILLIS_A_DAY = 86400000;
+    public static final String GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=javinator9889.bitcoinpools";
+    public static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
+    public static final String CHANNEL_ID = "javinator9889.bitcoinpools.Alerts";
+    public static final int NOTIFICATION_ID = 1;
+    public static final int REQUEST_CODE = 0;
+    public static final String GITHUB_USER = "Javinator9889";
+    public static final String GITHUB_REPO = "BitCoinPools";
+    public static final String STATS_URL = "https://api.blockchain.info/stats";
+    public static final String MARKET_NAME = "market_price_usd";
+    public static final String POOLS_URL = "https://api.blockchain.info/pools?timespan=";
+    public static final String TRANSLATION_URL = "https://www.javinator9889.com/bitcoinpools-translation/";
 
     public static class PAYMENTS {
         public static final String GOOGLE_PUBKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgt71diQE3dVAJ/KEJSpt+ZIEeeKDOWl5cBdwRirkjiVPtzwbOlOyJsf+tJzQrYvxJejmkfdwR5TlG4Z+NAZDtcS4mq63JVoPyEbmx0wvVYC3+zav2MbJO9P/gSmwTK0KGwVSyItcH5sqXjK9Mv280uj2jM0IMW0UpM91vzeitCGCbJRwMe1CnzLzFPFI01YJ/QjG+1KY7MzIhn3P2ZbS9C7fhP0BwJIBPoZJkp64pKhXf7iI5qsbZGby4V+iQiU5ONiS+ggy8X076IAB1DijL90BUnbTXCwa1WufChb3da7xV/AiPEHl9UJ2J70I3+/1Dx9MXOrYkBmOKAYFLJlcQwIDAQAB";
@@ -23,8 +33,7 @@ public class Constants {
                 "in_app_purchases_donations_13"};
         public static final String PAYPALME = "https://paypal.me/Javinator9889";
     }
-    public static final String GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=javinator9889.bitcoinpools";
-    public static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
+
     public static final class SHARED_PREFERENCES {
         public static final String SHARED_PREFERENCES_KEY = "javinator9889.bitcoinpools.usrPreferences";
         public static final String NOTIFICATIONS_ENABLED = "notifications_enabled";
@@ -36,15 +45,11 @@ public class Constants {
         public static final String APP_VERSION = "APP_VERSION";
         public static final String CACHE_JOB = "CACHE_JOB";
         public static final String CACHE_JOB_PERIOD = "CACHE_JOB_PERIOD";
+        public static final String CUSTOM_PRICE = "userCustomPrice";
+        public static final String CUSTOM_POOLS = "userCustomNumberOfPools";
+        public static final String HAS_USER_DEFINED_CUSTOM_PRICE = "userDefinedCustomPrice";
+        public static final String USER_LANGUAGE = "userLanguage";
     }
-    public static final String CHANNEL_ID = "javinator9889.bitcoinpools.Alerts";
-    public static final int NOTIFICATION_ID = 1;
-    public static final int REQUEST_CODE = 0;
-    public static final String GITHUB_USER = "Javinator9889";
-    public static final String GITHUB_REPO = "BitCoinPools";
-    public static final String STATS_URL = "https://api.blockchain.info/stats";
-    public static final String MARKET_NAME = "market_price_usd";
-    public static final String POOLS_URL = "https://api.blockchain.info/pools?timespan=";
 
     public static final class LOG {
         public static final String UNCAUGHT_ERROR = "Uncaught error on: ";

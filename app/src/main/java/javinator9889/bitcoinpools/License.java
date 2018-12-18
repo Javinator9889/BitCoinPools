@@ -6,15 +6,13 @@ import android.util.Log;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.ui.LibsSupportFragment;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 /**
- * Created by Javinator9889 on 22/12/2017.
- * License of the app
+ * Created by Javinator9889 on 22/12/2017. License of the app
  */
 
-public class License extends AppCompatActivity {
+public class License extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -26,7 +24,7 @@ public class License extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.license);
         setTitle(R.string.licenseTitle);
-        String[] libs = new String[] {
+        String[] libs = new String[]{
                 getString(R.string.library_donations_libraryName),
                 getString(R.string.library_appcompat_v7_libraryName),
                 getString(R.string.library_constraint_layout_libraryName),

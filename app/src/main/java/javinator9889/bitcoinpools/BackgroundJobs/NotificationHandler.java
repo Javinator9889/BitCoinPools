@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -52,6 +53,9 @@ import javinator9889.bitcoinpools.NetTools.net;
 import javinator9889.bitcoinpools.R;
 
 import static javinator9889.bitcoinpools.Constants.API_URL;
+import static javinator9889.bitcoinpools.Constants.LOG.NTAG;
+import static javinator9889.bitcoinpools.Constants.SHARED_PREFERENCES.CUSTOM_PRICE;
+import static javinator9889.bitcoinpools.Constants.SHARED_PREFERENCES.HAS_USER_DEFINED_CUSTOM_PRICE;
 
 /**
  * Created by Javinator9889 on 23/01/2018. Based on: https://stackoverflow.com/a/46991229
@@ -61,24 +65,54 @@ class NotificationHandler {
     private static boolean NOTIFICATIONS_ENABLED = false;
     private static boolean NOTIFIED_HIGH = false;
     private static boolean NOTIFIED_LOW = false;
-    private static int SPECIFIC_VALUE = 0;
+    private static float SPECIFIC_VALUE = 0f;
     private static float MPU;
 
     private NotificationHandler() {
         final SharedPreferences sp = BitCoinApp.getSharedPreferences();
-        Log.d(Constants.LOG.NTAG, Constants.LOG.CREATING_NOTIFICATION);
+        Log.d(NTAG, Constants.LOG.CREATING_NOTIFICATION);
         NOTIFICATIONS_ENABLED = sp.getBoolean(Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED,
                 false);
         NOTIFIED_HIGH = sp.getBoolean(Constants.SHARED_PREFERENCES.NOTIFIED_HIGH, false);
         NOTIFIED_LOW = sp.getBoolean(Constants.SHARED_PREFERENCES.NOTIFIED_LOW, false);
-        SPECIFIC_VALUE = sp.getInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
+        if (sp.getBoolean(HAS_USER_DEFINED_CUSTOM_PRICE, false))
+            SPECIFIC_VALUE = sp.getFloat(CUSTOM_PRICE, 10);
+        else
+            SPECIFIC_VALUE = sp.getInt(Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
         MPU = initMPU();
-        Log.d(Constants.LOG.NTAG, Constants.LOG.CURRRENT_NOT_SETTINGS
+        Log.d(NTAG, Constants.LOG.CURRRENT_NOT_SETTINGS
                 + NOTIFICATIONS_ENABLED + "\n"
                 + NOTIFIED_HIGH + "\n"
                 + NOTIFIED_LOW + "\n"
                 + SPECIFIC_VALUE + "\n"
                 + MPU);
+    }
+
+    @NonNull
+    static NotificationHandler newInstance() {
+        return new NotificationHandler();
+    }
+
+    private static float initMPU() {
+        net market = new net();
+        market.execute("https://api.blockchain.info/stats");
+        try {
+            return MainActivity.round((float) market.get().getDouble("market_price_usd"),
+                    2);
+        } catch (InterruptedException | ExecutionException
+                | JSONException | NullPointerException e) {
+            return -1;
+        }
+    }
+
+    private static void updateSharedPreferences() {
+        final SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp
+                .getSharedPreferences().edit();
+        sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES.NOTIFIED_HIGH,
+                NOTIFIED_HIGH);
+        sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES.NOTIFIED_LOW,
+                NOTIFIED_LOW);
+        sharedPreferencesEditor.apply();
     }
 
     void putNotification() {
@@ -94,38 +128,36 @@ class NotificationHandler {
                 new Intent(BitCoinApp.getAppContext(), DataLoaderScreen.class),
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
-
+        Context localeContext = BitCoinApp.localeManager.setLocale(BitCoinApp.getAppContext());
         if (NOTIFICATIONS_ENABLED) {
             if ((MPU < SPECIFIC_VALUE) && !NOTIFIED_LOW) {
-                notificationTitle = BitCoinApp.getAppContext().getString(R.string.lowerPrice);
-                notificationTextLong = BitCoinApp.getAppContext().getString(R.string.lowerPriceX)
+                notificationTitle = localeContext.getString(R.string.lowerPrice);
+                notificationTextLong = localeContext.getString(R.string.lowerPriceX)
                         + SPECIFIC_VALUE + ". "
-                        + BitCoinApp.getAppContext().getString(R.string.actualCost) + MPU;
-                notificationText = BitCoinApp.getAppContext().getString(R.string.lowerPriceX)
+                        + localeContext.getString(R.string.actualCost) + MPU;
+                notificationText = localeContext.getString(R.string.lowerPriceX)
                         + SPECIFIC_VALUE;
                 NOTIFIED_HIGH = false;
                 NOTIFIED_LOW = true;
                 notify = (MPU != -1);
             } else if ((MPU > SPECIFIC_VALUE) && !NOTIFIED_HIGH) {
-                notificationTitle = BitCoinApp.getAppContext().getString(R.string.morePrice);
-                notificationTextLong = BitCoinApp.getAppContext().getString(R.string.morePriceX)
-                        + SPECIFIC_VALUE + ". " + BitCoinApp.getAppContext().getString(R.string.actualCost) + MPU;
+                notificationTitle = localeContext.getString(R.string.morePrice);
+                notificationTextLong = localeContext.getString(R.string.morePriceX)
+                        + SPECIFIC_VALUE + ". " + localeContext.getString(R.string.actualCost) + MPU;
 
-                notificationText = BitCoinApp.getAppContext().getString(R.string.morePriceX)
+                notificationText = localeContext.getString(R.string.morePriceX)
                         + SPECIFIC_VALUE;
                 NOTIFIED_HIGH = true;
                 NOTIFIED_LOW = false;
                 notify = (MPU != -1);
             }
-            String notificationTitleLong = BitCoinApp
-                    .getAppContext()
-                    .getString(R.string.actualCost) + MPU;
+            String notificationTitleLong = localeContext.getString(R.string.actualCost) + MPU;
             if (notify) {
-                Log.d(Constants.LOG.NTAG, Constants.LOG.NOTIFYING);
+                Log.d(NTAG, Constants.LOG.NOTIFYING);
                 updatePreferences();
-                AsyncTask<String, Void, Bitmap> lineChartTask = generateLineChart();
-                String name = BitCoinApp.getAppContext().getString(R.string.alerts);
-                String description = BitCoinApp.getAppContext().getString(R.string.description);
+                AsyncTask<String, Void, Bitmap> lineChartTask = generateLineChart(localeContext);
+                String name = localeContext.getString(R.string.alerts);
+                String description = localeContext.getString(R.string.description);
                 Notification.Builder notification;
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -159,19 +191,40 @@ class NotificationHandler {
                             .setContentText(notificationText)
                             .setAutoCancel(true)
                             .setTicker(notificationTitle)
+                            .setVibrate(new long[]{100, 100, 300})
                             .setStyle(new Notification.BigTextStyle()
                                     .bigText(notificationTextLong));
                 }
                 try {
                     if (lineChartTask != null) {
                         Bitmap lineChart = lineChartTask.get();
-                        if (lineChart != null)
+                        if (lineChart != null) {
                             notification.setStyle(new Notification.BigPictureStyle()
                                     .bigPicture(lineChart)
+                                    .bigLargeIcon((Bitmap) null)
                                     .setBigContentTitle(notificationTitleLong));
+                            notification.setLargeIcon(lineChart);
+                            ShareDataIntent dataIntent = new ShareDataIntent(localeContext,
+                                    R.string.share_bitcoin_price_title);
+                            if (dataIntent.saveImageToCache(lineChart)) {
+                                Uri fileUri = dataIntent.getUriForSavedImage();
+                                Uri googlePlayLink = Uri.parse(Constants.GOOGLE_PLAY_URL);
+                                String bitCoinPriceChangedText = String.format(
+                                        localeContext.getString(R.string.share_bitcoin_price),
+                                        notificationText,
+                                        MPU,
+                                        googlePlayLink.toString());
+                                PendingIntent shareIntent = dataIntent.shareImageWithText
+                                        (bitCoinPriceChangedText, fileUri);
+                                Notification.Action action = new Notification.Action(R.drawable.share,
+                                        localeContext.getString(R.string.share), shareIntent);
+                                notification.addAction(action);
+                            }
+                        }
                     }
-                } catch (ExecutionException | InterruptedException ignored) {
-
+                } catch (ExecutionException | InterruptedException e) {
+                    Log.w(NTAG, "Unexpected exception while publishing " +
+                            "notification", e);
                 } finally {
                     notification.setContentIntent(clickIntent);
                     assert notificationManager != null;
@@ -179,10 +232,10 @@ class NotificationHandler {
                 }
             }
         } else
-            Log.d(Constants.LOG.NTAG, Constants.LOG.NNOTIFYING);
+            Log.d(NTAG, Constants.LOG.NNOTIFYING);
     }
 
-    private AsyncTask<String, Void, Bitmap> generateLineChart() {
+    private AsyncTask<String, Void, Bitmap> generateLineChart(Context localeContext) {
         Map<Date, Float> pricesMap;
         Calendar start = Calendar.getInstance();
         start.add(Calendar.DAY_OF_MONTH, -7);
@@ -205,6 +258,7 @@ class NotificationHandler {
         final LineChart bitcoinPricesChart = GCharts.newLineChart(bitcoinPricesLine);
         bitcoinPricesChart.setSize(760, 380);
         bitcoinPricesChart.setGrid(25, 25, 3, 2);
+        bitcoinPricesChart.setTitle(localeContext.getString(R.string.chart_title));
 
         AxisStyle axisStyle = AxisStyle.newAxisStyle(Color.BLACK, 11, AxisTextAlignment.CENTER);
         AxisLabels xAxis = AxisLabelsFactory.newAxisLabels(getDates(pricesMap));
@@ -244,13 +298,13 @@ class NotificationHandler {
         float minimum = Collections.min(values);
         float difference = maximum - minimum;
         float amount = difference / 5;
-        formattedValues.add(0, String.format(Locale.US, "%.2fK", (minimum / divider)));
+        formattedValues.add(0, String.format(Locale.US, "$%.2fK", (minimum / divider)));
         float latest = minimum;
         for (int i = 1; i < 5; ++i) {
             latest += amount;
-            formattedValues.add(i, String.format(Locale.US, "%.2fK", (latest / divider)));
+            formattedValues.add(i, String.format(Locale.US, "$%.2fK", (latest / divider)));
         }
-        formattedValues.add(5, String.format(Locale.US, "%.2fK", (maximum / divider)));
+        formattedValues.add(5, String.format(Locale.US, "$%.2fK", (maximum / divider)));
         return formattedValues;
     }
 
@@ -280,47 +334,24 @@ class NotificationHandler {
         }
     }
 
-    private static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            try {
-                URL imageUrl = new URL(urls[0]);
-                return BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-            } catch (IOException ignored) {
-                return null;
-            }
-        }
-
-    }
-
-    @NonNull
-    static NotificationHandler newInstance() {
-        return new NotificationHandler();
-    }
-
-    private static float initMPU() {
-        net market = new net();
-        market.execute("https://api.blockchain.info/stats");
-        try {
-            return MainActivity.round((float) market.get().getDouble("market_price_usd"),
-                    2);
-        } catch (InterruptedException | ExecutionException
-                | JSONException | NullPointerException e) {
-            return -1;
-        }
-    }
-
     void updatePreferences() {
         updateSharedPreferences();
     }
 
-    private static void updateSharedPreferences() {
-        final SharedPreferences.Editor sharedPreferencesEditor = BitCoinApp
-                .getSharedPreferences().edit();
-        sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES.NOTIFIED_HIGH,
-                NOTIFIED_HIGH);
-        sharedPreferencesEditor.putBoolean(Constants.SHARED_PREFERENCES.NOTIFIED_LOW,
-                NOTIFIED_LOW);
-        sharedPreferencesEditor.apply();
+    private static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                URL httpImageUrl = new URL(urls[0]);
+                URL httpsImageUrl = new URL("https", httpImageUrl.getHost(), httpImageUrl.getFile
+                        ());
+                Log.d(NTAG, "URL: " + httpsImageUrl);
+                return BitmapFactory.decodeStream(httpsImageUrl.openConnection().getInputStream());
+            } catch (IOException ex) {
+                Log.w(NTAG, "Error while downloading the photo", ex);
+                return null;
+            }
+        }
+
     }
 }

@@ -97,6 +97,14 @@ SOFTWARE.<br />
     <string name="github"><![CDATA[Access to the GitHub project right here: <a href="https://github.com/Javinator9889/BitCoinPools">GitHub</a>]]></string>
     <string name="changelog">
         <![CDATA[
+        <h1>Version 1.19.2 (18/12/18)</h1><i>
+        - Fixed notification issue on Android Pie (9.0) with images<br />
+        - New: share button from notification - now you can easily share the BitCoin evolution with everyone<br />
+        - New: customize how much pools you would like to see on the pools chart & information screen<br />
+        - New: fully customize the price from which getting notified when the BitCoin price is upper or lower than<br />
+        - New: change application language to your preferred one<br />
+        - Would you like to contribute with you own translations to your favourite language? Discover how at the application settings<br />
+        - Maintenance and little bugs solved<br /></i>
         <h1>Version 1.19.1 (03/12/18)</h1><i>
         - Notification style reworked - now, an image is shown with the BitCoin evolution of the latest 7 days<br />
         - Minor bugs correction<br /></i>
@@ -285,4 +293,59 @@ SOFTWARE.<br />
 
         Please, try again later.</string>
     <string name="latest_7_days">BitCoin evolution latest 7 days</string>
+    <string name="share_bitcoin_price">%1s. Its current price is $%2f\n\nDownload BitCoin
+        Pools and you can also get notified! - %3s</string>
+    <string name="share_bitcoin_price_title">Share the evolution and the price of the
+        BitCoin</string>
+    <string name="share">Share</string>
+    <string name="error_sharing_title">Error while sharing</string>
+    <string name="error_sharing_desc">It seems like something went wrong while sharing the
+        BitCoin evolution. Have you cleared app data and/or cache?</string>
+    <string name="pools_number_title">Number of pools to show</string>
+    <string name="pools_number_desc">At the main view, by default 10 pools are displayed.
+        Here you can change and customize how much you would like to be displayed, between
+        a minimum of 3 and a maximum of 24</string>
+    <string name="change_value">Change</string>
+    <string name="input_hint_pools">Pools to show…</string>
+    <string name="cancel">Cancel</string>
+    <string name="price_hint">Get notified at…</string>
+    <string name="pools_hint">Pools to show…</string>
+    <string name="language">Language</string>
+    <string name="language_desc">Manually change application language - this is not
+        recommended, as you should change your language at the proper Android
+        Settings\n\nClick the text below to change the value</string>
+    <string name="system">System (predefined)</string>
+    <string name="language_dialog_desc">Choose the language you want to use - "system" is your
+        Android device\'s language</string>
+    <string name="contribute_translation">Translate this app</string>
+    <string name="language_changed">Language switched - new changes will be applied when you
+        get back from settings</string>
+    <string-array name="pools_numbers">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+    </string-array>
+    <string name="chart_title">Created with BitCoin Pools</string>
+    <string name="number_of_pools_displayed">Showing %1d pools (total available: %2d)</string>
+    <string name="show_longer_table">Long press on table title for displaying the hole
+        table</string>
 </resources>

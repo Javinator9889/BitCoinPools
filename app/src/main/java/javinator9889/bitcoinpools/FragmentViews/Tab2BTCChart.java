@@ -48,7 +48,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,20 +60,19 @@ import javinator9889.bitcoinpools.NetTools.net;
 import javinator9889.bitcoinpools.R;
 
 /**
- * Created by Javinator9889 on 28/01/2018.
- * Based on https://www.coindesk.com/api/ API
+ * Created by Javinator9889 on 28/01/2018. Based on https://www.coindesk.com/api/ API
  */
 
-public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSetListener {
-    private static Map<Date, Float> BTCPRICE = new LinkedHashMap<>();
-    private HashMap<String, Float> cardsContentData;
+public class Tab2BTCChart extends BaseFragment implements DatePickerDialog.OnDateSetListener {
     private static final String API_URL = "https://api.coindesk.com/v1/bpi/historical/close.json";
+    private static final String STATS_URL = "https://api.blockchain.info/stats";
+    private static Map<Date, Float> BTCPRICE = new LinkedHashMap<>();
     private static String REQUEST_URL;
     private static LineChart DESTINATIONLINECHART;
-    private static final String STATS_URL = "https://api.blockchain.info/stats";
     @SuppressLint("StaticFieldLeak")
     private static Context FRAGMENT_CONTEXT;
     private static boolean lineChartCreated = false;
+    private HashMap<String, Float> cardsContentData;
     private int year;
     private int month;
     private int day;
@@ -94,6 +92,10 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         Tab2BTCChart fragment = new Tab2BTCChart();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static void setLineChartCreated() {
+        lineChartCreated = false;
     }
 
     @SuppressWarnings("unchecked")
@@ -338,22 +340,6 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
         createLineChart(DESTINATIONLINECHART, FRAGMENT_CONTEXT);
     }
 
-    public static void setLineChartCreated() {
-        lineChartCreated = false;
-    }
-
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-    }
-
     /**
      * Converting dp to pixel
      */
@@ -422,5 +408,17 @@ public class Tab2BTCChart extends Fragment implements DatePickerDialog.OnDateSet
             Log.e(Constants.LOG.MATAG, "Unable to create cache file");
         }
         return cache.readCache();
+    }
+
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
     }
 }

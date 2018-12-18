@@ -14,6 +14,7 @@ import com.crashlytics.android.Crashlytics;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
@@ -21,8 +22,7 @@ import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.Constants;
 
 /**
- * Created by Javinator9889 on 24/01/2018.
- * Check for updates based on GitHub releases
+ * Created by Javinator9889 on 24/01/2018. Check for updates based on GitHub releases
  */
 
 public class CheckUpdates {
@@ -49,7 +49,7 @@ public class CheckUpdates {
 
     public void checkForUpdates(final Context dialogContext, String title, String description,
                                 String positiveText, String negativeText, String neutralText) {
-        if (!APP_VERSION.equals(LATEST_VERSION)) {
+        if (isAnyVersionAvailable(LATEST_VERSION, APP_VERSION)) {
             Log.d(Constants.LOG.CTAG, Constants.LOG.NEW_VERSION + APP_VERSION
                     + " | " + LATEST_VERSION);
             MaterialDialog materialDialog;
@@ -130,12 +130,10 @@ public class CheckUpdates {
                     LATEST_VERSION = RETRIEVED_DATA.getJSONObject(i).getString("tag_name");
                     boolean apkFound = false;
                     for (int j = 0; (j < RETRIEVED_DATA.getJSONObject(i).getJSONArray("assets")
-                            .length()) && !apkFound; ++j)
-                    {
+                            .length()) && !apkFound; ++j) {
                         if (!(RETRIEVED_DATA.getJSONObject(i).getJSONArray("assets").isNull(j)
                                 && (RETRIEVED_DATA.getJSONObject(i).getJSONArray("assets")
-                                .getJSONObject(j).getString("name").contains(".apk"))))
-                        {
+                                .getJSONObject(j).getString("name").contains(".apk")))) {
                             apkFound = true;
                             DOWNLOAD_URL = RETRIEVED_DATA.getJSONObject(i)
                                     .getJSONArray("assets").getJSONObject(0)
@@ -152,5 +150,30 @@ public class CheckUpdates {
             Crashlytics.logException(e);
             Log.e(Constants.LOG.CTAG, Constants.LOG.NO_INFO + e.getMessage());
         }
+    }
+
+    public boolean isAnyVersionAvailable(String latestVersion, String appVersion) {
+        try (Scanner s1 = new Scanner(latestVersion);
+             Scanner s2 = new Scanner(appVersion)) {
+            s1.useDelimiter("\\.");
+            s2.useDelimiter("\\.");
+
+            while (s1.hasNextInt() && s2.hasNextInt()) {
+                int v1 = s1.nextInt();
+                int v2 = s2.nextInt();
+                if (v1 < v2) {
+                    return false;
+                } else if (v1 > v2) {
+                    return true;
+                }
+            }
+
+            if (s1.hasNextInt() && s1.nextInt() != 0)
+                return true; //latestVersion has an additional lower-level version number
+            if (s2.hasNextInt() && s2.nextInt() != 0)
+                return false; //appVersion has an additional lower-level version
+
+            return false;
+        } // end of try-with-resources
     }
 }

@@ -1,0 +1,36 @@
+        lineChart.setDrawGridBackground(false);
+        lineChart.getDescription().setEnabled(false);
+        CustomMarkerView markerView = new CustomMarkerView(mContext, R.layout.marker_view);
+        markerView.setChartView(lineChart);
+        lineChart.setMarker(markerView);
+        ArrayList<Entry> values = new ArrayList<>(pricesMap.size());
+        int i = 0;
+        for (Date currentDate : pricesMap.keySet()) {
+            values.add(new Entry(i, pricesMap.get(currentDate)));
+            ++i;
+        }
+        LineDataSet lineDataSet = new LineDataSet(values, mContext.getString(R.string
+                .latest_7_days));
+        lineDataSet.setDrawIcons(false);
+        lineDataSet.enableDashedLine(10f, 5f, 0f);
+        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+        lineDataSet.setColor(Color.BLACK);
+        lineDataSet.setCircleColor(Color.BLACK);
+        lineDataSet.setLineWidth(1f);
+        lineDataSet.setCircleRadius(3f);
+        lineDataSet.setDrawCircleHole(false);
+        lineDataSet.setValueTextSize(9f);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFormLineWidth(1f);
+        lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+        lineDataSet.setFormSize(15.f);
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setFillDrawable(ContextCompat.getDrawable(mContext, R.drawable.fade_red));
+        lineDataSet.setDrawCircles(false);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>(1);
+        dataSets.add(lineDataSet);
+        LineData data = new LineData(dataSets);
+        lineChart.setData(data);
+        lineChart.getAxisLeft().setValueFormatter(new LargeValueFormatter());
+        lineChart.invalidate();
+        return setLayoutParams(lineChart);

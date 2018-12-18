@@ -1,6 +1,5 @@
 package javinator9889.bitcoinpools;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.media.MediaMetadataRetriever;
@@ -14,15 +13,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Created by Javinator9889 on 10/03/2018.
- * Easter Egg :D
+ * Created by Javinator9889 on 10/03/2018. Easter Egg :D
  */
 
-public class EasterEgg extends Activity {
+public class EasterEgg extends BaseActivity {
     private String[] positivePhrases;
     private VideoView easterEggVideo;
     private boolean isEasterEggCompleted = false;
     private int actualStepCount = 0;
+
+    public EasterEgg() {
+        super();
+    }
+
+    private EasterEgg(Resources stringArrayResources) {
+        this.positivePhrases = stringArrayResources.getStringArray(R.array.positivePhrases);
+    }
+
+    public static EasterEgg newInstance(Resources applicationResources) {
+        return new EasterEgg(applicationResources);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,24 +63,12 @@ public class EasterEgg extends Activity {
     private int[] getVideoMeasurements(Uri videoUri) {
         MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
         metadataRetriever.setDataSource(this, videoUri);
-        return new int[] {
+        return new int[]{
                 Integer.parseInt(metadataRetriever
                         .extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)),
                 Integer.parseInt(metadataRetriever
                         .extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT))
         };
-    }
-
-    public EasterEgg() {
-        super();
-    }
-
-    private EasterEgg(Resources stringArrayResources) {
-        this.positivePhrases = stringArrayResources.getStringArray(R.array.positivePhrases);
-    }
-
-    public static EasterEgg newInstance(Resources applicationResources) {
-        return new EasterEgg(applicationResources);
     }
 
     public boolean addStep(Context context) {

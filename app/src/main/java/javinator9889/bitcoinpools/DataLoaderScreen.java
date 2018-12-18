@@ -31,11 +31,10 @@ import javinator9889.bitcoinpools.NetTools.net;
 import static javinator9889.bitcoinpools.MainActivity.round;
 
 /**
- * Created by Javinator9889 on 04/03/2018.
- * Based on: https://stackoverflow.com/questions/10115403/progressdialog-while-load-activity
+ * Created by Javinator9889 on 04/03/2018. Based on: https://stackoverflow.com/questions/10115403/progressdialog-while-load-activity
  */
 
-public class DataLoaderScreen extends AppCompatActivity {
+public class DataLoaderScreen extends BaseActivity {
     public static AppCompatActivity dataLoaderScreenActivity;
 
     private float mpu;
@@ -96,6 +95,8 @@ public class DataLoaderScreen extends AppCompatActivity {
         private Thread poolsDataThread;
         private Thread cardsDataThread;
         private Thread btcPriceThread;
+        private boolean isAnyExceptionThrown = false;
+        private boolean areHostsReachable = true;
         private Thread.UncaughtExceptionHandler threadExceptions = new Thread
                 .UncaughtExceptionHandler() {
             @Override
@@ -110,8 +111,6 @@ public class DataLoaderScreen extends AppCompatActivity {
                 }
             }
         };
-        private boolean isAnyExceptionThrown = false;
-        private boolean areHostsReachable = true;
 
         @Override
         protected void onPreExecute() {

@@ -20,26 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import javinator9889.bitcoinpools.R;
 
 /**
- * Created by Javinator9889 on 31/01/2018.
- * Based on: https://www.androidhive.info/2016/05/android-working-with-card-view-and-recycler-view/
+ * Created by Javinator9889 on 31/01/2018. Based on: https://www.androidhive.info/2016/05/android-working-with-card-view-and-recycler-view/
  */
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder> {
     private Context context;
     private List<CardsContent> btcData;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title, body, oldData;
-        View v;
-
-        MyViewHolder(View view) {
-            super(view);
-            title = view.findViewById(R.id.title_text);
-            body = view.findViewById(R.id.body_text);
-            oldData = view.findViewById(R.id.balance);
-            this.v = view;
-        }
-    }
 
     CardsAdapter(Context context, List<CardsContent> btcData) {
         this.context = context;
@@ -128,7 +114,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     if (result == 0)
                         difficultyPercentage = 0;
                     else
-                        difficultyPercentage = - result;
+                        difficultyPercentage = -result;
                     switch (Float.compare(difficultyPercentage, 0f)) {
                         case 0:
                             holder.oldData.setText("0%");
@@ -143,7 +129,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                             break;
                         case -1:
                             String negativeText = decimalFormat
-                                    .format(- difficultyPercentage) + "%";
+                                    .format(-difficultyPercentage) + "%";
                             holder.oldData.setText(negativeText);
                             holder.oldData.setTextColor(Color.RED);
                             holder.oldData.setCompoundDrawablesWithIntrinsicBounds(
@@ -188,7 +174,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     if (resultMinutes == 0)
                         minutesPercentage = 0;
                     else
-                        minutesPercentage = - resultMinutes;
+                        minutesPercentage = -resultMinutes;
                     switch (Float.compare(minutesPercentage, 0f)) {
                         case 0:
                             holder.oldData.setText("0%");
@@ -221,7 +207,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     if (resultFees == 0)
                         feePercentage = 0;
                     else
-                        feePercentage = - resultFees;
+                        feePercentage = -resultFees;
                     switch (Float.compare(feePercentage, 0f)) {
                         case 0:
                             holder.oldData.setText("0%");
@@ -378,8 +364,10 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
 
     /**
      * Based on: https://www.calculatorsoup.com/calculators/algebra/percent-difference-calculator.php
+     *
      * @param newValue new value
      * @param oldValue old value
+     *
      * @return difference in percentage of values
      */
     private float percentageCalculator(float newValue, float oldValue) {
@@ -396,5 +384,18 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
     @Override
     public int getItemCount() {
         return btcData.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView title, body, oldData;
+        View v;
+
+        MyViewHolder(View view) {
+            super(view);
+            title = view.findViewById(R.id.title_text);
+            body = view.findViewById(R.id.body_text);
+            oldData = view.findViewById(R.id.balance);
+            this.v = view;
+        }
     }
 }

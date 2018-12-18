@@ -41,16 +41,37 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:longClickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chart">
+        app:layout_constraintTop_toBottomOf="@+id/chart"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/showingNumber"
+            style="@android:style/Widget.DeviceDefault.Light.TextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/latest_24h_pools_information"
+            android:textAlignment="viewEnd"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/latest"
             style="@android:style/Widget.DeviceDefault.Light.TextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="sans-serif"
             android:text="@string/latest_24h_pools_information"
             android:textAlignment="center"
@@ -58,8 +79,9 @@
             android:textSize="18sp"
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/showingNumber" />
 
         <GridLayout
             android:id="@+id/poolstableName"

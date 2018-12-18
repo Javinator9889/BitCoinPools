@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -35,11 +36,11 @@ import javinator9889.bitcoinpools.BackgroundJobs.JobSchedulerService;
 import static javinator9889.bitcoinpools.Constants.SHARED_PREFERENCES.CACHE_JOB_PERIOD;
 
 /**
- * Created by Javinator9889 on 22/01/2018.
- * Based on: https://github.com/ZonaRMR/SimpleForFacebook/blob/master/app/src/main/java/com/creativetrends/simple/app/activities/SimpleApp.java
+ * Created by Javinator9889 on 22/01/2018. Based on: https://github.com/ZonaRMR/SimpleForFacebook/blob/master/app/src/main/java/com/creativetrends/simple/app/activities/SimpleApp.java
  */
 
 public class BitCoinApp extends Application {
+    public static LocaleManager localeManager;
     @SuppressLint("StaticFieldLeak")
     private static Context APPLICATION_CONTEXT;
     private static SharedPreferences SHARED_PREFERENCES;
@@ -55,27 +56,6 @@ public class BitCoinApp extends Application {
 
     public static FirebaseAnalytics getFirebaseAnalytics() {
         return firebaseAnalytics;
-    }
-
-    @Override
-    @AddTrace(name = "onCreateApplication")
-    public void onCreate() {
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        APPLICATION_CONTEXT = getApplicationContext();
-        SHARED_PREFERENCES = getSharedPreferences(
-                Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_KEY,
-                Context.MODE_PRIVATE);
-        initSharedPreferences();
-        try {
-            CacheManaging.newInstance(this).setupFile();
-        } catch (IOException ignored) {} // This error should never happen
-        startBackgroundJobs();
-        super.onCreate();
-        Log.d(Constants.LOG.BCTAG, Constants.LOG.CREATED_APP);
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.START_DATE, Calendar.getInstance()
-                .getTime().toString());
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
     }
 
     private static void startBackgroundJobs() {
@@ -115,8 +95,7 @@ public class BitCoinApp extends Application {
                             JobInfo.BACKOFF_POLICY_LINEAR);
 
                     if (mJobScheduler.schedule(cacheBuilder.build()) == JobScheduler
-                            .RESULT_FAILURE)
-                    {
+                            .RESULT_FAILURE) {
                         Log.e(Constants.LOG.BCTAG,
                                 Constants.LOG.NO_INIT + "JobScheduler" + mJobScheduler
                                         .getAllPendingJobs().toString());
@@ -130,36 +109,6 @@ public class BitCoinApp extends Application {
             }
         });
         backgroundJobsThread.start();
-    }
-
-    private void initSharedPreferences() {
-        Thread sharedPreferencesThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (!SHARED_PREFERENCES.contains(
-                        Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_INITIALIZED))
-                {
-                    Log.d(Constants.LOG.BCTAG, Constants.LOG.INIT_PREF);
-                    SharedPreferences.Editor sharedPreferencesEditor = SHARED_PREFERENCES.edit();
-                    sharedPreferencesEditor.putBoolean(
-                            Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_INITIALIZED, true);
-                    sharedPreferencesEditor.putBoolean(
-                            Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, false);
-                    sharedPreferencesEditor.putBoolean(
-                            Constants.SHARED_PREFERENCES.NOTIFIED_LOW, false);
-                    sharedPreferencesEditor.putBoolean(
-                            Constants.SHARED_PREFERENCES.NOTIFIED_HIGH, false);
-                    sharedPreferencesEditor.putInt(
-                            Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
-                    sharedPreferencesEditor.putInt(
-                            Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
-                    sharedPreferencesEditor.putString(
-                            Constants.SHARED_PREFERENCES.APP_VERSION, appVersion());
-                    sharedPreferencesEditor.apply();
-                }
-            }
-        });
-        sharedPreferencesThread.start();
     }
 
     public static void forceRestartBackgroundJobs() {
@@ -179,10 +128,10 @@ public class BitCoinApp extends Application {
         return ((netInfo != null) && netInfo.isConnected());
     }
 
-    public static String appVersion() {
+    public static String appVersion(Context base) {
         try {
-            PackageInfo pInfo = getAppContext().getPackageManager()
-                    .getPackageInfo(getAppContext().getPackageName(), 0);
+            PackageInfo pInfo = base.getPackageManager()
+                    .getPackageInfo(base.getPackageName(), 0);
             return pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             Crashlytics.logException(e);
@@ -221,5 +170,74 @@ public class BitCoinApp extends Application {
         } catch (Exception e) {
             return Long.MAX_VALUE;
         }
+    }
+
+    @Override
+    @AddTrace(name = "onCreateApplication")
+    public void onCreate() {
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        APPLICATION_CONTEXT = getApplicationContext();
+        try {
+            CacheManaging.newInstance(this).setupFile();
+        } catch (IOException ignored) {
+        } // This error should never happen
+        startBackgroundJobs();
+        super.onCreate();
+        Log.d(Constants.LOG.BCTAG, Constants.LOG.CREATED_APP);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.START_DATE, Calendar.getInstance()
+                .getTime().toString());
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        localeManager.setLocale(this);
+    }
+
+    /**
+     * Set the base context for this ContextWrapper.  All calls will then be delegated to the base
+     * context.  Throws IllegalStateException if a base context has already been set.
+     *
+     * @param base The new base context for this wrapper.
+     */
+    @Override
+    protected void attachBaseContext(Context base) {
+        SHARED_PREFERENCES = base.getSharedPreferences(
+                Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_KEY,
+                Context.MODE_PRIVATE);
+        initSharedPreferences(base);
+        localeManager = new LocaleManager();
+        super.attachBaseContext(localeManager.setLocale(base));
+    }
+
+    private void initSharedPreferences(final Context base) {
+        Thread sharedPreferencesThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (!SHARED_PREFERENCES.contains(
+                        Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_INITIALIZED)) {
+                    Log.d(Constants.LOG.BCTAG, Constants.LOG.INIT_PREF);
+                    SharedPreferences.Editor sharedPreferencesEditor = SHARED_PREFERENCES.edit();
+                    sharedPreferencesEditor.putBoolean(
+                            Constants.SHARED_PREFERENCES.SHARED_PREFERENCES_INITIALIZED, true);
+                    sharedPreferencesEditor.putBoolean(
+                            Constants.SHARED_PREFERENCES.NOTIFICATIONS_ENABLED, false);
+                    sharedPreferencesEditor.putBoolean(
+                            Constants.SHARED_PREFERENCES.NOTIFIED_LOW, false);
+                    sharedPreferencesEditor.putBoolean(
+                            Constants.SHARED_PREFERENCES.NOTIFIED_HIGH, false);
+                    sharedPreferencesEditor.putInt(
+                            Constants.SHARED_PREFERENCES.DAYS_TO_CHECK, 1);
+                    sharedPreferencesEditor.putInt(
+                            Constants.SHARED_PREFERENCES.VALUE_TO_CHECK, 1000);
+                    sharedPreferencesEditor.putString(
+                            Constants.SHARED_PREFERENCES.APP_VERSION, appVersion(base));
+                    sharedPreferencesEditor.apply();
+                }
+            }
+        });
+        sharedPreferencesThread.start();
     }
 }

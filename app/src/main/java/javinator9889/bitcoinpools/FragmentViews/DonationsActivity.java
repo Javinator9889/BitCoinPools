@@ -1,7 +1,10 @@
 package javinator9889.bitcoinpools.FragmentViews;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,12 +28,12 @@ import androidx.fragment.app.FragmentTransaction;
 import javinator9889.bitcoinpools.BitCoinApp;
 import javinator9889.bitcoinpools.R;
 
+import static android.content.pm.PackageManager.GET_META_DATA;
 import static javinator9889.bitcoinpools.Constants.PAYMENTS.GOOGLE_CATALOG;
 import static javinator9889.bitcoinpools.Constants.PAYMENTS.GOOGLE_PUBKEY;
 
 /**
- * Created by Javinator9889 on 01/03/2018.
- * Based on lib: https://github.com/PrivacyApps/donations
+ * Created by Javinator9889 on 01/03/2018. Based on lib: https://github.com/PrivacyApps/donations
  */
 
 public class DonationsActivity extends FragmentActivity {
@@ -39,6 +42,7 @@ public class DonationsActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resetActivityTitle();
         setContentView(R.layout.donations_activity);
 
         if ((isGooglePlayServicesAvailable(this))) { // && (Build.VERSION.SDK_INT > 22)) {
@@ -86,7 +90,7 @@ public class DonationsActivity extends FragmentActivity {
             });
         } catch (NullPointerException e) {
             Log.e("DonationsActivity", "Unable to get button-fragment. Full trace: "
-            + e.getMessage());
+                    + e.getMessage());
         }
     }
 
@@ -122,5 +126,22 @@ public class DonationsActivity extends FragmentActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(BitCoinApp.localeManager.setLocale(base));
+    }
+
+    private void resetActivityTitle() {
+        try {
+            ActivityInfo info = getPackageManager().getActivityInfo(getComponentName(),
+                    GET_META_DATA);
+            if (info.labelRes != 0) {
+                setTitle(info.labelRes);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.w("Donations", "Unable to change activity title - maybe it is not set?", e);
+        }
     }
 }

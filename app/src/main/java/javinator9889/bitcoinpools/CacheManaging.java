@@ -13,8 +13,7 @@ import java.util.HashMap;
 import androidx.annotation.NonNull;
 
 /**
- * Created by Javinator9889 on 02/03/2018.
- * Created for managing cache and writing data
+ * Created by Javinator9889 on 02/03/2018. Created for managing cache and writing data
  */
 
 public class CacheManaging {
